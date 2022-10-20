@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { ImageButton } from "../components/Button/ImageButton";
 import { Carousel } from "../components/Carousel";
 import { SearchInput } from "../components/Input/SearchInput";
@@ -24,13 +25,15 @@ const Home: NextPage = () => {
         />
         <Carousel width="480px" height="300px" />
         <SearchInput></SearchInput>
-        <ImageButton
-          labelText="전체 체위 보기"
-          imgUrl="/assets/typicalPosition.svg"
-          height={120}
-          width={368}
-          padding={20}
-        ></ImageButton>
+        <Link href="/totalShow">
+          <ImageButton
+            labelText="전체 체위 보기"
+            imgUrl="/assets/typicalPosition.svg"
+            height={120}
+            width={368}
+            padding={20}
+          ></ImageButton>
+        </Link>
         <ImageButton
           labelText="추천 체위 세트"
           imgUrl="/assets/recommendPosition.svg"

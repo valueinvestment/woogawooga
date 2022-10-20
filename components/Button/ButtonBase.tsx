@@ -27,7 +27,7 @@ const ButtonBase = styled.button<buttonProps>`
   font-weight: bold;
 
   &:hover {
-    background: buttonface;
+    opacity: 0.5;
   }
 
   /* if you want to place multiple lines of css, you can import {css}  */
