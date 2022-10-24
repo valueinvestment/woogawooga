@@ -42,6 +42,7 @@ const Input = styled.input<inputProps>`
   font-size: x-large;
   outline: none;
   padding: 20px;
+  caret-color: #d9d9d9;
 `;
 
 Input.defaultProps = {

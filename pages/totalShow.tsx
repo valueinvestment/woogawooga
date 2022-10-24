@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../components/Button/Button";
 import { ImageButton } from "../components/Button/ImageButton";
-import { Chips } from "../components/Chips";
+import { CardContainer } from "../components/CardContainer";
+import { Chips } from "../components/ChipContainer";
 import { SearchInput } from "../components/Input/SearchInput";
 import styles from "../styles/Home.module.css";
 
@@ -19,6 +20,88 @@ const TotalShow: NextPage = () => {
       key: 1,
       label: "Selected TEST",
       isSelected: true,
+    },
+    {
+      key: 2,
+      label: "TEST1",
+      isSelected: false,
+    },
+    {
+      key: 3,
+      label: "Selected TEST",
+      isSelected: true,
+    },
+    {
+      key: 4,
+      label: "TEST1",
+      isSelected: false,
+    },
+    {
+      key: 5,
+      label: "Selected TEST",
+      isSelected: true,
+    },
+    {
+      key: 6,
+      label: "TEST1",
+      isSelected: false,
+      backgroundColor: "red",
+    },
+    {
+      key: 7,
+      label: "Selected TEST",
+      isSelected: true,
+    },
+    {
+      key: 8,
+      label: "TEST1",
+      isSelected: false,
+    },
+    {
+      key: 9,
+      label: "Selected TEST",
+      isSelected: true,
+    },
+    {
+      key: 10,
+      label: "TEST1",
+      isSelected: false,
+    },
+    {
+      key: 11,
+      label: "Selected TEST",
+      isSelected: true,
+    },
+  ];
+
+  const cardData = [
+    {
+      key: 0,
+      title: "TEST1",
+      width: "160px",
+      height: "160px",
+      imgUrl: "/assets/example.svg",
+    },
+    {
+      key: 1,
+      title: "TEST 2",
+      width: "160px",
+      height: "160px",
+      imgUrl: "/assets/example.svg",
+    },
+    {
+      key: 2,
+      title: "TEST 3",
+      width: "160px",
+      height: "160px",
+      imgUrl: "/assets/example.svg",
+    },
+    {
+      key: 3,
+      title: "TEST 4",
+      width: "160px",
+      height: "160px",
+      imgUrl: "/assets/example.svg",
     },
   ];
   return (
@@ -44,6 +127,7 @@ const TotalShow: NextPage = () => {
           <h1> 난이도 </h1>
           <h1> 체위 전체 보기 </h1>
           <h2> 체위 260개 결과 값 </h2>
+          <CardContainer cardData={cardData}></CardContainer>
 
           <Link href="/">
             <Button

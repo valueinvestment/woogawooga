@@ -2,6 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  caret-color: transparent;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -13,6 +14,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+#__next {
+  text-align: center;
+  text-align: -webkit-center;
 }
 
 @media (prefers-color-scheme: dark) {
