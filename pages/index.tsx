@@ -42,13 +42,15 @@ const Home: NextPage = () => {
           padding={20}
           borderColor="#7B42AD"
         ></ImageButton>
-        <ImageButton
-          labelText="광고 문의"
-          imgUrl="/assets/advertisingInquiry.svg"
-          height={120}
-          width={368}
-          padding={20}
-        ></ImageButton>
+        <Link href="/advertisment">
+          <ImageButton
+            labelText="광고 문의"
+            imgUrl="/assets/advertisingInquiry.svg"
+            height={120}
+            width={368}
+            padding={20}
+          ></ImageButton>
+        </Link>
       </main>
 
       <footer className={styles.footer}>Footer 공간</footer>

@@ -29,6 +29,7 @@ const ChipContainer = styled.div<chipProps>`
   vertical-align: middle;
   box-sizing: border-box;
   opacity: ${({ isSelected }) => (isSelected ? 0.5 : 1)};
+  caret-color: transparent;
 
   &:hover {
     opacity: 0.5;
