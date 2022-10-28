@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../components/Button/Button";
-import DivideLine from "../components/divideLine";
+import DivideLine from "../components/DivideLine";
 import styles from "../styles/Home.module.css";
 
 const Advertisment: NextPage = () => {

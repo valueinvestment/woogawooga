@@ -51,6 +51,7 @@ Input.defaultProps = {
   backgroundColor: "transparent",
   width: "316px",
   height: "60px",
+  placeholder: "아직 기능 없음",
 };
 
 const SearchInput: React.FC<inputProps> = (props) => {

@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { ChipProps } from "../context/DataContext";
 import { Chip } from "./Button/Chip";
-
-type Chip = {
-  key: number;
-  label: string;
-  isSelected: boolean;
-};
 
 const Container = styled.div`
   width: 70%;
@@ -28,18 +23,18 @@ const Container = styled.div`
   }
 `;
 
-
 type Props = {
-  chipData: Array<Chip>;
+  chipData: Array<ChipProps>;
+  isReadonly: false;
 };
 
-const Chips: React.FC<Props> = ({ chipData }) => (
+const Chips: React.FC<Props> = ({ chipData, isReadonly }) => (
   <Container>
     <ul>
       {chipData.map((data) => {
         return (
-          <li key={data.key}>
-            <Chip {...data}></Chip>
+          <li key={data.number}>
+            <Chip {...data} isReadonly={isReadonly}></Chip>
           </li>
         );
       })}

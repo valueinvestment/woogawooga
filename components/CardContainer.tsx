@@ -1,13 +1,6 @@
 import styled from "styled-components";
+import { CardProps } from "../context/DataContext";
 import { Card } from "./Card";
-
-type Card = {
-  key: number;
-  title?: string;
-  imgUrl?: string;
-  width?: string;
-  height?: string;
-};
 
 const Container = styled.div`
   margin: 1rem;
@@ -17,7 +10,7 @@ const Container = styled.div`
 `;
 
 type Props = {
-  cardData: Array<Card>;
+  cardData: Array<CardProps>;
 };
 
 const CardContainer: React.FC<Props> = ({ cardData }) => (
@@ -25,7 +18,7 @@ const CardContainer: React.FC<Props> = ({ cardData }) => (
     <Container>
       {cardData.map((data) => {
         return (
-          <div key={data.key} style={{ margin: "1rem" }}>
+          <div key={data.number} style={{ margin: "1rem" }}>
             <Card {...data}></Card>
           </div>
         );

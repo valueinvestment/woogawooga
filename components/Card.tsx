@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import Image from "next/image";
+import {
+  CardProps,
+  SizeProps,
+  useSelectedDataContext,
+} from "../context/DataContext";
+import { useRouter } from "next/router";
 
-type Props = {
-  title?: string;
-  imgUrl?: string;
-  width?: string;
-  height?: string;
-};
+const Container = styled.div`
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
-const CardContainer = styled.div<Props>`
+const CardContainer = styled.div<SizeProps>`
   display: flex;
   border-radius: 2rem;
   overflow: hidden;
@@ -17,7 +22,7 @@ const CardContainer = styled.div<Props>`
   box-shadow: 2px 10px 5px 0px lightgray;
 `;
 
-const TitleContainer = styled.div<Props>`
+const TitleContainer = styled.div<SizeProps>`
   /* height: ${({ height }) => height}; */
   /* line-height: ${({ height }) => height}; */
   margin-top: 1rem;
@@ -26,9 +31,17 @@ const TitleContainer = styled.div<Props>`
   text-align: center;
 `;
 
-const Card: React.FC<Props> = (props) => {
+const Card: React.FC<CardProps> = (props) => {
+  const selectedDataContext = useSelectedDataContext();
+  const router = useRouter();
+
   return (
-    <>
+    <Container
+      onClick={() => {
+        selectedDataContext.update(props);
+        router.push("/detailShow");
+      }}
+    >
       <CardContainer width={props.width} height={props.height}>
         <Image
           src={props.imgUrl || ""}
@@ -39,8 +52,10 @@ const Card: React.FC<Props> = (props) => {
         />
       </CardContainer>
 
-      <TitleContainer width={props.width}>{props.title}</TitleContainer>
-    </>
+      <TitleContainer width={props.width} height="auto">
+        {props.title}
+      </TitleContainer>
+    </Container>
   );
 };
 
