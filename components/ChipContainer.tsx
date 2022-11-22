@@ -25,21 +25,25 @@ const Container = styled.div`
 
 type Props = {
   chipData: Array<ChipProps>;
-  isReadonly: false;
+  isReadonly?: boolean;
 };
 
 const Chips: React.FC<Props> = ({ chipData, isReadonly }) => (
-  <Container>
-    <ul>
-      {chipData.map((data) => {
-        return (
-          <li key={data.number}>
-            <Chip {...data} isReadonly={isReadonly}></Chip>
-          </li>
-        );
-      })}
-    </ul>
-  </Container>
+  <>
+    <Container>
+      <ul>
+        {chipData.map((data) => {
+          return (
+            <li key={data.number}>
+              <Chip {...data} isReadonly={isReadonly}></Chip>
+            </li>
+          );
+        })}
+      </ul>
+    </Container>
+  </>
 );
+
+Chips.defaultProps = { isReadonly: false };
 
 export { Chips };

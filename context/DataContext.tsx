@@ -24,7 +24,7 @@ type ChipProps = {
   backgroundColor?: string;
   isSelected?: boolean;
   label: string;
-  isReadonly?: false;
+  isReadonly?: boolean;
 };
 
 export type { SizeProps, ChipProps, CardProps };

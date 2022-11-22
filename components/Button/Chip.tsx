@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { isReadonly } from "vue";
 import { useTagActions } from "../../context/DataContext";
 import { ChipProps } from "../../context/DataContext";
 

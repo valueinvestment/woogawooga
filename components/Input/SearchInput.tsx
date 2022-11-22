@@ -24,6 +24,7 @@ const SearchContainer = styled.div<inputProps>`
   font-size: x-large;
   box-shadow: 5px 10px 8px ${(props) => props.borderColor};
   outline: none;
+  margin: 1rem;
 `;
 
 SearchContainer.defaultProps = {
