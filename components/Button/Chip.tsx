@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 import { useTagActions } from "../../context/DataContext";
 import { ChipProps } from "../../context/DataContext";
 
@@ -11,6 +12,7 @@ const ChipContainer = styled.div<ChipProps>`
   justify-content: center;
   height: 32px;
   color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0px 2px 2px 0px grey;
   background-color: ${({ backgroundColor }) =>
     backgroundColor || "rgba(0, 0, 0, 0.08)"};
   border-radius: 16px;
@@ -41,11 +43,11 @@ ChipContainer.defaultProps = {
   isSelected: false,
 };
 
-const ChipLabelSpan = styled.span`
+const ChipLabelSpan = styled.span<ChipProps>`
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-right: 16px;
+  padding-left: ${({ imgUrl }) => (imgUrl != undefined ? "0px" : "16px")};
   white-space: nowrap;
 `;
 
@@ -55,11 +57,22 @@ const Chip: React.FC<ChipProps> = (props) => {
     <>
       <ChipContainer
         {...props}
-        onClick={(e) => {
-          updateIsSelected(props.number);
+        onClick={() => {
+          if (!props.isReadonly) {
+            updateIsSelected(props.number);
+          }
         }}
       >
-        <ChipLabelSpan>{props.label}</ChipLabelSpan>
+        <div
+          style={{
+            margin: "5px",
+            alignSelf: "end",
+            display: props.imgUrl != undefined ? "block" : "none",
+          }}
+        >
+          <Image src={props.imgUrl || ""} alt="" height={16} width={16} />
+        </div>
+        <ChipLabelSpan {...props}>{props.label}</ChipLabelSpan>
       </ChipContainer>
     </>
   );

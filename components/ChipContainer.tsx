@@ -12,7 +12,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     padding: 4px;
-    justify-content: center;
+    justify-content: left;
 
     li {
       margin: 4px;

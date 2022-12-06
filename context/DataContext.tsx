@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Dispatch } from "react";
 
+const loadCount = 4;
+
 type SizeProps = {
   width: number | string | undefined;
   height: number | string | undefined;
@@ -22,6 +24,7 @@ type CardProps = SizeProps & {
 type ChipProps = {
   number: number;
   backgroundColor?: string;
+  imgUrl?: string;
   isSelected?: boolean;
   label: string;
   isReadonly?: boolean;
@@ -32,11 +35,13 @@ export type { SizeProps, ChipProps, CardProps };
 export const tags: Array<ChipProps> = [
   {
     number: 0,
+    imgUrl: "/favicon.ico",
     label: "TEST 1",
     isSelected: false,
   },
   {
     number: 1,
+    backgroundColor: "purple",
     label: "TEST 2",
     isSelected: false,
   },
@@ -56,15 +61,6 @@ export const tags: Array<ChipProps> = [
     isSelected: false,
   },
 ];
-
-export const selectedData: CardProps = {
-  number: 0,
-  title: "TEST 1",
-  width: "160px",
-  height: "160px",
-  imgUrl: "/assets/example.svg",
-  tags: ["TEST 1", "TEST All"],
-};
 
 export const filteredData = [];
 
@@ -101,7 +97,46 @@ export const data: Array<CardProps> = [
     imgUrl: "/assets/example.svg",
     tags: ["TEST 3,4", "TEST All"],
   },
+  {
+    number: 4,
+    title: "TEST 1",
+    width: "160px",
+    height: "160px",
+    imgUrl: "/assets/example.svg",
+    tags: ["TEST 1", "TEST All"],
+  },
+  {
+    number: 5,
+    title: "TEST 2",
+    width: "160px",
+    height: "160px",
+    imgUrl: "/assets/example.svg",
+    tags: ["TEST 2", "TEST All"],
+  },
+  {
+    number: 6,
+    title: "TEST 3",
+    width: "160px",
+    height: "160px",
+    imgUrl: "/assets/example.svg",
+    tags: ["TEST 3,4", "TEST All"],
+  },
+  {
+    number: 7,
+    title: "TEST 4",
+    width: "160px",
+    height: "160px",
+    imgUrl: "/assets/example.svg",
+    tags: ["TEST 3,4", "TEST All"],
+  },
 ];
+
+export const selectedData = {
+  title: "",
+  tags: ["TEST All"],
+  count: 0,
+  card: data[0],
+};
 
 function createCustomContext<T>(defaultValue: T) {
   type UpdateType = Dispatch<SetStateAction<typeof defaultValue>>;
@@ -126,22 +161,73 @@ function createCustomContext<T>(defaultValue: T) {
   return [useCustomContext, Provider] as const;
 }
 
+function search(
+  update: React.Dispatch<React.SetStateAction<CardProps[]>>,
+  title: string,
+  tags: Array<string>,
+  count: number
+) {
+  if (tags.length == 0) {
+    update(data.filter((item) => item.title?.includes(title)).slice(0, count));
+  } else {
+    update(
+      data
+        .filter((item) => item.title?.includes(title))
+        .filter((item) => tags.every((tag) => item.tags.includes(tag)))
+        .slice(0, count)
+    );
+  }
+}
+
 export const [useDataContext, DataProvider] = createCustomContext(data);
 export const [useTagContext, TagProvider] = createCustomContext(tags);
 export const [useSelectedDataContext, SelectedDataProvider] =
   createCustomContext(selectedData);
 
 export function useDataState() {
-  const value = useDataContext();
-  if (value === undefined) {
+  const dataContext = useDataContext();
+  const selectedContext = useSelectedDataContext();
+  if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
-  return value;
+
+  if (selectedContext.state.count == 0) {
+    selectedContext.update({
+      ...selectedContext.state,
+      count: loadCount,
+    });
+
+    search(
+      dataContext.update,
+      selectedContext.state.title,
+      selectedContext.state.tags,
+      loadCount
+    );
+  }
+
+  return dataContext;
+}
+
+export function useTagState() {
+  const value = useTagContext();
+  if (value === undefined) {
+    throw new Error("useTagActions should be used within TagProvider");
+  }
+  return value.state;
+}
+
+export function useSelectedDataState() {
+  const value = useSelectedDataContext();
+  if (value === undefined) {
+    throw new Error("useTagActions should be used within TagProvider");
+  }
+  return value.state;
 }
 
 export function useTagActions() {
   const value = useTagContext();
   const dataContext = useDataContext();
+  const selectedContext = useSelectedDataContext();
 
   if (value === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
@@ -158,15 +244,16 @@ export function useTagActions() {
       const selectedTags = newValue
         .filter((item) => item.isSelected)
         .map((item) => item.label);
-      if (selectedTags.length == 0) {
-        dataContext.update(data);
-      } else {
-        dataContext.update(
-          data.filter((item) =>
-            selectedTags.every((tag) => item.tags.includes(tag))
-          )
-        );
-      }
+      selectedContext.update({
+        ...selectedContext.state,
+        tags: selectedTags,
+      });
+      search(
+        dataContext.update,
+        selectedContext.state.title,
+        selectedTags,
+        selectedContext.state.count
+      );
     } else {
       throw new Error("tag key dosen't exist");
     }
@@ -175,10 +262,37 @@ export function useTagActions() {
   return { updateIsSelected };
 }
 
-export function useTagState() {
-  const value = useTagContext();
-  if (value === undefined) {
-    throw new Error("useTagActions should be used within TagProvider");
-  }
-  return value.state;
+export function useSearchAction() {
+  const dataContext = useDataContext();
+  const selectedContext = useSelectedDataContext();
+
+  const searchAction = (value: string) => {
+    selectedContext.update({ ...selectedContext.state, title: value });
+    search(
+      dataContext.update,
+      value,
+      selectedContext.state.tags,
+      selectedContext.state.count
+    );
+  };
+
+  const addSearchCountAction = () => {
+    const newCount = Math.min(
+      selectedContext.state.count + loadCount,
+      data.length
+    );
+
+    selectedContext.update({
+      ...selectedContext.state,
+      count: newCount,
+    });
+    search(
+      dataContext.update,
+      selectedContext.state.title,
+      selectedContext.state.tags,
+      newCount
+    );
+  };
+
+  return { searchAction, addSearchCountAction };
 }

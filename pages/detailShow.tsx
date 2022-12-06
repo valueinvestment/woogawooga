@@ -20,7 +20,7 @@ import styles from "../styles/Home.module.css";
 const DetailShow: NextPage = () => {
   const cardData = useSelectedDataContext();
   const chipData = useTagState().filter((item) =>
-    cardData.state.tags.includes(item.label)
+    cardData.state.card.tags.includes(item.label)
   );
   const router = useRouter();
 
@@ -39,13 +39,13 @@ const DetailShow: NextPage = () => {
             </h2>
           </Link>
           <Card
-            {...cardData.state}
+            {...cardData.state.card}
             width="320px"
             height="320px"
             title=""
           ></Card>
 
-          <h1> {cardData.state.title} </h1>
+          <h1> {cardData.state.card.title} </h1>
           <h2> 설명 </h2>
           <DivideLine />
           <Chips chipData={chipData} isReadonly={true}></Chips>
@@ -55,7 +55,7 @@ const DetailShow: NextPage = () => {
           <DivideLine />
           <h1> Tips </h1>
           <h3> ... 기획중 ... </h3>
-          <CardContainer cardData={[cardData.state]}></CardContainer>
+          <CardContainer cardData={[cardData.state.card]}></CardContainer>
           <Link href="/">
             <Button
               labelText="공유하기"

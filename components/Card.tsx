@@ -8,6 +8,7 @@ import {
 import { useRouter } from "next/router";
 
 const Container = styled.div`
+  cursor: pointer;
   &:hover {
     opacity: 0.5;
   }
@@ -19,7 +20,7 @@ const CardContainer = styled.div<SizeProps>`
   overflow: hidden;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
-  box-shadow: 2px 10px 5px 0px lightgray;
+  box-shadow: 0px 4px 4px 0px lightgray;
 `;
 
 const TitleContainer = styled.div<SizeProps>`
@@ -32,13 +33,11 @@ const TitleContainer = styled.div<SizeProps>`
 `;
 
 const Card: React.FC<CardProps> = (props) => {
-  const selectedDataContext = useSelectedDataContext();
   const router = useRouter();
 
   return (
     <Container
       onClick={() => {
-        selectedDataContext.update(props);
         router.push("/detailShow");
       }}
     >

@@ -1,5 +1,10 @@
+import { Console } from "console";
 import Image from "next/image";
 import styled from "styled-components";
+import {
+  useSearchAction,
+  useSelectedDataState,
+} from "../../context/DataContext";
 
 type inputProps = {
   active?: boolean; // making this props optional
@@ -51,15 +56,24 @@ Input.defaultProps = {
   borderColor: "#D9D9D9",
   backgroundColor: "transparent",
   width: "316px",
-  height: "60px",
-  placeholder: "아직 기능 없음",
+  placeholder: "",
 };
 
 const SearchInput: React.FC<inputProps> = (props) => {
+  const { searchAction } = useSearchAction();
+  const selectedData = useSelectedDataState();
+
   return (
     <>
       <SearchContainer>
-        <Input type="text" defaultValue={props.defaultValue}></Input>
+        <Input
+          type="text"
+          defaultValue={props.defaultValue}
+          onChange={(val) => {
+            searchAction(val.target.value.toString().trim());
+          }}
+          value={selectedData.title}
+        />
         <Image
           src="/assets/icon/search.svg"
           alt="search"
