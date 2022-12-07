@@ -136,6 +136,7 @@ export const selectedData = {
   tags: ["TEST All"],
   count: 0,
   card: data[0],
+  toggled: false,
 };
 
 function createCustomContext<T>(defaultValue: T) {

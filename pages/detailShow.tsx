@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../components/Button/Button";
 import { ImageButton } from "../components/Button/ImageButton";
+import { Toggle } from "../components/Button/ToggleButton";
 import { Card } from "../components/Card";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
@@ -51,7 +52,7 @@ const DetailShow: NextPage = () => {
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <DivideLine />
           <h1> 난이도 </h1>
-          <h3>... 기획중 ...</h3>
+          <Toggle></Toggle>
           <DivideLine />
           <h1> Tips </h1>
           <h3> ... 기획중 ... </h3>
