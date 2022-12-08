@@ -2,6 +2,7 @@
   "name": "wogawoga",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,11 +11,12 @@
     "vercel-deploy": "next build && next export"
   },
   "dependencies": {
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "babel-plugin-styled-components": "^2.0.7",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
     "react-slick": "^0.29.0",
     "styled-components": "^5.3.6"
   },
@@ -22,8 +24,10 @@
     "@types/node": "18.8.5",
     "@types/react-slick": "^0.23.10",
     "@types/styled-components": "^5.1.26",
+    "chart.js": "^4.0.1",
     "eslint": "8.25.0",
     "eslint-config-next": "12.3.1",
+    "react-chartjs-2": "^5.0.1",
     "slick-carousel": "^1.8.1",
     "typescript": "4.8.4"
   }
