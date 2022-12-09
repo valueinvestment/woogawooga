@@ -7,6 +7,7 @@ import { Button } from "../components/Button/Button";
 import { ImageButton } from "../components/Button/ImageButton";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
+import DivideLine from "../components/DivideLine";
 import { SearchInput } from "../components/Input/SearchInput";
 import {
   useDataState,
@@ -52,7 +53,7 @@ const TotalShow: NextPage = () => {
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
-
+          <DivideLine></DivideLine>
           <h1 style={{ textAlign: "left" }}> 체위 전체 보기 </h1>
           <h2 style={{ textAlign: "left" }}>
             체위 {cardData.state.length}개 결과 값

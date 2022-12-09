@@ -169,11 +169,11 @@ const DetailShow: NextPage = () => {
           <Toggle></Toggle>
           <DivideLine />
           <h1> 난이도 </h1>
-          <h1> 총점 : 100(매우 어려움) </h1>
+          <h1> 총점 : 80(어려움) / 30(쉬움) </h1>
           <Radar data={data} width={300} height={300} options={options}></Radar>
           <DivideLine />
           <h1> 쾌감도 </h1>
-          <h1> 총점 : 100(매우 어려움) </h1>
+          <h1> 총점 : 50(중간 쾌감) / 70(강한 쾌감) </h1>
           <Bar data={data} width={300} height={300} options={barOption}></Bar>
           <DivideLine />
           <div></div>
@@ -199,9 +199,23 @@ const DetailShow: NextPage = () => {
               color="white"
             ></Button>
           </Link>
-          <div>
-            <CardContainer cardData={[cardData.state.card]}></CardContainer>
-            <CardContainer cardData={[cardData.state.card]}></CardContainer>
+          <div style={{ display: "flex" }}>
+            <div>
+              <Link href="/detailShow">
+                <h2 style={{ textAlign: "left", marginLeft: "30px" }}>
+                  ← 이전
+                </h2>
+              </Link>
+              <CardContainer cardData={[cardData.state.card]}></CardContainer>
+            </div>
+            <div>
+              <Link href="/detailShow">
+                <h2 style={{ textAlign: "right", marginRight: "40px" }}>
+                  다음 →
+                </h2>
+              </Link>
+              <CardContainer cardData={[cardData.state.card]}></CardContainer>
+            </div>
           </div>
 
           <Link href="/">
