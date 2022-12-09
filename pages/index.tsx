@@ -28,14 +28,16 @@ const Home: NextPage = () => {
             padding={20}
           ></ImageButton>
         </Link>
-        <ImageButton
-          labelText="추천 체위 세트"
-          imgUrl="/assets/recommendPosition.svg"
-          height={120}
-          width={368}
-          padding={20}
-          borderColor="#7B42AD"
-        ></ImageButton>
+        <Link href="/totalRecommendSet">
+          <ImageButton
+            labelText="추천 체위 세트"
+            imgUrl="/assets/recommendPosition.svg"
+            height={120}
+            width={368}
+            padding={20}
+            borderColor="#7B42AD"
+          ></ImageButton>
+        </Link>
         <Link href="/advertisment">
           <ImageButton
             labelText="광고 문의"
