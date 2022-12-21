@@ -8,12 +8,12 @@ const ImageLabelContainer = styled.div<imageLabelProps>`
   display: grid;
   grid-template-columns: ${({ height }) => height + "px"} auto;
   height: ${({ height }) => height + "px"};
-  width: ${({ width }) => width};
+  width: ${({ width }) => width + "px"};
 `;
 
 const LabelContainer = styled.div<imageLabelProps>`
   height: ${({ height }) => height + "px"};
-  /* line-height: ${({ height }) => height + "px"}; */
+  line-height: ${({ content, height }) => (content ? "" : height + "px")};
   text-align: center;
 `;
 
@@ -38,7 +38,7 @@ const ImageLabel: React.FC<imageLabelProps> = (props) => {
           height={props.height}
           width={props.height}
         />
-        <LabelContainer height={props.height}>
+        <LabelContainer {...props}>
           <Title {...props}>{props.title}</Title>
           <Content {...props}>{props.content}</Content>
         </LabelContainer>
