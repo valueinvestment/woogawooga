@@ -9,15 +9,18 @@ import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
 import DivideLine from "../components/DivideLine";
 import { SearchInput } from "../components/Input/SearchInput";
+import { SetContainer } from "../components/SetContainer";
 import {
   useDataState,
   useSearchAction,
+  useSetDataState,
   useTagState,
 } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
 
 const TotalRecommendSet: NextPage = () => {
   const chipData = useTagState();
+  const setData = useSetDataState();
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
 
@@ -54,7 +57,10 @@ const TotalRecommendSet: NextPage = () => {
           </div>
           <DivideLine></DivideLine>
           <h1 style={{ textAlign: "left" }}> 추천 세트 전체 보기 </h1>
-          <h2 style={{ textAlign: "left" }}>개 결과 값</h2>
+          <h2 style={{ textAlign: "left" }}>
+            Set {setData.state.length}개 결과 값
+          </h2>
+          <SetContainer setData={setData.state}></SetContainer>
           <h3
             style={{
               alignSelf: "center",

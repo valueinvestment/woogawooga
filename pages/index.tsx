@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <SearchInput></SearchInput>
         <Link href="/totalShow">
           <ImageButton
-            labelText="전체 체위 보기"
+            title="전체 체위 보기"
             imgUrl="/assets/typicalPosition.svg"
             height={120}
             width={368}
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         </Link>
         <Link href="/totalRecommendSet">
           <ImageButton
-            labelText="추천 체위 세트"
+            title="추천 체위 세트"
             imgUrl="/assets/recommendPosition.svg"
             height={120}
             width={368}
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         </Link>
         <Link href="/advertisment">
           <ImageButton
-            labelText="광고 문의"
+            title="광고 문의"
             imgUrl="/assets/advertisingInquiry.svg"
             height={120}
             width={368}

@@ -4,6 +4,7 @@ type buttonProps = {
   active?: boolean;
   darkBtn?: boolean;
   borderColor?: string;
+  boxShadow?: string;
   backgroundColor?: string;
   color?: string;
   children?: any;
@@ -18,12 +19,14 @@ const ButtonBase = styled.button<buttonProps>`
   padding: ${(props) => props.padding};
   margin: 0.5rem;
   font-size: 2.1rem;
-  border: solid;
+  border: ${(props) => (props.borderColor == "transparent" ? "none" : "solid")};
   border-radius: 2.5rem;
   border-color: ${(props) => props.borderColor};
   color: ${(props) => props.color};
   background-color: ${(props) => props.backgroundColor};
   font-weight: bold;
+  overflow: hidden;
+  box-shadow: ${(props) => props.boxShadow};
 
   &:hover {
     opacity: 0.5;

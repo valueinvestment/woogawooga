@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import {
   DataProvider,
   SelectedDataProvider,
+  SetDataProvider,
   TagProvider,
 } from "../context/DataContext";
 import Head from "next/head";
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DataProvider>
-        <SelectedDataProvider>
-          <TagProvider>
-            <Component {...pageProps} />
-          </TagProvider>
-        </SelectedDataProvider>
+        <SetDataProvider>
+          <SelectedDataProvider>
+            <TagProvider>
+              <Component {...pageProps} />
+            </TagProvider>
+          </SelectedDataProvider>
+        </SetDataProvider>
       </DataProvider>
     </>
   );

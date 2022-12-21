@@ -30,7 +30,14 @@ type ChipProps = {
   isReadonly?: boolean;
 };
 
-export type { SizeProps, ChipProps, CardProps };
+type SetProps = {
+  title?: string;
+  content?: string;
+  imgUrl?: string;
+  tags: Array<string>;
+};
+
+export type { SizeProps, ChipProps, CardProps, SetProps };
 
 export const tags: Array<ChipProps> = [
   {
@@ -137,7 +144,32 @@ export const selectedData = {
   count: 0,
   card: data[0],
   toggled: false,
+  set: "",
 };
+
+export const setData: Array<SetProps> = [
+  {
+    title: "강아지 산책",
+    content:
+      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
+    tags: ["TEST 3,4", "TEST All"],
+    imgUrl: "/assets/set1.png",
+  },
+  {
+    title: "기분이 울적할 때",
+    content:
+      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
+    tags: ["TEST 3,4", "TEST All"],
+    imgUrl: "/assets/set2.png",
+  },
+  {
+    title: "고양이처럼",
+    content:
+      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
+    tags: ["TEST 3,4", "TEST All"],
+    imgUrl: "/assets/set3.png",
+  },
+];
 
 function createCustomContext<T>(defaultValue: T) {
   type UpdateType = Dispatch<SetStateAction<typeof defaultValue>>;
@@ -180,7 +212,29 @@ function search(
   }
 }
 
+function searchSets(
+  update: React.Dispatch<React.SetStateAction<SetProps[]>>,
+  title: string,
+  tags: Array<string>,
+  count: number
+) {
+  if (tags.length == 0) {
+    update(
+      setData.filter((item) => item.title?.includes(title)).slice(0, count)
+    );
+  } else {
+    update(
+      setData
+        .filter((item) => item.title?.includes(title))
+        .filter((item) => tags.every((tag) => item.tags.includes(tag)))
+        .slice(0, count)
+    );
+  }
+}
+
 export const [useDataContext, DataProvider] = createCustomContext(data);
+export const [useSetDataContext, SetDataProvider] =
+  createCustomContext(setData);
 export const [useTagContext, TagProvider] = createCustomContext(tags);
 export const [useSelectedDataContext, SelectedDataProvider] =
   createCustomContext(selectedData);
@@ -199,6 +253,30 @@ export function useDataState() {
     });
 
     search(
+      dataContext.update,
+      selectedContext.state.title,
+      selectedContext.state.tags,
+      loadCount
+    );
+  }
+
+  return dataContext;
+}
+
+export function useSetDataState() {
+  const dataContext = useSetDataContext();
+  const selectedContext = useSelectedDataContext();
+  if (dataContext === undefined) {
+    throw new Error("useDataState should be used within DataProvider");
+  }
+
+  if (selectedContext.state.count == 0) {
+    selectedContext.update({
+      ...selectedContext.state,
+      count: loadCount,
+    });
+
+    searchSets(
       dataContext.update,
       selectedContext.state.title,
       selectedContext.state.tags,
