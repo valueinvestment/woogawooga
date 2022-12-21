@@ -21,7 +21,7 @@ const SetContainer: React.FC<Props> = ({ setData }) => (
           <div key={data.title}>
             <ImageButton
               {...data}
-              width={368}
+              width={500}
               height={120}
               padding={0}
               borderColor={"transparent"}
