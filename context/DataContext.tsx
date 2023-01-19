@@ -143,7 +143,7 @@ export const selectedData = {
   tags: ["TEST All"],
   count: 0,
   card: data[0],
-  toggled: false,
+  toggledIndex: 0,
   set: "",
 };
 
