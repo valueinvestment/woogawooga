@@ -65,7 +65,7 @@ const Chip: React.FC<ChipProps> = (props) => {
       >
         <div
           style={{
-            margin: "5px",
+            margin: "5px 10px",
             alignSelf: "end",
             display: props.imgUrl != undefined ? "block" : "none",
           }}
