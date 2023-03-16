@@ -54,6 +54,7 @@ const TotalShow: NextPage = () => {
           </div>
           <h3
             style={{
+              display: showTag ? "block" : "none",
               alignSelf: "self-start",
               cursor: "pointer",
               margin: "0.5rem 1rem",
