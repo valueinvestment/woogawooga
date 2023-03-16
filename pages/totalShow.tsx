@@ -12,6 +12,7 @@ import { SearchInput } from "../components/Input/SearchInput";
 import {
   useDataState,
   useSearchAction,
+  useTagActions,
   useTagState,
 } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
@@ -21,6 +22,7 @@ const TotalShow: NextPage = () => {
   const cardData = useDataState();
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
+  const { initializeTag } = useTagActions();
 
   return (
     <>
@@ -50,6 +52,24 @@ const TotalShow: NextPage = () => {
               태그 {showTag ? "접기" : "펼치기"}
             </h3>
           </div>
+          <h3
+            style={{
+              alignSelf: "self-start",
+              cursor: "pointer",
+              margin: "0.5rem 1rem",
+            }}
+            onClick={() => {
+              initializeTag();
+            }}
+          >
+            초기화{" "}
+            <Image
+              src="/assets/icon/refresh.png"
+              width="20px"
+              height="20px"
+              alt="refresh"
+            />
+          </h3>
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>

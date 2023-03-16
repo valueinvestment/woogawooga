@@ -497,7 +497,28 @@ export function useTagActions() {
     }
   };
 
-  return { updateIsSelected };
+  const initializeTag = () => {
+    value.update(
+      value.state.map((item) => {
+        item.isSelected = false;
+        return item;
+      })
+    );
+
+    selectedContext.update({
+      ...selectedContext.state,
+      tags: [],
+    });
+
+    search(
+      dataContext.update,
+      selectedContext.state.title,
+      [],
+      selectedContext.state.count
+    );
+  };
+
+  return { updateIsSelected, initializeTag };
 }
 
 export function useSearchAction() {
