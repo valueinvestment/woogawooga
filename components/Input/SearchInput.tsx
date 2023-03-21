@@ -30,12 +30,13 @@ const SearchContainer = styled.div<inputProps>`
   box-shadow: 5px 10px 8px ${(props) => props.borderColor};
   outline: none;
   margin: 1rem;
+  max-width: 368px;
 `;
 
 SearchContainer.defaultProps = {
   color: "#D9D9D9",
   borderColor: "#D9D9D9",
-  width: "368px",
+  width: "100%",
   height: "60px",
 };
 
@@ -55,7 +56,7 @@ Input.defaultProps = {
   color: "#D9D9D9",
   borderColor: "#D9D9D9",
   backgroundColor: "transparent",
-  width: "316px",
+  width: "100%",
   placeholder: "",
 };
 
@@ -74,12 +75,14 @@ const SearchInput: React.FC<inputProps> = (props) => {
           }}
           value={selectedData.title}
         />
-        <Image
-          src="/assets/icon/search.svg"
-          alt="search"
-          width="32px"
-          height="50px"
-        />
+        <div style={{ margin: "0 1rem", display: "flex" }}>
+          <Image
+            src="/assets/icon/search.svg"
+            alt="search"
+            width="32px"
+            height="32px"
+          />
+        </div>
       </SearchContainer>
     </>
   );

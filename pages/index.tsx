@@ -17,7 +17,7 @@ const Home: NextPage = () => {
           height="284px"
           alt="title"
         />
-        <Carousel width="480px" height="300px" />
+        <Carousel width="100%" height="300px" />
         <SearchInput></SearchInput>
         <Link href="/totalShow">
           <ImageButton
