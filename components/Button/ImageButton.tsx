@@ -6,8 +6,7 @@ const ImageButton: React.FC<imageButtonProps> = (props) => (
     <ButtonBase {...props} padding={props.padding.toString() + "px"}>
       <ImageLabel
         {...props}
-        width={props.width - props.padding * 2}
-        height={props.height - props.padding * 2}
+        imageSize={props.imageSize ?? 90}
       />
     </ButtonBase>
   </>
@@ -21,8 +20,9 @@ type imageButtonProps = {
   imgUrl?: string;
   title?: string;
   content?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  imageSize?: number;
   padding: number;
   children?: any;
   onClick?: () => void;

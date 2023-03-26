@@ -18,7 +18,7 @@ const ButtonBase = styled.button<buttonProps>`
       : backgroundColor}; // i am destructing here, instead of using as prop.darkBtn
   padding: ${(props) => props.padding};
   margin: 0.5rem;
-  font-size: 2.1rem;
+  font-size: 1.7rem;
   border: ${(props) => (props.borderColor == "transparent" ? "none" : "solid")};
   border-radius: 2.5rem;
   border-color: ${(props) => props.borderColor};
@@ -26,6 +26,7 @@ const ButtonBase = styled.button<buttonProps>`
   background-color: ${(props) => props.backgroundColor};
   font-weight: bold;
   overflow: hidden;
+  align-self: stretch;
   box-shadow: ${(props) => props.boxShadow};
 
   &:hover {

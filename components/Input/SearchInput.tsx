@@ -36,7 +36,6 @@ const SearchContainer = styled.div<inputProps>`
 SearchContainer.defaultProps = {
   color: "#D9D9D9",
   borderColor: "#D9D9D9",
-  width: "100%",
   height: "60px",
 };
 

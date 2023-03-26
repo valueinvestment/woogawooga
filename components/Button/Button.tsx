@@ -5,7 +5,6 @@ const LabelContainer = styled.div<buttonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: ${(props) => (props.width - props.padding * 2).toString() + "px"};
   height: ${(props) => (props.height - props.padding * 2).toString() + "px"};
 `;
 
@@ -22,7 +21,7 @@ type buttonProps = {
   backgroundColor?: string;
   color?: string;
   labelText?: string;
-  width: number;
+  width?: number;
   height: number;
   padding: number;
   children?: any;

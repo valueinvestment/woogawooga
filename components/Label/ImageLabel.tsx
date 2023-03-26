@@ -6,14 +6,13 @@ const Label = styled.label``;
 
 const ImageLabelContainer = styled.div<imageLabelProps>`
   display: grid;
-  grid-template-columns: ${({ height }) => height + "px"} auto;
-  height: ${({ height }) => height + "px"};
-  width: ${({ width }) => width + "px"};
+  grid-template-columns: ${({ imageSize }) => imageSize + "px"} auto;  
 `;
+// height: ${({ imageSize }) => imageSize + "px"};
 
 const LabelContainer = styled.div<imageLabelProps>`
-  height: ${({ height }) => height + "px"};
-  line-height: ${({ content, height }) => (content ? "" : height + "px")};
+  height: ${({ imageSize }) => imageSize + "px"};
+  line-height: ${({ content, imageSize }) => (content ? "" : imageSize + "px")};
   text-align: center;
 `;
 
@@ -31,12 +30,12 @@ const Content = styled.div<imageLabelProps>`
 const ImageLabel: React.FC<imageLabelProps> = (props) => {
   return (
     <>
-      <ImageLabelContainer height={props.height} width={props.width}>
+      <ImageLabelContainer {...props}>
         <Image
           src={props.imgUrl || ""}
           alt=""
-          height={props.height}
-          width={props.height}
+          width={props.imageSize}
+          height={props.imageSize}
         />
         <LabelContainer {...props}>
           <Title {...props}>{props.title}</Title>
@@ -53,6 +52,7 @@ type imageLabelProps = {
   content?: string;
   width?: number;
   height?: number;
+  imageSize : number;
 };
 
 export { ImageLabel };

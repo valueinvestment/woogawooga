@@ -3,7 +3,7 @@ import { CardProps } from "../context/DataContext";
 import { Card } from "./Card";
 
 const Container = styled.div`
-  margin: 1rem;
+  margin: 0.1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -18,7 +18,7 @@ const CardContainer: React.FC<Props> = ({ cardData }) => (
     <Container>
       {cardData.map((data) => {
         return (
-          <div key={data.number} style={{ margin: "1rem" }}>
+          <div key={data.number} style={{ margin: "0.5rem" }}>
             <Card {...data}></Card>
           </div>
         );

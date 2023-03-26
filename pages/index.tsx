@@ -23,8 +23,6 @@ const Home: NextPage = () => {
           <ImageButton
             title="전체 체위 보기"
             imgUrl="/assets/typicalPosition.svg"
-            height={120}
-            width={368}
             padding={20}
           ></ImageButton>
         </Link>
@@ -32,8 +30,6 @@ const Home: NextPage = () => {
           <ImageButton
             title="추천 체위 세트"
             imgUrl="/assets/recommendPosition.svg"
-            height={120}
-            width={368}
             padding={20}
             borderColor="#7B42AD"
           ></ImageButton>
@@ -42,8 +38,6 @@ const Home: NextPage = () => {
           <ImageButton
             title="광고 문의"
             imgUrl="/assets/advertisingInquiry.svg"
-            height={120}
-            width={368}
             padding={20}
           ></ImageButton>
         </Link>

@@ -96,7 +96,6 @@ const TotalShow: NextPage = () => {
             <Button
               labelText="랜덤 뽑기"
               height={120}
-              width={368}
               padding={20}
               backgroundColor="#7B42AD"
               color="white"
@@ -106,7 +105,6 @@ const TotalShow: NextPage = () => {
             <Button
               labelText="메인 화면으로"
               height={120}
-              width={368}
               padding={20}
               backgroundColor="#32154B"
               color="white"
