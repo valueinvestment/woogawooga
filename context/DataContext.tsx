@@ -463,22 +463,22 @@ export function useSelectedDataState() {
 }
 
 export function useTagActions() {
-  const value = useTagContext();
+  const tagContext = useTagContext();
   const dataContext = useDataContext();
   const selectedContext = useSelectedDataContext();
 
-  if (value === undefined) {
+  if (tagContext === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
   }
 
   const updateIsSelected = (id: number) => {
     const newValue = JSON.parse(
-      JSON.stringify(value.state)
+      JSON.stringify(tagContext.state)
     ) as Array<ChipProps>;
     const tag = newValue.find((item) => item.number == id);
     if (tag) {
       tag.isSelected = !tag.isSelected;
-      value.update(newValue);
+      tagContext.update(newValue);
       const selectedTags = newValue
         .filter((item) => item.isSelected)
         .map((item) => item.label);
@@ -498,8 +498,8 @@ export function useTagActions() {
   };
 
   const initializeTag = () => {
-    value.update(
-      value.state.map((item) => {
+    tagContext.update(
+      tagContext.state.map((item) => {
         item.isSelected = false;
         return item;
       })

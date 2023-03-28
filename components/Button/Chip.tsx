@@ -16,10 +16,10 @@ const ChipContainer = styled.div<ChipProps>`
   background-color: ${({ backgroundColor }) =>
     backgroundColor || "rgba(0, 0, 0, 0.08)"};
   border-radius: 16px;
-  border-color: ${({ isReadonly, isSelected }) =>
+  /* border-color: ${({ isReadonly, isSelected }) =>
     isReadonly ? "transparent" : isSelected ? "#FF8EAE" : "transparent"};
-  border-style: solid;
-  border-width: 1px;
+  border-style: solid; */
+  /* border-width: 1px; */
   white-space: nowrap;
   transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -32,11 +32,6 @@ const ChipContainer = styled.div<ChipProps>`
   opacity: ${({ isReadonly, isSelected }) =>
     isReadonly ? 1 : isSelected ? 1 : 0.5};
   caret-color: transparent;
-
-  &:hover {
-    opacity: ${({ isReadonly, isSelected }) =>
-      isReadonly ? 1 : isSelected ? 0.5 : 1};
-  }
 `;
 
 ChipContainer.defaultProps = {
