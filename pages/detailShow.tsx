@@ -10,6 +10,7 @@ import DivideLine from "../components/DivideLine";
 import { useSelectedDataContext, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
+import { useEffect, useRef } from "react";
 
 import {
   Chart,
@@ -38,7 +39,6 @@ import {
   Tooltip,
   ChartOptions,
 } from "chart.js";
-import { useEffect, useRef } from "react";
 
 Chart.register(
   ArcElement,

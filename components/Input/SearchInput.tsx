@@ -30,7 +30,6 @@ const SearchContainer = styled.div<inputProps>`
   box-shadow: 5px 10px 8px ${(props) => props.borderColor};
   outline: none;
   margin: 1rem;
-  max-width: 368px;
 `;
 
 SearchContainer.defaultProps = {
