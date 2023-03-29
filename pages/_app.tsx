@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import {
   DataProvider,
-  SelectedDataProvider,
+  SearchDataProvider,
   SetDataProvider,
   TagProvider,
 } from "../context/DataContext";
@@ -18,11 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <DataProvider>
         <SetDataProvider>
-          <SelectedDataProvider>
+          <SearchDataProvider>
             <TagProvider>
               <Component {...pageProps} />
             </TagProvider>
-          </SelectedDataProvider>
+          </SearchDataProvider>
         </SetDataProvider>
       </DataProvider>
     </>

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { useSelectedDataContext } from "../../context/DataContext";
+import { useSearchDataContext } from "../../context/DataContext";
 import ButtonBase from "./ButtonBase";
 
 const ToggleContainer = styled.div<{ toggledIndex: number }>`
@@ -70,7 +70,7 @@ const Circle = styled.div<{ toggledIndex: number }>`
 `;
 
 const Toggle: React.FC = () => {
-  const selectedDataContext = useSelectedDataContext();
+  const selectedDataContext = useSearchDataContext();
   const clickedToggle = (event: any) => {
     console.log(event.target.dataset.index);
     selectedDataContext.update({

@@ -3,7 +3,7 @@ import Image from "next/image";
 import {
   CardProps,
   SizeProps,
-  useSelectedDataContext,
+  useSearchDataContext,
 } from "../context/DataContext";
 import { useRouter } from "next/router";
 
@@ -23,6 +23,8 @@ const CardContainer = styled.div<SizeProps>`
   box-shadow: 0px 4px 4px 0px lightgray;
 `;
 
+CardContainer.defaultProps = { height: 150, width: 150 };
+
 const TitleContainer = styled.div<SizeProps>`
   /* height: ${({ height }) => height}; */
   /* line-height: ${({ height }) => height}; */
@@ -34,25 +36,28 @@ const TitleContainer = styled.div<SizeProps>`
 
 const Card: React.FC<CardProps> = (props) => {
   const router = useRouter();
-
+  const defaultSize = 150;
   return (
     <Container
       onClick={() => {
         router.push("/detailShow");
       }}
     >
-      <CardContainer width={props.width} height={props.height}>
+      <CardContainer
+        width={props.width ?? defaultSize}
+        height={props.height ?? defaultSize}
+      >
         <Image
-          src={props.imgUrl || ""}
+          src={"/assets/images/" + props.id + (props.height ? ".gif" : ".png")}
           alt=""
-          height={props.height}
-          width={props.width}
+          height={props.height ?? defaultSize}
+          width={props.width ?? defaultSize}
           objectFit="cover"
         />
       </CardContainer>
 
-      <TitleContainer width={props.width} height="auto">
-        {props.title}
+      <TitleContainer width={props.width ?? defaultSize} height="auto">
+        {props.name}
       </TitleContainer>
     </Container>
   );

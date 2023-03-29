@@ -7,7 +7,7 @@ import { Card } from "../components/Card";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
 import DivideLine from "../components/DivideLine";
-import { useSelectedDataContext, useTagState } from "../context/DataContext";
+import { useSearchDataContext, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -66,9 +66,9 @@ Chart.register(
   Tooltip
 );
 const DetailShow: NextPage = () => {
-  const selectedData = useSelectedDataContext();
+  const selectedData = useSearchDataContext();
   const chipData = useTagState().filter((item) =>
-    selectedData.state.card.tags.includes(item.label)
+    selectedData.state.card.tags.includes(item.chipId)
   );
   const router = useRouter();
 
@@ -179,7 +179,7 @@ const DetailShow: NextPage = () => {
               이전 페이지로
             </h2>
           </Link>
-          <h1> {selectedData.state.card.title} </h1>
+          <h1> {selectedData.state.card.name} </h1>
           <i>
             <h2 style={{}}> 설명 </h2>
           </i>
@@ -188,7 +188,7 @@ const DetailShow: NextPage = () => {
             {...selectedData.state.card}
             width="320px"
             height="320px"
-            title=""
+            name=""
           ></Card>
 
           <Chips chipData={chipData} isReadonly={true}></Chips>

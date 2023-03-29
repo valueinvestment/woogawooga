@@ -54,7 +54,7 @@ const Chip: React.FC<ChipProps> = (props) => {
         {...props}
         onClick={() => {
           if (!props.isReadonly) {
-            updateIsSelected(props.number);
+            updateIsSelected(props.chipId);
           }
         }}
       >

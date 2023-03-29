@@ -52,7 +52,7 @@ const Chips: React.FC<Props> = ({ chipData, isReadonly }) => {
                   .filter((data) => data.category === category)
                   .map((data) => {
                     return (
-                      <li key={data.number}>
+                      <li key={data.chipId}>
                         <Chip {...data} isReadonly={isReadonly}></Chip>
                       </li>
                     );

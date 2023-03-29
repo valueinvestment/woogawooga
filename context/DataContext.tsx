@@ -6,23 +6,24 @@ import React, {
   useState,
 } from "react";
 import { Dispatch } from "react";
+import detailData from "./detailData.json";
+import tagData from "./tags.json";
 
 const loadCount = 4;
 
 type SizeProps = {
-  width: number | string | undefined;
-  height: number | string | undefined;
+  width?: number | string | undefined;
+  height?: number | string | undefined;
 };
 
 type CardProps = SizeProps & {
-  number?: number;
-  title?: string;
-  imgUrl?: string;
-  tags: Array<string>;
+  id?: number;
+  name?: string;
+  tags: Array<number>;
 };
 
 type ChipProps = {
-  number: number;
+  chipId: number;
   backgroundColor?: string;
   imgUrl?: string;
   isSelected?: boolean;
@@ -42,119 +43,119 @@ export type { SizeProps, ChipProps, CardProps, SetProps };
 
 export const tags: Array<ChipProps> = [
   {
-    number: 0,
+    chipId: 1,
     label: "# 정상위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 1,
+    chipId: 2,
     label: "# 후배위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 2,
+    chipId: 3,
     label: "# 기승위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 3,
-    label: "# 입위",
-    backgroundColor: "#C6D6FE",
-    category: "체위 유형",
-    isSelected: false,
-  },
-  {
-    number: 4,
+    chipId: 4,
     label: "# 좌위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 5,
-    label: "# 반전체위",
+    chipId: 5,
+    label: "# 입위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 6,
-    label: "# 굴곡위",
-    backgroundColor: "#C6D6FE",
-    category: "체위 유형",
-    isSelected: false,
-  },
-  {
-    number: 7,
-    label: "# 교차위",
-    backgroundColor: "#C6D6FE",
-    category: "체위 유형",
-    isSelected: false,
-  },
-  {
-    number: 8,
+    chipId: 6,
     label: "# 측위",
     backgroundColor: "#C6D6FE",
     category: "체위 유형",
     isSelected: false,
   },
   {
-    number: 10,
+    chipId: 7,
+    label: "# 굴곡위",
+    backgroundColor: "#C6D6FE",
+    category: "체위 유형",
+    isSelected: false,
+  },
+  {
+    chipId: 8,
+    label: "# 반전체위",
+    backgroundColor: "#C6D6FE",
+    category: "체위 유형",
+    isSelected: false,
+  },
+  {
+    chipId: 9,
+    label: "# 교차위",
+    backgroundColor: "#C6D6FE",
+    category: "체위 유형",
+    isSelected: false,
+  },
+  {
+    chipId: 10,
     label: "❤ 쉬움",
     backgroundColor: "#FBD2DD",
     category: "난이도",
     isSelected: false,
   },
   {
-    number: 11,
+    chipId: 11,
     label: "❤ 보통",
     backgroundColor: "#FBD2DD",
     category: "난이도",
     isSelected: false,
   },
   {
-    number: 12,
+    chipId: 12,
     label: "❤ 어려움",
     backgroundColor: "#FBD2DD",
     category: "난이도",
     isSelected: false,
   },
   {
-    number: 13,
+    chipId: 13,
     label: "❤ 전문가",
     backgroundColor: "#FBD2DD",
     category: "난이도",
     isSelected: false,
   },
   {
-    number: 14,
+    chipId: 14,
     label: "❤ 이거 가능?",
     backgroundColor: "#FBD2DD",
     category: "난이도",
     isSelected: false,
   },
   {
-    number: 20,
+    chipId: 15,
     backgroundColor: "#BB92DF",
     label: "♂ 남성 리드",
     category: "형태",
     isSelected: false,
   },
   {
-    number: 21,
+    chipId: 16,
     backgroundColor: "#F3B4C5",
     label: "♀ 여성 리드",
     category: "형태",
     isSelected: false,
   },
   {
-    number: 22,
+    chipId: 17,
     imgUrl: "/favicon.ico",
     backgroundColor: "#F6C9F4",
     label: "상호 리드",
@@ -162,7 +163,7 @@ export const tags: Array<ChipProps> = [
     isSelected: false,
   },
   {
-    number: 23,
+    chipId: 18,
     imgUrl: "/favicon.ico",
     backgroundColor: "#F6C9F4",
     label: "키스 가능",
@@ -170,7 +171,7 @@ export const tags: Array<ChipProps> = [
     isSelected: false,
   },
   {
-    number: 24,
+    chipId: 19,
     imgUrl: "/favicon.ico",
     backgroundColor: "#F6C9F4",
     label: "아크로바틱",
@@ -178,49 +179,28 @@ export const tags: Array<ChipProps> = [
     isSelected: false,
   },
   {
-    number: 25,
-    backgroundColor: "#BB92DF",
-    label: "♂ 허리부담 X",
-    category: "형태",
-    isSelected: false,
-  },
-  {
-    number: 26,
-    backgroundColor: "#F3B4C5",
-    label: "♀ 허리부담 X",
-    category: "형태",
-    isSelected: false,
-  },
-  {
-    number: 30,
-    backgroundColor: "#DADADA",
-    label: "# 야외가능",
-    category: "장소/소품",
-    isSelected: false,
-  },
-  {
-    number: 31,
+    chipId: 20,
     backgroundColor: "#DADADA",
     label: "# 책상",
     category: "장소/소품",
     isSelected: false,
   },
   {
-    number: 32,
+    chipId: 21,
     backgroundColor: "#DADADA",
     label: "# 침대",
     category: "장소/소품",
     isSelected: false,
   },
   {
-    number: 33,
+    chipId: 22,
     backgroundColor: "#DADADA",
     label: "# 의자",
     category: "장소/소품",
     isSelected: false,
   },
   {
-    number: 34,
+    chipId: 23,
     backgroundColor: "#DADADA",
     label: "# 벽",
     category: "장소/소품",
@@ -230,78 +210,13 @@ export const tags: Array<ChipProps> = [
 
 export const filteredData = [];
 
-export const data: Array<CardProps> = [
-  {
-    number: 0,
-    title: "TEST 1",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 1", "TEST All"],
-  },
-  {
-    number: 1,
-    title: "TEST 2",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 2", "TEST All"],
-  },
-  {
-    number: 2,
-    title: "TEST 3",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 3,4", "TEST All"],
-  },
-  {
-    number: 3,
-    title: "TEST 4",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 3,4", "TEST All"],
-  },
-  {
-    number: 4,
-    title: "TEST 1",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 1", "TEST All"],
-  },
-  {
-    number: 5,
-    title: "TEST 2",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 2", "TEST All"],
-  },
-  {
-    number: 6,
-    title: "TEST 3",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 3,4", "TEST All"],
-  },
-  {
-    number: 7,
-    title: "TEST 4",
-    width: "150px",
-    height: "150px",
-    imgUrl: "/assets/example.svg",
-    tags: ["TEST 3,4", "TEST All"],
-  },
-];
+export const cards: Array<CardProps> = tagData;
 
-export const selectedData = {
+export const searchData = {
   title: "",
-  tags: ["TEST All"],
+  tags: [0],
   count: 0,
-  card: data[0],
+  card: cards[0],
   toggledIndex: 0,
   set: "",
 };
@@ -356,18 +271,20 @@ function createCustomContext<T>(defaultValue: T) {
 function search(
   update: React.Dispatch<React.SetStateAction<CardProps[]>>,
   title: string,
-  tags: Array<string>,
+  tags: Array<number>,
   count: number
 ) {
-  if (tags.length == 0) {
-    update(data.filter((item) => item.title?.includes(title)).slice(0, count));
-  } else {
-    update(
-      data
-        .filter((item) => item.title?.includes(title))
-        .filter((item) => tags.every((tag) => item.tags.includes(tag)))
-        .slice(0, count)
+  if (tags.length == 1 && tags[0] == 0) {
+    var result = cards.filter(
+      (item) => title == "" || item.name?.includes(title)
     );
+
+    update(result);
+  } else {
+    var result = cards
+      .filter((item) => title == "" || item.name?.includes(title))
+      .filter((item) => tags.every((tag) => item.tags.includes(tag)));
+    update(result);
   }
 }
 
@@ -391,16 +308,16 @@ function searchSets(
   }
 }
 
-export const [useDataContext, DataProvider] = createCustomContext(data);
+export const [useDataContext, DataProvider] = createCustomContext(cards);
 export const [useSetDataContext, SetDataProvider] =
   createCustomContext(setData);
 export const [useTagContext, TagProvider] = createCustomContext(tags);
-export const [useSelectedDataContext, SelectedDataProvider] =
-  createCustomContext(selectedData);
+export const [useSearchDataContext, SearchDataProvider] =
+  createCustomContext(searchData);
 
 export function useDataState() {
   const dataContext = useDataContext();
-  const selectedContext = useSelectedDataContext();
+  const selectedContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
@@ -424,7 +341,7 @@ export function useDataState() {
 
 export function useSetDataState() {
   const dataContext = useSetDataContext();
-  const selectedContext = useSelectedDataContext();
+  const selectedContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
@@ -435,12 +352,7 @@ export function useSetDataState() {
       count: loadCount,
     });
 
-    searchSets(
-      dataContext.update,
-      selectedContext.state.title,
-      selectedContext.state.tags,
-      loadCount
-    );
+    searchSets(dataContext.update, selectedContext.state.title, [], loadCount);
   }
 
   return dataContext;
@@ -455,7 +367,7 @@ export function useTagState() {
 }
 
 export function useSelectedDataState() {
-  const value = useSelectedDataContext();
+  const value = useSearchDataContext();
   if (value === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
   }
@@ -465,7 +377,7 @@ export function useSelectedDataState() {
 export function useTagActions() {
   const tagContext = useTagContext();
   const dataContext = useDataContext();
-  const selectedContext = useSelectedDataContext();
+  const selectedContext = useSearchDataContext();
 
   if (tagContext === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
@@ -475,13 +387,13 @@ export function useTagActions() {
     const newValue = JSON.parse(
       JSON.stringify(tagContext.state)
     ) as Array<ChipProps>;
-    const tag = newValue.find((item) => item.number == id);
+    const tag = newValue.find((item) => item.chipId == id);
     if (tag) {
       tag.isSelected = !tag.isSelected;
       tagContext.update(newValue);
       const selectedTags = newValue
         .filter((item) => item.isSelected)
-        .map((item) => item.label);
+        .map((item) => item.chipId);
       selectedContext.update({
         ...selectedContext.state,
         tags: selectedTags,
@@ -507,7 +419,7 @@ export function useTagActions() {
 
     selectedContext.update({
       ...selectedContext.state,
-      tags: [],
+      tags: [0],
     });
 
     search(
@@ -523,7 +435,7 @@ export function useTagActions() {
 
 export function useSearchAction() {
   const dataContext = useDataContext();
-  const selectedContext = useSelectedDataContext();
+  const selectedContext = useSearchDataContext();
 
   const searchAction = (value: string) => {
     selectedContext.update({ ...selectedContext.state, title: value });
@@ -538,7 +450,7 @@ export function useSearchAction() {
   const addSearchCountAction = () => {
     const newCount = Math.min(
       selectedContext.state.count + loadCount,
-      data.length
+      cards.length
     );
 
     selectedContext.update({
