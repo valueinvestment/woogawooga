@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import {
-  DataProvider,
+  CardDataProvider,
   SearchDataProvider,
   SetDataProvider,
   TagProvider,
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:title" content="우가우가" key="title" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DataProvider>
+      <CardDataProvider>
         <SetDataProvider>
           <SearchDataProvider>
             <TagProvider>
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </TagProvider>
           </SearchDataProvider>
         </SetDataProvider>
-      </DataProvider>
+      </CardDataProvider>
     </>
   );
 }

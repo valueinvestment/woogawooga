@@ -1,16 +1,22 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button } from "../components/Button/Button";
-import { Toggle } from "../components/Button/ToggleButton";
-import { Card } from "../components/Card";
-import { CardContainer } from "../components/CardContainer";
-import { Chips } from "../components/ChipContainer";
-import DivideLine from "../components/DivideLine";
-import { useSearchDataContext, useTagState } from "../context/DataContext";
-import styles from "../styles/Home.module.css";
+import { Button } from "../../components/Button/Button";
+import { Toggle } from "../../components/Button/ToggleButton";
+import { Card } from "../../components/Card";
+import { CardContainer } from "../../components/CardContainer";
+import { Chips } from "../../components/ChipContainer";
+import DivideLine from "../../components/DivideLine";
+import {
+  CardProps,
+  useSelectedData,
+  useTagState,
+  useDataContext,
+} from "../../context/DataContext";
+import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
+import { CustomLink } from "../../components/CustomLink";
 
 import {
   Chart,
@@ -66,11 +72,13 @@ Chart.register(
   Tooltip
 );
 const DetailShow: NextPage = () => {
-  const selectedData = useSearchDataContext();
-  const chipData = useTagState().filter((item) =>
-    selectedData.state.card.tags.includes(item.chipId)
-  );
   const router = useRouter();
+  const id = Number(router.query.id);
+  const selectedData = useSelectedData(id);
+  const dataState = useDataContext().state;
+  const chipData = useTagState().filter((item) =>
+    selectedData?.tags.includes(item.chipId)
+  );
 
   const data = {
     labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "하체근력"],
@@ -116,8 +124,8 @@ const DetailShow: NextPage = () => {
     chartRef.current?.hide(0);
     chartRef.current?.hide(1);
     chartRef.current?.hide(2);
-    chartRef.current?.show(selectedData.state.toggledIndex);
-  }, [selectedData.state]);
+    chartRef.current?.show(0);
+  });
 
   const options: ChartOptions<"radar"> = {
     responsive: true,
@@ -165,11 +173,30 @@ const DetailShow: NextPage = () => {
     indexAxis: "y",
   };
 
+  const previousData = dataState.find(
+    (item) => item.order === selectedData?.order ?? 0 - 1
+  );
+  const nextData = dataState.find(
+    (item) => item.order === selectedData?.order ?? 0 + 1
+  );
+
+  const previousCard: CardProps = {
+    name: previousData?.name,
+    tags: previousData?.tags,
+    id: previousData?.id,
+  };
+
+  const nextCard: CardProps = {
+    name: nextData?.name,
+    tags: nextData?.tags,
+    id: nextData?.id,
+  };
+
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main}>
-          <Link href="/">
+          <CustomLink href="/">
             <h2
               style={{ cursor: "pointer", alignSelf: "start" }}
               onClick={() => {
@@ -178,14 +205,15 @@ const DetailShow: NextPage = () => {
             >
               이전 페이지로
             </h2>
-          </Link>
-          <h1> {selectedData.state.card.name} </h1>
+          </CustomLink>
+          <h1> {selectedData?.name} </h1>
           <i>
             <h2 style={{}}> 설명 </h2>
           </i>
 
           <Card
-            {...selectedData.state.card}
+            {...selectedData}
+            tags={selectedData?.tags}
             width="320px"
             height="320px"
             name=""
@@ -245,7 +273,7 @@ const DetailShow: NextPage = () => {
           </div>
           <div></div>
 
-          <Link href="/">
+          <CustomLink href="/">
             <Button
               labelText="공유하기"
               height={120}
@@ -255,8 +283,8 @@ const DetailShow: NextPage = () => {
               borderColor="#7B42AD"
               color="white"
             ></Button>
-          </Link>
-          <Link href="/">
+          </CustomLink>
+          <CustomLink href="/">
             <Button
               labelText="랜덤 뽑기"
               height={120}
@@ -265,31 +293,27 @@ const DetailShow: NextPage = () => {
               backgroundColor="#7B42AD"
               color="white"
             ></Button>
-          </Link>
+          </CustomLink>
           <div style={{ display: "flex" }}>
             <div>
-              <Link href="/detailShow">
+              <CustomLink href="/detailShow">
                 <h2 style={{ textAlign: "left", marginLeft: "30px" }}>
                   ← 이전
                 </h2>
-              </Link>
-              <CardContainer
-                cardData={[selectedData.state.card]}
-              ></CardContainer>
+              </CustomLink>
+              <CardContainer cardData={[previousCard]}></CardContainer>
             </div>
             <div>
-              <Link href="/detailShow">
+              <CustomLink href="/detailShow">
                 <h2 style={{ textAlign: "right", marginRight: "40px" }}>
                   다음 →
                 </h2>
-              </Link>
-              <CardContainer
-                cardData={[selectedData.state.card]}
-              ></CardContainer>
+              </CustomLink>
+              <CardContainer cardData={[nextCard]}></CardContainer>
             </div>
           </div>
 
-          <Link href="/">
+          <CustomLink href="/">
             <Button
               labelText="메인 화면으로 "
               height={120}
@@ -298,7 +322,7 @@ const DetailShow: NextPage = () => {
               backgroundColor="#32154B"
               color="white"
             ></Button>
-          </Link>
+          </CustomLink>
         </main>
 
         <footer className={styles.footer}>Footer 공간</footer>

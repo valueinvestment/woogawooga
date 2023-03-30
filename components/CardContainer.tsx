@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {
   CardProps,
-  useSelectedDataState as useSearchDataState,
+  useSearchDataState as useSearchDataState,
 } from "../context/DataContext";
 import { Card } from "./Card";
 

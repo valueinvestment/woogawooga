@@ -1,10 +1,7 @@
 import { Console } from "console";
 import Image from "next/image";
 import styled from "styled-components";
-import {
-  useSearchAction,
-  useSelectedDataState,
-} from "../../context/DataContext";
+import { useSearchAction, useSearchDataState } from "../../context/DataContext";
 
 type inputProps = {
   active?: boolean; // making this props optional
@@ -59,8 +56,8 @@ Input.defaultProps = {
 };
 
 const SearchInput: React.FC<inputProps> = (props) => {
-  // const { searchAction } = useSearchAction();
-  // const selectedData = useSelectedDataState();
+  const { searchAction } = useSearchAction();
+  const selectedData = useSearchDataState();
 
   return (
     <>
@@ -69,9 +66,9 @@ const SearchInput: React.FC<inputProps> = (props) => {
           type="text"
           defaultValue={props.defaultValue}
           onChange={(val) => {
-            // searchAction(val.target.value.toString().trim());
+            searchAction(val.target.value.toString().trim());
           }}
-          // value={selectedData.title}
+          value={selectedData.title}
         />
         <div style={{ margin: "0 1rem", display: "flex" }}>
           <Image

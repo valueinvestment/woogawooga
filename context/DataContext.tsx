@@ -19,7 +19,7 @@ type SizeProps = {
 type CardProps = SizeProps & {
   id?: number;
   name?: string;
-  tags: Array<number>;
+  tags?: Array<number>;
 };
 
 type ChipProps = {
@@ -208,6 +208,8 @@ export const tags: Array<ChipProps> = [
   },
 ];
 
+export const data = detailData;
+
 export const filteredData = [];
 
 export const cards: Array<CardProps> = tagData;
@@ -283,7 +285,7 @@ function search(
   } else {
     var result = cards
       .filter((item) => title == "" || item.name?.includes(title))
-      .filter((item) => tags.every((tag) => item.tags.includes(tag)));
+      .filter((item) => tags.every((tag) => item.tags?.includes(tag)));
     update(result);
   }
 }
@@ -308,7 +310,9 @@ function searchSets(
   }
 }
 
-export const [useDataContext, DataProvider] = createCustomContext(cards);
+export const [useDataContext, DataProvider] = createCustomContext(data);
+export const [useCardDataContext, CardDataProvider] =
+  createCustomContext(cards);
 export const [useSetDataContext, SetDataProvider] =
   createCustomContext(setData);
 export const [useTagContext, TagProvider] = createCustomContext(tags);
@@ -316,7 +320,7 @@ export const [useSearchDataContext, SearchDataProvider] =
   createCustomContext(searchData);
 
 export function useDataState() {
-  const dataContext = useDataContext();
+  const dataContext = useCardDataContext();
   const selectedContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
@@ -352,17 +356,17 @@ export function useTagState() {
   return value.state;
 }
 
-export function useSelectedDataState() {
+export function useSearchDataState() {
   const value = useSearchDataContext();
   if (value === undefined) {
-    throw new Error("useTagActions should be used within TagProvider");
+    throw new Error("useSearchDataState should be used within SearchProvider");
   }
   return value.state;
 }
 
 export function useTagActions() {
   const tagContext = useTagContext();
-  const dataContext = useDataContext();
+  const dataContext = useCardDataContext();
   const selectedContext = useSearchDataContext();
 
   if (tagContext === undefined) {
@@ -420,7 +424,7 @@ export function useTagActions() {
 }
 
 export function useSearchAction() {
-  const dataContext = useDataContext();
+  const dataContext = useCardDataContext();
   const selectedContext = useSearchDataContext();
 
   const searchAction = (value: string) => {
@@ -452,4 +456,14 @@ export function useSearchAction() {
   };
 
   return { searchAction, addSearchCountAction };
+}
+
+export function useSelectedData(id: number) {
+  const dataContext = useDataContext();
+  var data = dataContext.state.find((value) => value.id == id);
+  if (data) {
+    return data;
+  } else {
+    null;
+  }
 }

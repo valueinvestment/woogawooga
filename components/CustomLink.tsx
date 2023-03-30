@@ -4,7 +4,7 @@ const CustomLink: React.FC<any> = ({ children, href, ...props }) => {
   return (
     <>
       <Link href={href} passHref>
-        <a>{children}</a>
+        <a style={{ display: "flex", width: "100%" }}>{children}</a>
       </Link>
     </>
   );
