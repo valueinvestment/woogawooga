@@ -35,32 +35,30 @@ const Chips: React.FC<Props> = ({ chipData, isReadonly }) => {
   return (
     <>
       <Container>
-        {categorys.map((category) => {
-          return (
-            <>
-              <p
-                style={{
-                  fontSize: "small",
-                  margin: "0px 40px",
-                  textAlign: "left",
-                }}
-              >
-                {category}
-              </p>
-              <ul>
-                {chipData
-                  .filter((data) => data.category === category)
-                  .map((data) => {
-                    return (
-                      <li key={data.chipId}>
-                        <Chip {...data} isReadonly={isReadonly}></Chip>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </>
-          );
-        })}
+        {categorys.map((category) => (
+          <div key={category}>
+            <p
+              style={{
+                fontSize: "small",
+                margin: "0px 40px",
+                textAlign: "left",
+              }}
+            >
+              {category}
+            </p>
+            <ul>
+              {chipData
+                .filter((data) => data.category === category)
+                .map((data) => {
+                  return (
+                    <li key={data.chipId}>
+                      <Chip {...data} isReadonly={isReadonly}></Chip>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        ))}
       </Container>
     </>
   );

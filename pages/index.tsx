@@ -2,11 +2,12 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "../components/Button/Button";
 import { ImageButton } from "../components/Button/ImageButton";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
+import { CustomLink } from "../components/CustomLink";
 import DivideLine from "../components/DivideLine";
 import { SearchInput } from "../components/Input/SearchInput";
 import {
@@ -23,6 +24,10 @@ const TotalShow: NextPage = () => {
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
   const { initializeTag } = useTagActions();
+
+  useEffect(() => {
+    addSearchCountAction();
+  }, []);
 
   return (
     <>
@@ -77,9 +82,9 @@ const TotalShow: NextPage = () => {
           <DivideLine></DivideLine>
           <h1 style={{ textAlign: "left" }}> 체위 전체 보기 </h1>
           <h2 style={{ textAlign: "left" }}>
-            체위 {cardData.state.length}개 결과 값
+            체위 {cardData.length}개 결과 값
           </h2>
-          <CardContainer cardData={cardData.state}></CardContainer>
+          <CardContainer cardData={cardData}></CardContainer>
           <h3
             style={{
               alignSelf: "center",
@@ -92,7 +97,7 @@ const TotalShow: NextPage = () => {
           >
             더보기
           </h3>
-          <Link href="/">
+          <CustomLink href="/">
             <Button
               labelText="랜덤 뽑기"
               height={120}
@@ -100,7 +105,7 @@ const TotalShow: NextPage = () => {
               backgroundColor="#7B42AD"
               color="white"
             ></Button>
-          </Link>
+          </CustomLink>
           {/* <Link href="/">
             <Button
               labelText="메인 화면으로"

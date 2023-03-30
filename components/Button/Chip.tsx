@@ -65,7 +65,12 @@ const Chip: React.FC<ChipProps> = (props) => {
             display: props.imgUrl != undefined ? "block" : "none",
           }}
         >
-          <Image src={props.imgUrl || ""} alt="" height={16} width={16} />
+          <Image
+            src={props.imgUrl || "/favicon.ico"}
+            alt=""
+            height={16}
+            width={16}
+          />
         </div>
         <ChipLabelSpan {...props}>{props.label}</ChipLabelSpan>
       </ChipContainer>

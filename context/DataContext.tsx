@@ -322,21 +322,7 @@ export function useDataState() {
     throw new Error("useDataState should be used within DataProvider");
   }
 
-  if (selectedContext.state.count == 0) {
-    selectedContext.update({
-      ...selectedContext.state,
-      count: loadCount,
-    });
-
-    search(
-      dataContext.update,
-      selectedContext.state.title,
-      selectedContext.state.tags,
-      loadCount
-    );
-  }
-
-  return dataContext;
+  return dataContext.state;
 }
 
 export function useSetDataState() {
