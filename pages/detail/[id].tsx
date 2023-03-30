@@ -9,9 +9,10 @@ import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
 import {
   CardProps,
-  useSelectedData,
   useTagState,
+  useSelectedAction,
   useDataContext,
+  useSearchDataState,
 } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
@@ -72,31 +73,28 @@ Chart.register(
   Tooltip
 );
 const DetailShow: NextPage = () => {
+  const { getSelectedData, getPreviousData, getNextData } = useSelectedAction();
   const router = useRouter();
   const id = Number(router.query.id);
-  const selectedData = useSelectedData(id);
+  const selectedData = getSelectedData(id);
   const dataState = useDataContext().state;
   const chipData = useTagState().filter((item) =>
     selectedData?.tags.includes(item.chipId)
   );
+  const searchData = useSearchDataState();
 
   const data = {
-    labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "하체근력"],
+    labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "균형감각"],
     datasets: [
       {
-        label: "종합",
-        data: [50, 50, 55, 41, 78],
-        fill: true,
-        backgroundColor: "rgba(235, 148, 235, 0.2)",
-        borderColor: "rgba(59, 50, 50, 0.692)",
-        pointBackgroundColor: "rgb(247, 73, 131)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(255, 99, 132)",
-      },
-      {
         label: "남자",
-        data: [28, 48, 40, 19, 96],
+        data: [
+          selectedData?.["무게부담(남)"],
+          selectedData?.["상체힘(남)"],
+          selectedData?.["하체힘(남)"],
+          selectedData?.["유연성(남)"],
+          selectedData?.["균형감각(남)"],
+        ],
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
         borderColor: "#7B42AD",
@@ -107,7 +105,13 @@ const DetailShow: NextPage = () => {
       },
       {
         label: "여자",
-        data: [65, 59, 90, 81, 56],
+        data: [
+          selectedData?.["무게부담(여)"],
+          selectedData?.["상체힘(여)"],
+          selectedData?.["하체힘(여)"],
+          selectedData?.["유연성(여)"],
+          selectedData?.["균형감각(여)"],
+        ],
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
         borderColor: "#F3B4C5",
@@ -121,11 +125,17 @@ const DetailShow: NextPage = () => {
 
   const chartRef = useRef<Chart<"radar">>();
   useEffect(() => {
-    chartRef.current?.hide(0);
-    chartRef.current?.hide(1);
-    chartRef.current?.hide(2);
-    chartRef.current?.show(0);
-  });
+    if (searchData.toggledIndex == 0) {
+      chartRef.current?.show(0);
+      chartRef.current?.show(1);
+    } else if (searchData.toggledIndex == 1) {
+      chartRef.current?.show(0);
+      chartRef.current?.hide(1);
+    } else {
+      chartRef.current?.hide(0);
+      chartRef.current?.show(1);
+    }
+  }, [searchData.toggledIndex]);
 
   const options: ChartOptions<"radar"> = {
     responsive: true,
@@ -173,43 +183,40 @@ const DetailShow: NextPage = () => {
     indexAxis: "y",
   };
 
-  const previousData = dataState.find(
-    (item) => item.order === selectedData?.order ?? 0 - 1
-  );
-  const nextData = dataState.find(
-    (item) => item.order === selectedData?.order ?? 0 + 1
-  );
-
+  const previousData = getPreviousData(id);
   const previousCard: CardProps = {
     name: previousData?.name,
     tags: previousData?.tags,
     id: previousData?.id,
   };
-
+  const nextData = getNextData(id);
   const nextCard: CardProps = {
     name: nextData?.name,
     tags: nextData?.tags,
     id: nextData?.id,
   };
 
+  let score =
+    (searchData.toggledIndex == 0
+      ? selectedData?.["종합난이도"]
+      : searchData.toggledIndex == 1
+      ? selectedData?.["난이도(남)"]
+      : selectedData?.["난이도(여)"]) ?? 0;
+
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main}>
-          <CustomLink href="/">
-            <h2
-              style={{ cursor: "pointer", alignSelf: "start" }}
-              onClick={() => {
-                router.back();
-              }}
-            >
-              이전 페이지로
-            </h2>
-          </CustomLink>
-          <h1> {selectedData?.name} </h1>
-          <i>
-            <h2 style={{}}> 설명 </h2>
-          </i>
+          <h2
+            style={{ cursor: "pointer", alignSelf: "start" }}
+            onClick={() => {
+              router.back();
+            }}
+          >
+            이전 페이지로
+          </h2>
+          <h1 style={{ margin: "0.4rem 0rem" }}> {selectedData?.name} </h1>
+          <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p>
 
           <Card
             {...selectedData}
@@ -221,19 +228,31 @@ const DetailShow: NextPage = () => {
 
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <h1> Tips </h1>
-          <h3>
-            <li>설명 1</li>
-          </h3>
-          <h3>
-            <li>설명 2</li>
-          </h3>
+          {selectedData?.["텍스트"].map((v) => {
+            return (
+              <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                {v}
+              </li>
+            );
+          })}
+
           <DivideLine />
           <h1> 성별 선택 </h1>
           <Toggle></Toggle>
           <DivideLine />
           <h1> 난이도 </h1>
           <h1>
-            총점 : <span style={{ fontSize: "3em" }}>80</span>(어려움){" "}
+            총점 : <span style={{ fontSize: "3em" }}>{score}</span>(
+            {score > 90
+              ? "이거 가능?"
+              : score > 70
+              ? "전문가"
+              : score > 50
+              ? "어려움"
+              : score > 20
+              ? "보통"
+              : "쉬움"}
+            )
           </h1>
           <Radar
             ref={chartRef}
@@ -247,7 +266,7 @@ const DetailShow: NextPage = () => {
             <div
               style={{
                 width: "100%",
-                height: "100%",
+                height: "100px",
                 top: "50%",
                 position: "absolute",
                 zIndex: 10,
@@ -273,42 +292,49 @@ const DetailShow: NextPage = () => {
           </div>
           <div></div>
 
-          <CustomLink href="/">
-            <Button
-              labelText="공유하기"
-              height={120}
-              width={368}
-              padding={20}
-              backgroundColor="#FF90AD"
-              borderColor="#7B42AD"
-              color="white"
-            ></Button>
-          </CustomLink>
-          <CustomLink href="/">
-            <Button
-              labelText="랜덤 뽑기"
-              height={120}
-              width={368}
-              padding={20}
-              backgroundColor="#7B42AD"
-              color="white"
-            ></Button>
-          </CustomLink>
+          <Button
+            labelText="공유하기"
+            height={120}
+            width={368}
+            padding={20}
+            backgroundColor="#FF90AD"
+            borderColor="#7B42AD"
+            color="white"
+            onClick={() => {
+              const links = "oogaooga.app" + router.asPath;
+              navigator.clipboard.writeText(links);
+              alert("주소 (" + links + ")가 클립보드에 복사되었습니다!");
+              console.log(links);
+            }}
+          ></Button>
+          <Button
+            labelText="랜덤 뽑기"
+            height={120}
+            width={368}
+            padding={20}
+            backgroundColor="#7B42AD"
+            color="white"
+            onClick={() =>
+              router.push(
+                "/detail/" + parseInt((Math.random() * 146).toString())
+              )
+            }
+          ></Button>
           <div style={{ display: "flex" }}>
             <div>
-              <CustomLink href="/detailShow">
-                <h2 style={{ textAlign: "left", marginLeft: "30px" }}>
-                  ← 이전
-                </h2>
-              </CustomLink>
+              <h2 style={{ textAlign: "left", marginLeft: "30px" }}>← 이전</h2>
               <CardContainer cardData={[previousCard]}></CardContainer>
             </div>
             <div>
-              <CustomLink href="/detailShow">
-                <h2 style={{ textAlign: "right", marginRight: "40px" }}>
-                  다음 →
-                </h2>
-              </CustomLink>
+              <h2
+                style={{
+                  textAlign: "right",
+                  marginRight: "30px",
+                  width: "100%",
+                }}
+              >
+                다음 →
+              </h2>
               <CardContainer cardData={[nextCard]}></CardContainer>
             </div>
           </div>

@@ -30,10 +30,6 @@ const ButtonBase = styled.button<buttonProps>`
   box-shadow: ${(props) => props.boxShadow};
   width: 100%;
 
-  &:hover {
-    opacity: 0.5;
-  }
-
   /* if you want to place multiple lines of css, you can import {css}  */
   ${({ active }) =>
     active &&

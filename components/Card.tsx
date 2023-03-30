@@ -9,9 +9,6 @@ import { useRouter } from "next/router";
 
 const Container = styled.div`
   cursor: pointer;
-  &:hover {
-    opacity: 0.5;
-  }
 `;
 
 const CardContainer = styled.div<SizeProps>`
@@ -40,7 +37,7 @@ const Card: React.FC<CardProps> = (props) => {
   return (
     <Container
       onClick={() => {
-        router.push("/detailShow");
+        router.push("/detail/" + props.id);
       }}
     >
       <CardContainer

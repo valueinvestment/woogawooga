@@ -217,7 +217,7 @@ export const cards: Array<CardProps> = tagData;
 export const searchData = {
   title: "",
   tags: [0],
-  count: 0,
+  count: 4,
   card: cards[0],
   toggledIndex: 0,
   set: "",
@@ -321,7 +321,6 @@ export const [useSearchDataContext, SearchDataProvider] =
 
 export function useDataState() {
   const dataContext = useCardDataContext();
-  const selectedContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
@@ -457,13 +456,34 @@ export function useSearchAction() {
 
   return { searchAction, addSearchCountAction };
 }
-
-export function useSelectedData(id: number) {
+export function useSelectedAction() {
   const dataContext = useDataContext();
-  var data = dataContext.state.find((value) => value.id == id);
-  if (data) {
-    return data;
-  } else {
-    null;
-  }
+  const getSelectedData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    if (data) {
+      return data;
+    } else {
+      null;
+    }
+  };
+
+  const getPreviousData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    var prev = dataContext.state.find(
+      (value) => value.order == (data?.order ?? 0) - 1
+    );
+
+    return prev ?? data;
+  };
+
+  const getNextData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    var next = dataContext.state.find(
+      (value) => value.order == (data?.order ?? 0) + 1
+    );
+
+    return next ?? data;
+  };
+
+  return { getSelectedData, getPreviousData, getNextData };
 }

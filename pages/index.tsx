@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "../components/Button/Button";
 import { ImageButton } from "../components/Button/ImageButton";
@@ -19,15 +20,12 @@ import {
 import styles from "../styles/Home.module.css";
 
 const TotalShow: NextPage = () => {
+  const router = useRouter();
   const chipData = useTagState();
   const cardData = useDataState();
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
   const { initializeTag } = useTagActions();
-
-  useEffect(() => {
-    addSearchCountAction();
-  }, []);
 
   return (
     <>
@@ -97,15 +95,19 @@ const TotalShow: NextPage = () => {
           >
             더보기
           </h3>
-          <CustomLink href="/">
-            <Button
-              labelText="랜덤 뽑기"
-              height={120}
-              padding={20}
-              backgroundColor="#7B42AD"
-              color="white"
-            ></Button>
-          </CustomLink>
+          <Button
+            labelText="랜덤 뽑기"
+            height={120}
+            width={368}
+            padding={20}
+            backgroundColor="#7B42AD"
+            color="white"
+            onClick={() =>
+              router.push(
+                "/detail/" + parseInt((Math.random() * 146).toString())
+              )
+            }
+          ></Button>
           {/* <Link href="/">
             <Button
               labelText="메인 화면으로"
