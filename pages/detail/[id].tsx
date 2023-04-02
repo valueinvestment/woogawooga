@@ -284,7 +284,12 @@ const Detail: NextPage = () => {
             >
               <h1> 쾌감도 </h1>
               <h1> 총점 : 50(중간 쾌감) / 70(강한 쾌감) </h1>
-              <Bar data={data} options={barOption}></Bar>
+              <Bar
+                data={data}
+                options={barOption}
+                width={200}
+                height={200}
+              ></Bar>
               <DivideLine />
             </div>
           </div>
@@ -326,7 +331,7 @@ const Detail: NextPage = () => {
               <h2
                 style={{
                   textAlign: "right",
-                  marginRight: "30px",
+                  paddingRight: "20px",
                   width: "100%",
                 }}
               >
