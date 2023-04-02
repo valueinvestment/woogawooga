@@ -305,9 +305,8 @@ const Detail: NextPage = () => {
             color="white"
             onClick={() => {
               const links = "oogaooga.app" + router.asPath;
-              navigator.clipboard.writeText(links);
               alert("주소 (" + links + ")가 클립보드에 복사되었습니다!");
-              console.log(links);
+              navigator.clipboard.writeText(links);
             }}
           ></Button>
           <Button
