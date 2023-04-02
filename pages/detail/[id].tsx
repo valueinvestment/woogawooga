@@ -46,6 +46,7 @@ import {
   Tooltip,
   ChartOptions,
 } from "chart.js";
+import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
 
 Chart.register(
   ArcElement,
@@ -72,7 +73,8 @@ Chart.register(
   Title,
   Tooltip
 );
-const DetailShow: NextPage = () => {
+
+const Detail: NextPage = () => {
   const { getSelectedData, getPreviousData, getNextData } = useSelectedAction();
   const router = useRouter();
   const id = Number(router.query.id);
@@ -123,7 +125,8 @@ const DetailShow: NextPage = () => {
     ],
   };
 
-  const chartRef = useRef<Chart<"radar">>();
+  const chartRef =
+    useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
   useEffect(() => {
     if (searchData.toggledIndex == 0) {
       chartRef.current?.show(0);
@@ -357,4 +360,4 @@ const DetailShow: NextPage = () => {
   );
 };
 
-export default DetailShow;
+export default Detail;
