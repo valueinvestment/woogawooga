@@ -12,6 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <link
+          href="/fonts/NanumSquareNeoTTF-bRg.woff2"
+          rel="preload"
+          as="font"
+          type="font/woff2"
+        />
         <title>우가? 우가!</title>
         <meta property="og:title" content="우가우가" key="title" />
         <link rel="icon" href="/favicon.ico" />

@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { ChipProps } from "../context/DataContext";
 import { Chip } from "./Button/Chip";
 
-const Container = styled.div`
+const Container = styled.div<Props>`
   width: 100%;
 
   ul {
     list-style: none;
-    margin: 0.5rem 1rem;
+    margin: 0rem 1rem;
     display: flex;
     flex-wrap: wrap;
     padding: 4px;
-    justify-content: left;
+    justify-content: ${({ isReadonly }) => (isReadonly ? "center" : "left")};
 
     li {
       margin: 4px;
@@ -34,18 +34,23 @@ const Chips: React.FC<Props> = ({ chipData, isReadonly }) => {
 
   return (
     <>
-      <Container>
+      <Container chipData={chipData} isReadonly={isReadonly}>
         {categorys.map((category) => (
           <div key={category}>
-            <p
-              style={{
-                fontSize: "small",
-                margin: "0px 40px",
-                textAlign: "left",
-              }}
-            >
-              {category}
-            </p>
+            {isReadonly ? (
+              ``
+            ) : (
+              <p
+                style={{
+                  fontSize: "small",
+                  margin: "0px 20px",
+                  textAlign: "left",
+                }}
+              >
+                {category}
+              </p>
+            )}
+
             <ul>
               {chipData
                 .filter((data) => data.category === category)

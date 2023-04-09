@@ -9,7 +9,7 @@ import { Dispatch } from "react";
 import detailData from "./detailData.json";
 import tagData from "./tags.json";
 
-const loadCount = 4;
+const loadCount = 8;
 
 type SizeProps = {
   width?: number | string | undefined;
@@ -217,9 +217,9 @@ export const cards: Array<CardProps> = tagData;
 export const searchData = {
   title: "",
   tags: [0],
-  count: 4,
+  count: 8,
   card: cards[0],
-  toggledIndex: 0,
+  toggledIndex: 1,
   set: "",
 };
 
@@ -330,18 +330,18 @@ export function useDataState() {
 
 export function useSetDataState() {
   const dataContext = useSetDataContext();
-  const selectedContext = useSearchDataContext();
+  const searhDataContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
 
-  if (selectedContext.state.count == 0) {
-    selectedContext.update({
-      ...selectedContext.state,
+  if (searhDataContext.state.count == 0) {
+    searhDataContext.update({
+      ...searhDataContext.state,
       count: loadCount,
     });
 
-    searchSets(dataContext.update, selectedContext.state.title, [], loadCount);
+    searchSets(dataContext.update, searhDataContext.state.title, [], loadCount);
   }
 
   return dataContext;
@@ -367,6 +367,7 @@ export function useTagActions() {
   const tagContext = useTagContext();
   const dataContext = useCardDataContext();
   const selectedContext = useSearchDataContext();
+  const searchDataContext = useSearchDataContext();
 
   if (tagContext === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
@@ -411,12 +412,12 @@ export function useTagActions() {
       tags: [0],
     });
 
-    search(
-      dataContext.update,
-      selectedContext.state.title,
-      [],
-      selectedContext.state.count
-    );
+    searchDataContext.update({
+      ...searchDataContext.state,
+      count: loadCount,
+    });
+
+    search(dataContext.update, selectedContext.state.title, [], loadCount);
   };
 
   return { updateIsSelected, initializeTag };
@@ -424,32 +425,33 @@ export function useTagActions() {
 
 export function useSearchAction() {
   const dataContext = useCardDataContext();
-  const selectedContext = useSearchDataContext();
+  const searchDataContext = useSearchDataContext();
 
   const searchAction = (value: string) => {
-    selectedContext.update({ ...selectedContext.state, title: value });
-    search(
-      dataContext.update,
-      value,
-      selectedContext.state.tags,
-      selectedContext.state.count
-    );
+    searchDataContext.update({
+      ...searchDataContext.state,
+      title: value,
+      count: loadCount,
+    });
+
+    search(dataContext.update, value, searchDataContext.state.tags, loadCount);
   };
 
   const addSearchCountAction = () => {
     const newCount = Math.min(
-      selectedContext.state.count + loadCount,
+      searchDataContext.state.count + loadCount,
       cards.length
     );
 
-    selectedContext.update({
-      ...selectedContext.state,
+    searchDataContext.update({
+      ...searchDataContext.state,
       count: newCount,
     });
+
     search(
       dataContext.update,
-      selectedContext.state.title,
-      selectedContext.state.tags,
+      searchDataContext.state.title,
+      searchDataContext.state.tags,
       newCount
     );
   };

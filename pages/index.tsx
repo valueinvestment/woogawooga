@@ -14,6 +14,7 @@ import { SearchInput } from "../components/Input/SearchInput";
 import {
   useDataState,
   useSearchAction,
+  useSearchDataState,
   useTagActions,
   useTagState,
 } from "../context/DataContext";
@@ -23,6 +24,7 @@ const TotalShow: NextPage = () => {
   const router = useRouter();
   const chipData = useTagState();
   const cardData = useDataState();
+  const searchData = useSearchDataState();
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
   const { initializeTag } = useTagActions();
@@ -37,9 +39,9 @@ const TotalShow: NextPage = () => {
             height="284px"
             alt="title"
           />
-          <div style={{ alignSelf: "center" }}>
+          {/* <div style={{ alignSelf: "center" }}>
             <SearchInput></SearchInput>
-          </div>
+          </div> */}
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1 style={{ textAlign: "left" }}> 태그 </h1>
             <h3
@@ -80,25 +82,31 @@ const TotalShow: NextPage = () => {
           <DivideLine></DivideLine>
           <h1 style={{ textAlign: "left" }}> 체위 전체 보기 </h1>
           <h2 style={{ textAlign: "left" }}>
-            체위 {cardData.length}개 결과 값
+            체위 {Math.min(searchData.count, cardData.length)}개 결과 값
           </h2>
+          {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
           <CardContainer cardData={cardData}></CardContainer>
-          <h3
-            style={{
-              alignSelf: "center",
-              textDecoration: "underline",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              addSearchCountAction();
-            }}
-          >
-            더보기
-          </h3>
+          {cardData.length == 0 || searchData.count > cardData.length ? (
+            ``
+          ) : (
+            <h3
+              style={{
+                alignSelf: "center",
+                textDecoration: "underline",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                addSearchCountAction();
+              }}
+            >
+              더보기
+            </h3>
+          )}
+
           <Button
-            labelText="랜덤 뽑기"
+            labelText="이거 가능?"
             height={120}
-            width={368}
+            maxWidth={330}
             padding={20}
             backgroundColor="#7B42AD"
             color="white"

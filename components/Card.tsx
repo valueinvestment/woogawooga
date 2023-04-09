@@ -33,7 +33,7 @@ const TitleContainer = styled.div<SizeProps>`
 
 const Card: React.FC<CardProps> = (props) => {
   const router = useRouter();
-  const defaultSize = 150;
+  const defaultSize = 140;
   return (
     <Container
       onClick={() => {

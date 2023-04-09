@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { useSearchDataContext } from "../../context/DataContext";
-import ButtonBase from "./ButtonBase";
 
 const ToggleContainer = styled.div<{ toggledIndex: number }>`
   width: 160px;
@@ -26,13 +25,13 @@ const Circle = styled.div<{ toggledIndex: number }>`
   color: white;
   background-color: ${(props) =>
     props.toggledIndex == 0
-      ? "brown"
-      : props.toggledIndex == 1
       ? "#7b42ad"
+      : props.toggledIndex == 1
+      ? "brown"
       : "#FF90AD"};
   width: ${(props) => {
     switch (props.toggledIndex) {
-      case 0:
+      case 1:
         return "58px";
       default:
         return "38px";
@@ -57,7 +56,7 @@ const Circle = styled.div<{ toggledIndex: number }>`
         `;
       case 1:
         return css`
-          transform: translate(60px, 0);
+          transform: translate(45px, 0);
           transition: all 0.5s ease-in-out;
         `;
       case 2:
@@ -83,19 +82,19 @@ const Toggle: React.FC = () => {
     <>
       <ToggleContainer toggledIndex={selectedDataContext.state.toggledIndex}>
         <ToogleButton data-index="0" onClick={clickedToggle}>
-          종합
+          남
         </ToogleButton>
         <ToogleButton data-index="1" onClick={clickedToggle}>
-          남
+          종합
         </ToogleButton>
         <ToogleButton data-index="2" onClick={clickedToggle}>
           여
         </ToogleButton>
         <Circle toggledIndex={selectedDataContext.state.toggledIndex}>
           {selectedDataContext.state.toggledIndex == 0
-            ? "종합"
-            : selectedDataContext.state.toggledIndex == 1
             ? "남"
+            : selectedDataContext.state.toggledIndex == 1
+            ? "종합"
             : "여"}
         </Circle>
       </ToggleContainer>

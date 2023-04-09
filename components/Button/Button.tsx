@@ -21,7 +21,7 @@ type buttonProps = {
   backgroundColor?: string;
   color?: string;
   labelText?: string;
-  width?: number;
+  maxWidth?: number;
   height: number;
   padding: number;
   children?: any;

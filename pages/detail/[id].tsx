@@ -18,6 +18,7 @@ import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
 import { CustomLink } from "../../components/CustomLink";
+import Image from "next/image";
 
 import {
   Chart,
@@ -100,6 +101,7 @@ const Detail: NextPage = () => {
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
         borderColor: "#7B42AD",
+        borderWidth: 5,
         pointBackgroundColor: "rgb(54, 162, 235)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
@@ -117,6 +119,7 @@ const Detail: NextPage = () => {
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
         borderColor: "#F3B4C5",
+        borderWidth: 5,
         pointBackgroundColor: "rgb(255, 99, 132)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
@@ -130,10 +133,10 @@ const Detail: NextPage = () => {
   useEffect(() => {
     if (searchData.toggledIndex == 0) {
       chartRef.current?.show(0);
-      chartRef.current?.show(1);
+      chartRef.current?.hide(1);
     } else if (searchData.toggledIndex == 1) {
       chartRef.current?.show(0);
-      chartRef.current?.hide(1);
+      chartRef.current?.show(1);
     } else {
       chartRef.current?.hide(0);
       chartRef.current?.show(1);
@@ -156,8 +159,12 @@ const Detail: NextPage = () => {
       },
       legend: {
         labels: {
+          filter: function (legendItem, chartData) {
+            return !legendItem.hidden; // Remove strikethrough from unselected data
+          },
           font: {
             size: 18,
+            family: "Nanum Square Neo",
           },
         },
       },
@@ -174,12 +181,14 @@ const Detail: NextPage = () => {
         pointLabels: {
           font: {
             size: 18,
+            family: "Nanum Square Neo",
           },
         },
         suggestedMin: 10,
         suggestedMax: 100,
       },
     },
+    events: [],
   };
 
   const barOption: ChartOptions<"bar"> = {
@@ -200,9 +209,9 @@ const Detail: NextPage = () => {
   };
 
   let score =
-    (searchData.toggledIndex == 0
+    (searchData.toggledIndex == 1
       ? selectedData?.["종합난이도"]
-      : searchData.toggledIndex == 1
+      : searchData.toggledIndex == 0
       ? selectedData?.["난이도(남)"]
       : selectedData?.["난이도(여)"]) ?? 0;
 
@@ -210,16 +219,16 @@ const Detail: NextPage = () => {
     <>
       <div className={styles.container}>
         <main className={styles.main}>
-          <h2
+          <div
             style={{ cursor: "pointer", alignSelf: "start" }}
             onClick={() => {
-              router.back();
+              router.push("/");
             }}
           >
-            이전 페이지로
-          </h2>
+            <Image src="/assets/main.svg" alt="" width={60} height={60}></Image>
+          </div>
           <h1 style={{ margin: "0.4rem 0rem" }}> {selectedData?.name} </h1>
-          <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p>
+          {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
           <Card
             {...selectedData}
@@ -231,21 +240,23 @@ const Detail: NextPage = () => {
 
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <h1> Tips </h1>
-          {selectedData?.["텍스트"].map((v) => {
-            return (
-              <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
-                {v}
-              </li>
-            );
-          })}
+          <ul>
+            {selectedData?.["텍스트"].map((v) => {
+              return (
+                <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                  {v}
+                </li>
+              );
+            })}
+          </ul>
 
           <DivideLine />
           <h1> 성별 선택 </h1>
           <Toggle></Toggle>
-          <DivideLine />
-          <h1> 난이도 </h1>
+          {/* <DivideLine /> */}
           <h1>
-            총점 : <span style={{ fontSize: "3em" }}>{score}</span>(
+            난이도 :{"  "}
+            {/* 총점 : <span style={{ fontSize: "3em" }}>{score}</span>( */}
             {score > 90
               ? "이거 가능?"
               : score > 70
@@ -255,12 +266,12 @@ const Detail: NextPage = () => {
               : score > 20
               ? "보통"
               : "쉬움"}
-            )
+            {/* ) */}
           </h1>
           <Radar
             ref={chartRef}
             data={data}
-            width={300}
+            width={400}
             height={300}
             options={options}
           ></Radar>
@@ -275,7 +286,7 @@ const Detail: NextPage = () => {
                 zIndex: 10,
               }}
             >
-              <h2>업데이트 예정</h2>
+              {/* <h2>업데이트 예정</h2>
             </div>
             <div
               style={{
@@ -289,7 +300,7 @@ const Detail: NextPage = () => {
                 options={barOption}
                 width={200}
                 height={200}
-              ></Bar>
+              ></Bar> */}
               <DivideLine />
             </div>
           </div>
@@ -298,7 +309,7 @@ const Detail: NextPage = () => {
           <Button
             labelText="공유하기"
             height={120}
-            width={368}
+            maxWidth={330}
             padding={20}
             backgroundColor="#FF90AD"
             borderColor="#7B42AD"
@@ -310,47 +321,60 @@ const Detail: NextPage = () => {
             }}
           ></Button>
           <Button
-            labelText="랜덤 뽑기"
+            labelText="이거 가능?"
             height={120}
-            width={368}
+            maxWidth={330}
             padding={20}
             backgroundColor="#7B42AD"
             color="white"
-            onClick={() =>
-              router.push(
-                "/detail/" + parseInt((Math.random() * 146).toString())
-              )
-            }
+            onClick={() => {
+              var randomId = parseInt((Math.random() * 146).toString());
+              randomId = dataState.some((v) => v.id == randomId) ? randomId : 1;
+              router.push("/detail/" + randomId);
+            }}
           ></Button>
-          <div style={{ display: "flex" }}>
-            <div>
-              <h2 style={{ textAlign: "left", marginLeft: "30px" }}>← 이전</h2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "90%",
+            }}
+          >
+            <CustomLink href={"/detail/" + previousCard.id}>
+              <h2
+                style={{
+                  textAlign: "left",
+                  marginLeft: "30px",
+                  textDecorationLine: "underline",
+                }}
+              >
+                ← 이전
+              </h2>
               <CardContainer cardData={[previousCard]}></CardContainer>
-            </div>
-            <div>
+            </CustomLink>
+            <CustomLink href={"/detail/" + nextCard.id}>
               <h2
                 style={{
                   textAlign: "right",
                   paddingRight: "20px",
-                  width: "100%",
+                  textDecorationLine: "underline",
                 }}
               >
                 다음 →
               </h2>
               <CardContainer cardData={[nextCard]}></CardContainer>
-            </div>
+            </CustomLink>
           </div>
 
-          <CustomLink href="/">
-            <Button
-              labelText="메인 화면으로 "
-              height={120}
-              width={368}
-              padding={20}
-              backgroundColor="#32154B"
-              color="white"
-            ></Button>
-          </CustomLink>
+          <Button
+            labelText="메인 화면으로 "
+            height={120}
+            maxWidth={330}
+            padding={20}
+            backgroundColor="#32154B"
+            color="white"
+            onClick={() => router.push("/")}
+          ></Button>
         </main>
 
         <footer className={styles.footer}>Footer 공간</footer>

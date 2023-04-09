@@ -23,7 +23,7 @@ const CardContainer: React.FC<Props> = ({ cardData }) => {
       <Container>
         {cardData.slice(0, count).map((data) => {
           return (
-            <div key={data.id} style={{ margin: "0.5rem" }}>
+            <div key={data.id}>
               <Card {...data}></Card>
             </div>
           );

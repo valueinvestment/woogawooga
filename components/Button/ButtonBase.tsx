@@ -7,6 +7,7 @@ type buttonProps = {
   boxShadow?: string;
   backgroundColor?: string;
   color?: string;
+  maxWidth?: number;
   children?: any;
   padding?: string;
 };
@@ -20,15 +21,17 @@ const ButtonBase = styled.button<buttonProps>`
   margin: 0.5rem 0rem;
   font-size: 1.7rem;
   border: ${(props) => (props.borderColor == "transparent" ? "none" : "solid")};
-  border-radius: 2.5rem;
+  border-radius: 4rem;
+  border-width: thick;
   border-color: ${(props) => props.borderColor};
   color: ${(props) => props.color};
   background-color: ${(props) => props.backgroundColor};
   font-weight: bold;
   overflow: hidden;
-  align-self: stretch;
+  align-self: center;
   box-shadow: ${(props) => props.boxShadow};
-  width: 100%;
+  max-width: ${({ maxWidth }) => maxWidth + "px"};
+  width: 90%;
 
   /* if you want to place multiple lines of css, you can import {css}  */
   ${({ active }) =>
