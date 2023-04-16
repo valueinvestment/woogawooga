@@ -19,6 +19,7 @@ type SizeProps = {
 type CardProps = SizeProps & {
   id?: number;
   name?: string;
+  type?: number;
   tags?: Array<number>;
 };
 
@@ -218,6 +219,7 @@ export const searchData = {
   title: "",
   tags: [0],
   count: 8,
+  type: [0, 1],
   card: cards[0],
   toggledIndex: 1,
   set: "",
@@ -274,18 +276,19 @@ function search(
   update: React.Dispatch<React.SetStateAction<CardProps[]>>,
   title: string,
   tags: Array<number>,
+  types: Array<number>,
   count: number
 ) {
   if (tags.length == 1 && tags[0] == 0) {
-    var result = cards.filter(
-      (item) => title == "" || item.name?.includes(title)
-    );
-
+    var result = cards
+      .filter((item) => title == "" || item.name?.includes(title))
+      .filter((item) => types.includes(item.type ?? -1));
     update(result);
   } else {
     var result = cards
       .filter((item) => title == "" || item.name?.includes(title))
-      .filter((item) => tags.every((tag) => item.tags?.includes(tag)));
+      .filter((item) => tags.every((tag) => item.tags?.includes(tag)))
+      .filter((item) => types.includes(item.type ?? -1));
     update(result);
   }
 }
@@ -366,14 +369,14 @@ export function useSearchDataState() {
 export function useTagActions() {
   const tagContext = useTagContext();
   const dataContext = useCardDataContext();
-  const selectedContext = useSearchDataContext();
+  const searchContext = useSearchDataContext();
   const searchDataContext = useSearchDataContext();
 
   if (tagContext === undefined) {
     throw new Error("useTagActions should be used within TagProvider");
   }
 
-  const updateIsSelected = (id: number) => {
+  const updateTagSelected = (id: number) => {
     const newValue = JSON.parse(
       JSON.stringify(tagContext.state)
     ) as Array<ChipProps>;
@@ -384,15 +387,16 @@ export function useTagActions() {
       const selectedTags = newValue
         .filter((item) => item.isSelected)
         .map((item) => item.chipId);
-      selectedContext.update({
-        ...selectedContext.state,
+      searchContext.update({
+        ...searchContext.state,
         tags: selectedTags,
       });
       search(
         dataContext.update,
-        selectedContext.state.title,
+        searchContext.state.title,
         selectedTags,
-        selectedContext.state.count
+        searchContext.state.type,
+        searchContext.state.count
       );
     } else {
       throw new Error("tag key dosen't exist");
@@ -407,8 +411,8 @@ export function useTagActions() {
       })
     );
 
-    selectedContext.update({
-      ...selectedContext.state,
+    searchContext.update({
+      ...searchContext.state,
       tags: [0],
     });
 
@@ -417,10 +421,16 @@ export function useTagActions() {
       count: loadCount,
     });
 
-    search(dataContext.update, selectedContext.state.title, [], loadCount);
+    search(
+      dataContext.update,
+      searchContext.state.title,
+      [],
+      searchContext.state.type,
+      loadCount
+    );
   };
 
-  return { updateIsSelected, initializeTag };
+  return { updateTagSelected, initializeTag };
 }
 
 export function useSearchAction() {
@@ -434,7 +444,13 @@ export function useSearchAction() {
       count: loadCount,
     });
 
-    search(dataContext.update, value, searchDataContext.state.tags, loadCount);
+    search(
+      dataContext.update,
+      value,
+      searchDataContext.state.tags,
+      searchDataContext.state.type,
+      loadCount
+    );
   };
 
   const addSearchCountAction = () => {
@@ -452,11 +468,32 @@ export function useSearchAction() {
       dataContext.update,
       searchDataContext.state.title,
       searchDataContext.state.tags,
+      searchDataContext.state.type,
       newCount
     );
   };
 
-  return { searchAction, addSearchCountAction };
+  const changeSearchTypeAction = (value: number) => {
+    var newType = [...searchDataContext.state.type];
+    newType.includes(value)
+      ? newType.splice(newType.indexOf(value), 1)
+      : newType.push(value);
+    console.log(newType);
+    searchDataContext.update({
+      ...searchDataContext.state,
+      type: newType,
+    });
+
+    search(
+      dataContext.update,
+      searchDataContext.state.title,
+      searchDataContext.state.tags,
+      newType,
+      searchDataContext.state.count
+    );
+  };
+
+  return { searchAction, addSearchCountAction, changeSearchTypeAction };
 }
 export function useSelectedAction() {
   const dataContext = useDataContext();

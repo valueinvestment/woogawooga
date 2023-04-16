@@ -22,7 +22,7 @@ const SetContainer: React.FC<Props> = ({ setData }) => (
             <ImageButton
               {...data}
               width={500}
-              height={120}
+              height={100}
               padding={0}
               borderColor={"transparent"}
               boxShadow={"1px 3px lightgray"}

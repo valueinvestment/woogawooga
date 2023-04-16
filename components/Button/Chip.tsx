@@ -9,7 +9,7 @@ const ChipContainer = styled.div<ChipProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
+  height: 34px;
   color: rgba(0, 0, 0, 0.87);
   box-shadow: 0px 2px 2px 0px grey;
   background-color: ${({ backgroundColor }) =>
@@ -46,7 +46,7 @@ const ChipLabelSpan = styled.span<ChipProps>`
 `;
 
 const Chip: React.FC<ChipProps> = (props) => {
-  const { updateIsSelected } = useTagActions();
+  const { updateTagSelected: updateIsSelected } = useTagActions();
   return (
     <>
       <ChipContainer

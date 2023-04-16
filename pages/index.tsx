@@ -26,7 +26,7 @@ const TotalShow: NextPage = () => {
   const cardData = useDataState();
   const searchData = useSearchDataState();
   const [showTag, setShowTag] = useState(true);
-  const { addSearchCountAction } = useSearchAction();
+  const { addSearchCountAction, changeSearchTypeAction } = useSearchAction();
   const { initializeTag } = useTagActions();
 
   return (
@@ -79,10 +79,31 @@ const TotalShow: NextPage = () => {
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
+          <div
+            style={{
+              alignSelf: "start",
+              margin: "0.5rem",
+            }}
+          >
+            <input
+              type="checkbox"
+              id="basic"
+              checked={searchData.type.includes(0)}
+              onChange={() => changeSearchTypeAction(0)}
+            ></input>
+            <label>기본형</label>{" "}
+            <input
+              type="checkbox"
+              id="side"
+              checked={searchData.type.includes(1)}
+              onChange={() => changeSearchTypeAction(1)}
+            ></input>
+            <label>파생형</label>
+          </div>
           <DivideLine></DivideLine>
-          <h1 style={{ textAlign: "left" }}> 체위 전체 보기 </h1>
+          <h1 style={{ textAlign: "left" }}> 체위 요소 전체 보기 </h1>
           <h2 style={{ textAlign: "left" }}>
-            체위 {Math.min(searchData.count, cardData.length)}개 결과 값
+            {Math.min(searchData.count, cardData.length)}개 결과 값
           </h2>
           {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
           <CardContainer cardData={cardData}></CardContainer>
@@ -105,21 +126,21 @@ const TotalShow: NextPage = () => {
 
           <Button
             labelText="이거 가능?"
-            height={120}
+            height={100}
             maxWidth={330}
             padding={20}
             backgroundColor="#7B42AD"
             color="white"
-            onClick={() =>
-              router.push(
-                "/detail/" + parseInt((Math.random() * 146).toString())
-              )
-            }
+            onClick={() => {
+              var randomId = parseInt((Math.random() * 146).toString());
+              randomId = cardData.some((v) => v.id == randomId) ? randomId : 1;
+              router.push("/detail/" + randomId);
+            }}
           ></Button>
           {/* <Link href="/">
             <Button
               labelText="메인 화면으로"
-              height={120}
+              height={100}
               padding={20}
               backgroundColor="#32154B"
               color="white"

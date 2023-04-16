@@ -97,7 +97,7 @@ const Advertisment: NextPage = () => {
           <Link href="/">
             <Button
               labelText="메인 화면으로 "
-              height={120}
+              height={100}
               maxWidth={330}
               padding={20}
               backgroundColor="#32154B"

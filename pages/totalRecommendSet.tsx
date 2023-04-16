@@ -76,7 +76,7 @@ const TotalRecommendSet: NextPage = () => {
           <Link href="/">
             <Button
               labelText="랜덤 뽑기"
-              height={120}
+              height={100}
               maxWidth={330}
               padding={20}
               backgroundColor="#7B42AD"
@@ -86,7 +86,7 @@ const TotalRecommendSet: NextPage = () => {
           <Link href="/">
             <Button
               labelText="메인 화면으로"
-              height={120}
+              height={100}
               maxWidth={330}
               padding={20}
               backgroundColor="#32154B"

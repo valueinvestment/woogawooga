@@ -135,11 +135,17 @@ const Detail: NextPage = () => {
       chartRef.current?.show(0);
       chartRef.current?.hide(1);
     } else if (searchData.toggledIndex == 1) {
-      chartRef.current?.show(0);
-      chartRef.current?.show(1);
+      if (!chartRef.current?.isDatasetVisible(1)) {
+        console.log(chartRef.current?.getDataVisibility(1));
+        chartRef.current?.show(1);
+      }
+      if (!chartRef.current?.isDatasetVisible(0)) {
+        console.log(chartRef.current?.getDataVisibility(0));
+        chartRef.current?.show(0);
+      }
     } else {
-      chartRef.current?.hide(0);
       chartRef.current?.show(1);
+      chartRef.current?.hide(0);
     }
   }, [searchData.toggledIndex]);
 
@@ -240,7 +246,7 @@ const Detail: NextPage = () => {
 
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <h1> Tips </h1>
-          <ul>
+          <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.["텍스트"].map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
@@ -308,7 +314,7 @@ const Detail: NextPage = () => {
 
           <Button
             labelText="공유하기"
-            height={120}
+            height={100}
             maxWidth={330}
             padding={20}
             backgroundColor="#FF90AD"
@@ -322,7 +328,7 @@ const Detail: NextPage = () => {
           ></Button>
           <Button
             labelText="이거 가능?"
-            height={120}
+            height={100}
             maxWidth={330}
             padding={20}
             backgroundColor="#7B42AD"
@@ -368,7 +374,7 @@ const Detail: NextPage = () => {
 
           <Button
             labelText="메인 화면으로 "
-            height={120}
+            height={100}
             maxWidth={330}
             padding={20}
             backgroundColor="#32154B"
