@@ -31,18 +31,7 @@ const Footer: React.FC = () => (
           marginTop: "0.3rem",
           textDecoration: "underline",
           color: "blue",
-        }}
-      >
-        oogaooga.app@gmail.com
-      </a>
-      <h3 style={{ margin: "0rem", marginTop: "1rem" }}>버그 리포트</h3>
-      <a
-        href="mailto: oogaooga.app@gmail.com"
-        style={{
-          margin: "0rem",
-          marginTop: "0.3rem",
-          textDecoration: "underline",
-          color: "blue",
+          textUnderlineOffset: "5px",
         }}
       >
         oogaooga.app@gmail.com
