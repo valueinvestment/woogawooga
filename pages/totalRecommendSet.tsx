@@ -94,8 +94,6 @@ const TotalRecommendSet: NextPage = () => {
             ></Button>
           </Link>
         </main>
-
-        <footer className={styles.footer}>Footer 공간</footer>
       </div>
     </>
   );

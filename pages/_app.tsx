@@ -8,6 +8,7 @@ import {
 } from "../context/DataContext";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
+import { Footer } from "../components/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </SetDataProvider>
       </CardDataProvider>
       <Analytics />
+      <Footer></Footer>
     </>
   );
 }

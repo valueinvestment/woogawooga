@@ -382,8 +382,6 @@ const Detail: NextPage = () => {
             onClick={() => router.push("/")}
           ></Button>
         </main>
-
-        <footer className={styles.footer}>Footer 공간</footer>
       </div>
     </>
   );

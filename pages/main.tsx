@@ -42,8 +42,6 @@ const Home: NextPage = () => {
           ></ImageButton>
         </Link>
       </main>
-
-      <footer className={styles.footer}>Footer 공간</footer>
     </div>
   );
 };
