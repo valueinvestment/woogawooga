@@ -19,7 +19,7 @@ import {
   useTagState,
 } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
-import { Footer } from "../components/Footer";
+import { Carousel } from "../components/Carousel";
 
 const TotalShow: NextPage = () => {
   const router = useRouter();

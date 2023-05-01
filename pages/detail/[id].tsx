@@ -48,6 +48,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
+import { Carousel } from "../../components/Carousel";
 
 Chart.register(
   ArcElement,
@@ -101,7 +102,6 @@ const Detail: NextPage = () => {
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
         borderColor: "#7B42AD",
-        borderWidth: 5,
         pointBackgroundColor: "rgb(54, 162, 235)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
@@ -119,7 +119,6 @@ const Detail: NextPage = () => {
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
         borderColor: "#F3B4C5",
-        borderWidth: 5,
         pointBackgroundColor: "rgb(255, 99, 132)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
@@ -151,9 +150,12 @@ const Detail: NextPage = () => {
 
   const options: ChartOptions<"radar"> = {
     responsive: true,
+    layout: {
+      padding: 30,
+    },
     elements: {
       line: {
-        borderWidth: 4,
+        borderWidth: 3,
       },
       point: {
         radius: 0,
@@ -181,7 +183,7 @@ const Detail: NextPage = () => {
           display: true,
         },
         ticks: {
-          count: 2,
+          count: 5,
           display: false,
         },
         pointLabels: {
@@ -190,7 +192,10 @@ const Detail: NextPage = () => {
             family: "Nanum Square Neo",
           },
         },
-        suggestedMin: 10,
+        grid: {
+          color: ["black", "lightGray", "lightGray", "lightGray"],
+        },
+        suggestedMin: 0,
         suggestedMax: 100,
       },
     },
@@ -233,7 +238,7 @@ const Detail: NextPage = () => {
           >
             <Image src="/assets/main.svg" alt="" width={60} height={60}></Image>
           </div>
-          <h1 style={{ margin: "0.4rem 0rem" }}> {selectedData?.name} </h1>
+          <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
           {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
           <Card
@@ -256,7 +261,7 @@ const Detail: NextPage = () => {
             })}
           </ul>
 
-          <DivideLine />
+          <Carousel width="450px" height="80px" />
           <h1> 성별 선택 </h1>
           <Toggle></Toggle>
           {/* <DivideLine /> */}
@@ -282,7 +287,7 @@ const Detail: NextPage = () => {
             height={300}
             options={options}
           ></Radar>
-          <DivideLine />
+          <Carousel width="450px" height="80px" />
           <div style={{ position: "relative" }}>
             <div
               style={{

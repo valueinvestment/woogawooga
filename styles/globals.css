@@ -14,6 +14,7 @@ body {
   font-family: "Nanum Square Neo", -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
+  background-color: #eeeeee;
 }
 
 a {
@@ -32,6 +33,18 @@ a {
 
 button {
   font-family: "Nanum Square Neo", -apple-system, BlinkMacSystemFont, Segoe UI;
+}
+
+h1 {
+  margin: 0.7rem 0rem;
+}
+
+h2 {
+  margin: 0.5rem 0rem;
+}
+
+h3 {
+  margin: 0.3rem 0rem;
 }
 
 @media (prefers-color-scheme: dark) {

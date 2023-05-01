@@ -6,17 +6,17 @@ import Image from "next/image";
 
 const Container = styled.div<carouselProps>`
   overflow: hidden;
-  padding: 0 0 50px 0;
-  width: ${(props) => props.width};
+  // padding: 0 0 50px 0;
+  width: 100%;
 `;
 
 const StyledSlider = styled(Slider)`
   .slick-slide div {
+    margin: 0.2rem 0rem 0rem 0rem;
   }
 `;
 
 const ImageContainer = styled.div`
-  margin: 0 16px;
   text-align: center;
 `;
 
@@ -30,14 +30,18 @@ const Carousel: React.FC<carouselProps> = (props) => {
     dots: true,
     infinite: true,
     speed: 500,
+    autoplay: true,
+    autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
 
   const items = [
-    { id: 1, url: "/assets/main.svg" },
-    { id: 2, url: "/assets/main.svg" },
-    { id: 3, url: "/assets/main.svg" },
+    { id: 1, url: "/assets/carousel/carousel1.png" },
+    { id: 2, url: "/assets/carousel/carousel2.png" },
+    { id: 3, url: "/assets/carousel/carousel3.png" },
+    { id: 4, url: "/assets/carousel/carousel4.png" },
+    { id: 5, url: "/assets/carousel/carousel5.png" },
   ];
 
   return (
@@ -50,9 +54,9 @@ const Carousel: React.FC<carouselProps> = (props) => {
                 <ImageContainer>
                   <Image
                     src={item.url}
-                    alt="test"
-                    height={props.height}
-                    width={props.width}
+                    alt={item.url}
+                    width="400px"
+                    height="80px"
                   />
                 </ImageContainer>
               </div>
