@@ -35,27 +35,36 @@ const TotalShow: NextPage = () => {
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
           <Image
-            src="/assets/main.svg"
-            width="284px"
-            height="284px"
+            src="/assets/mainlogo.png"
+            width="512px"
+            height="360px"
             alt="title"
           />
           {/* <div style={{ alignSelf: "center" }}>
             <SearchInput></SearchInput>
           </div> */}
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
-            <h1 style={{ textAlign: "left" }}> 태그 </h1>
+            <h1
+              style={{
+                textAlign: "left",
+                margin: "0.5rem",
+              }}
+            >
+              {" "}
+              태그{" "}
+            </h1>
             <h3
               style={{
                 alignSelf: "self-end",
                 textDecoration: "underline",
+                textUnderlineOffset: "2px",
                 cursor: "pointer",
               }}
               onClick={() => {
                 setShowTag(!showTag);
               }}
             >
-              태그 {showTag ? "접기" : "펼치기"}
+              {showTag ? "접기" : "펼치기"}
             </h3>
           </div>
           <h3
@@ -80,6 +89,10 @@ const TotalShow: NextPage = () => {
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
+
+          <Carousel width="412px" height="80px" />
+          <h2 style={{ textAlign: "left" }}> 체위 요소 전체 보기 </h2>
+          <h3 style={{ textAlign: "left" }}>{cardData.length}개 결과 값</h3>
           <div
             style={{
               alignSelf: "start",
@@ -101,11 +114,6 @@ const TotalShow: NextPage = () => {
             ></input>
             <label>파생형</label>
           </div>
-          <DivideLine></DivideLine>
-          <h1 style={{ textAlign: "left" }}> 체위 요소 전체 보기 </h1>
-          <h2 style={{ textAlign: "left" }}>
-            {Math.min(searchData.count, cardData.length)}개 결과 값
-          </h2>
           {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
           <CardContainer cardData={cardData}></CardContainer>
           {cardData.length == 0 || searchData.count > cardData.length ? (
@@ -127,8 +135,8 @@ const TotalShow: NextPage = () => {
 
           <Button
             labelText="이거 가능?"
-            height={100}
-            maxWidth={330}
+            height={75}
+            maxWidth={250}
             padding={20}
             backgroundColor="#7B42AD"
             color="white"

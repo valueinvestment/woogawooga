@@ -27,7 +27,6 @@ const TitleContainer = styled.div<SizeProps>`
   /* line-height: ${({ height }) => height}; */
   margin-top: 1rem;
   margin-bottom: 1rem;
-  font-size: large;
   width: ${({ width }) => width};
   text-align: center;
 `;

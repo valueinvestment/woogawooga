@@ -65,6 +65,7 @@ const TotalRecommendSet: NextPage = () => {
             style={{
               alignSelf: "center",
               textDecoration: "underline",
+              textUnderlineOffset: "2px",
               cursor: "pointer",
             }}
             onClick={() => {

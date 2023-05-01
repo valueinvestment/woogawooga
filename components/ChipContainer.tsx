@@ -12,7 +12,7 @@ const Container = styled.div<Props>`
     display: flex;
     flex-wrap: wrap;
     padding: 4px;
-    justify-content: ${({ isReadonly }) => (isReadonly ? "center" : "left")};
+    justify-content: "left"};
 
     li {
       margin: 4px;

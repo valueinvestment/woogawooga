@@ -30,7 +30,7 @@ const Footer: React.FC = () => (
           margin: "0rem",
           marginTop: "0.3rem",
           textDecoration: "underline",
-          color: "blue",
+          color: "#7B42AD",
           textUnderlineOffset: "5px",
         }}
       >

@@ -43,6 +43,7 @@ const ChipLabelSpan = styled.span<ChipProps>`
   padding-right: 16px;
   padding-left: ${({ imgUrl }) => (imgUrl != undefined ? "0px" : "16px")};
   white-space: nowrap;
+  font-weight: bold;
 `;
 
 const Chip: React.FC<ChipProps> = (props) => {

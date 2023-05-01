@@ -21,7 +21,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           type="font/woff2"
         />
         <title>우가? 우가!</title>
-        <meta property="og:title" content="우가우가" key="title" />
+        <meta property="og:title" content="우가?우가!" key="title" />
+        <meta
+          property="og:description"
+          content="자세가 솔루션이다"
+          key="description"
+        />
+        <meta property="og:url" content="https://www.oogaooga.app/" />
+        <meta property="og:image" content="/assets/forshareimg.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CardDataProvider>

@@ -262,22 +262,23 @@ const Detail: NextPage = () => {
           {/* <DivideLine /> */}
           <h1>
             난이도 :{"  "}
-            {/* 총점 : <span style={{ fontSize: "3em" }}>{score}</span>( */}
-            {score > 90
-              ? "이거 가능?"
-              : score > 70
-              ? "전문가"
-              : score > 50
-              ? "어려움"
-              : score > 20
-              ? "보통"
-              : "쉬움"}
-            {/* ) */}
+            <span style={{ fontSize: "1.5em" }}>
+              {score > 90
+                ? "이거 가능?"
+                : score > 70
+                ? "전문가"
+                : score > 50
+                ? "어려움"
+                : score > 20
+                ? "보통"
+                : "쉬움"}
+              {/* ) */}
+            </span>
           </h1>
           <Radar
             ref={chartRef}
             data={data}
-            width={400}
+            width={300}
             height={300}
             options={options}
           ></Radar>
@@ -314,8 +315,8 @@ const Detail: NextPage = () => {
 
           <Button
             labelText="공유하기"
-            height={100}
-            maxWidth={330}
+            height={75}
+            maxWidth={250}
             padding={20}
             backgroundColor="#FF90AD"
             borderColor="#7B42AD"
@@ -328,8 +329,8 @@ const Detail: NextPage = () => {
           ></Button>
           <Button
             labelText="이거 가능?"
-            height={100}
-            maxWidth={330}
+            height={75}
+            maxWidth={250}
             padding={20}
             backgroundColor="#7B42AD"
             color="white"
@@ -352,6 +353,7 @@ const Detail: NextPage = () => {
                   textAlign: "left",
                   marginLeft: "30px",
                   textDecorationLine: "underline",
+                  textUnderlineOffset: "5px",
                 }}
               >
                 ← 이전
@@ -364,6 +366,7 @@ const Detail: NextPage = () => {
                   textAlign: "right",
                   paddingRight: "20px",
                   textDecorationLine: "underline",
+                  textUnderlineOffset: "5px",
                 }}
               >
                 다음 →
@@ -374,8 +377,8 @@ const Detail: NextPage = () => {
 
           <Button
             labelText="메인 화면으로 "
-            height={100}
-            maxWidth={330}
+            height={75}
+            maxWidth={250}
             padding={20}
             backgroundColor="#32154B"
             color="white"
