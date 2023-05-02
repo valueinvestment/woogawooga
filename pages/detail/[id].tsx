@@ -264,7 +264,6 @@ const Detail: NextPage = () => {
           <Carousel width="450px" height="80px" />
           <h1> 성별 선택 </h1>
           <Toggle></Toggle>
-          {/* <DivideLine /> */}
           <h1>
             난이도 :{"  "}
             <span style={{ fontSize: "1.5em" }}>
@@ -277,7 +276,6 @@ const Detail: NextPage = () => {
                 : score > 20
                 ? "보통"
                 : "쉬움"}
-              {/* ) */}
             </span>
           </h1>
           <Radar
