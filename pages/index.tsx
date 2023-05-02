@@ -123,6 +123,7 @@ const TotalShow: NextPage = () => {
               style={{
                 alignSelf: "center",
                 textDecoration: "underline",
+                textUnderlineOffset: "3px",
                 cursor: "pointer",
               }}
               onClick={() => {
