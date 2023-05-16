@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { Carousel } from "./Carousel";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ function getDiffDate(date: Date) {
 const Footer: React.FC = () => (
   <>
     <FooterContainer>
+      <Carousel width="450px" height="80px" />
       <h3 style={{ margin: "0rem" }}>투자 문의 / 아이디어 제안</h3>
       <a
         href="mailto: oogaooga.app@gmail.com"

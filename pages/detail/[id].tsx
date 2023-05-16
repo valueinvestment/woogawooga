@@ -151,7 +151,7 @@ const Detail: NextPage = () => {
   const options: ChartOptions<"radar"> = {
     responsive: true,
     layout: {
-      padding: 30,
+      padding: 40,
     },
     elements: {
       line: {
@@ -175,6 +175,7 @@ const Detail: NextPage = () => {
             family: "Nanum Square Neo",
           },
         },
+        maxHeight: 30,
       },
     },
     scales: {
@@ -262,9 +263,9 @@ const Detail: NextPage = () => {
           </ul>
 
           <Carousel width="450px" height="80px" />
-          <h1> 성별 선택 </h1>
+          <h1 style={{ marginTop: "20px" }}> 성별 선택 </h1>
           <Toggle></Toggle>
-          <h1>
+          <h1 style={{ marginBottom: "-10px" }}>
             난이도 :{"  "}
             <span style={{ fontSize: "1.5em" }}>
               {score > 90
@@ -281,8 +282,8 @@ const Detail: NextPage = () => {
           <Radar
             ref={chartRef}
             data={data}
-            width={300}
-            height={300}
+            width={400}
+            height={400}
             options={options}
           ></Radar>
           <Carousel width="450px" height="80px" />
@@ -314,11 +315,11 @@ const Detail: NextPage = () => {
               <DivideLine />
             </div>
           </div>
-          <div></div>
+          <div style={{ marginBottom: "0.5rem" }}></div>
 
           <Button
             labelText="공유하기"
-            height={75}
+            height={80}
             maxWidth={250}
             padding={20}
             backgroundColor="#FF90AD"
@@ -332,7 +333,7 @@ const Detail: NextPage = () => {
           ></Button>
           <Button
             labelText="이거 가능?"
-            height={75}
+            height={80}
             maxWidth={250}
             padding={20}
             backgroundColor="#7B42AD"
@@ -380,7 +381,7 @@ const Detail: NextPage = () => {
 
           <Button
             labelText="메인 화면으로 "
-            height={75}
+            height={80}
             maxWidth={250}
             padding={20}
             backgroundColor="#32154B"

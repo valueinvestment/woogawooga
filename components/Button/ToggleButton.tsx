@@ -6,7 +6,7 @@ const ToggleContainer = styled.div<{ toggledIndex: number }>`
   height: 50px;
   border-radius: 30px;
   border: none;
-  background-color: whitesmoke;
+  background-color: #eaeaea;
   position: relative;
   display: flex;
   justify-content: space-around;

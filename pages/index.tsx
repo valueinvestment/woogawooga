@@ -91,12 +91,17 @@ const TotalShow: NextPage = () => {
           </div>
 
           <Carousel width="412px" height="80px" />
-          <h2 style={{ textAlign: "left" }}> 체위 요소 전체 보기 </h2>
-          <h3 style={{ textAlign: "left" }}>{cardData.length}개 결과 값</h3>
+          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
+            체위 요소 전체 보기
+          </h2>
+          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>
+            {cardData.length}개 결과 값
+          </h3>
           <div
             style={{
               alignSelf: "start",
               margin: "0.5rem",
+              marginLeft: "1rem",
             }}
           >
             <input
@@ -136,7 +141,7 @@ const TotalShow: NextPage = () => {
 
           <Button
             labelText="이거 가능?"
-            height={75}
+            height={80}
             maxWidth={250}
             padding={20}
             backgroundColor="#7B42AD"
