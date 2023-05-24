@@ -37,11 +37,13 @@ const Carousel: React.FC<carouselProps> = (props) => {
   };
 
   const items = [
-    { id: 1, url: "/assets/carousel/carousel1.png" },
-    { id: 2, url: "/assets/carousel/carousel2.png" },
-    { id: 3, url: "/assets/carousel/carousel3.png" },
-    { id: 4, url: "/assets/carousel/carousel4.png" },
-    { id: 5, url: "/assets/carousel/carousel5.png" },
+    { id: 1, url: "/assets/carousel/carousel1.jpg" },
+    { id: 2, url: "/assets/carousel/carousel2.jpg" },
+    { id: 3, url: "/assets/carousel/carousel3.jpg" },
+    { id: 4, url: "/assets/carousel/carousel4.jpg" },
+    { id: 5, url: "/assets/carousel/carousel5.jpg" },
+    { id: 6, url: "/assets/carousel/carousel6.jpg" },
+    { id: 7, url: "/assets/carousel/carousel7.jpg" },
   ];
 
   return (
