@@ -1,16 +1,10 @@
 import { NextPage } from "next";
-import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../components/Button/Button";
-import { ImageButton } from "../components/Button/ImageButton";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
-import { CustomLink } from "../components/CustomLink";
-import DivideLine from "../components/DivideLine";
-import { SearchInput } from "../components/Input/SearchInput";
 import {
   useDataState,
   useSearchAction,
@@ -34,15 +28,14 @@ const TotalShow: NextPage = () => {
     <>
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
-          <Image
-            src="/assets/mainlogo.png"
-            width="512px"
-            height="360px"
-            alt="title"
-          />
-          {/* <div style={{ alignSelf: "center" }}>
-            <SearchInput></SearchInput>
-          </div> */}
+          <div style={{ alignSelf: "center", padding: "50px" }}>
+            <Image
+              src="/assets/mainlogo.png"
+              width={512}
+              height={360}
+              alt="title"
+            />
+          </div>
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1
               style={{
@@ -50,8 +43,7 @@ const TotalShow: NextPage = () => {
                 margin: "0.5rem",
               }}
             >
-              {" "}
-              태그{" "}
+              태그
             </h1>
             <h3
               style={{
@@ -119,6 +111,7 @@ const TotalShow: NextPage = () => {
             ></input>
             <label>파생형</label>
           </div>
+
           {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
           <CardContainer cardData={cardData}></CardContainer>
           {cardData.length == 0 || searchData.count > cardData.length ? (

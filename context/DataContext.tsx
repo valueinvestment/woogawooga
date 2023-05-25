@@ -34,6 +34,7 @@ type ChipProps = {
 };
 
 type SetProps = {
+  id?: number;
   title?: string;
   content?: string;
   imgUrl?: string;
@@ -234,6 +235,7 @@ export const searchData = {
 
 export const setData: Array<SetProps> = [
   {
+    id: 1,
     title: "강아지 산책",
     content:
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
@@ -241,6 +243,7 @@ export const setData: Array<SetProps> = [
     imgUrl: "/assets/set1.png",
   },
   {
+    id: 2,
     title: "기분이 울적할 때",
     content:
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
@@ -248,6 +251,7 @@ export const setData: Array<SetProps> = [
     imgUrl: "/assets/set2.png",
   },
   {
+    id: 3,
     title: "고양이처럼",
     content:
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
@@ -354,7 +358,7 @@ export function useSetDataState() {
     searchSets(dataContext.update, searhDataContext.state.title, [], loadCount);
   }
 
-  return dataContext;
+  return dataContext.state;
 }
 
 export function useTagState() {

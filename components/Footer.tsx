@@ -9,6 +9,7 @@ const FooterContainer = styled.div`
   justify-content: center;
   margin-top: 2rem;
   margin-bottom: 3rem;
+  max-width: 400px;
 `;
 
 const launchingDate = new Date("2023-04-05");

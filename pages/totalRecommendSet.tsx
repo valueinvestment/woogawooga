@@ -1,24 +1,20 @@
+import { useRouter } from "next/router";
 import { NextPage } from "next";
-import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button } from "../components/Button/Button";
-import { ImageButton } from "../components/Button/ImageButton";
-import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
-import DivideLine from "../components/DivideLine";
-import { SearchInput } from "../components/Input/SearchInput";
 import { SetContainer } from "../components/SetContainer";
 import {
-  useDataState,
   useSearchAction,
   useSetDataState,
   useTagState,
 } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
+import { Carousel } from "../components/Carousel";
 
 const TotalRecommendSet: NextPage = () => {
+  const router = useRouter();
   const chipData = useTagState();
   const setData = useSetDataState();
   const [showTag, setShowTag] = useState(true);
@@ -28,14 +24,13 @@ const TotalRecommendSet: NextPage = () => {
     <>
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
-          <Image
-            src="/assets/main.svg"
-            width="284px"
-            height="284px"
-            alt="title"
-          />
-          <div style={{ alignSelf: "center" }}>
-            <SearchInput></SearchInput>
+          <div style={{ alignSelf: "center", padding: "50px" }}>
+            <Image
+              src="/assets/mainlogo.png"
+              width={512}
+              height={360}
+              alt="title"
+            />
           </div>
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1 style={{ textAlign: "left" }}> 태그 </h1>
@@ -55,45 +50,60 @@ const TotalRecommendSet: NextPage = () => {
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
-          <DivideLine></DivideLine>
-          <h1 style={{ textAlign: "left" }}> 추천 세트 전체 보기 </h1>
-          <h2 style={{ textAlign: "left" }}>
-            Set {setData.state.length}개 결과 값
+          <Carousel width="412px" height="80px" />
+          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
+            추천 세트 전체 보기
           </h2>
-          <SetContainer setData={setData.state}></SetContainer>
-          <h3
-            style={{
-              alignSelf: "center",
-              textDecoration: "underline",
-              textUnderlineOffset: "2px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              addSearchCountAction();
-            }}
-          >
-            더보기
+          <h3 style={{ textAlign: "left", marginLeft: "15x" }}>
+            Set {setData.length}개 결과 값
           </h3>
-          <Link href="/">
-            <Button
-              labelText="랜덤 뽑기"
-              height={100}
-              maxWidth={330}
-              padding={20}
-              backgroundColor="#7B42AD"
-              color="white"
-            ></Button>
-          </Link>
-          <Link href="/">
+
+          {setData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
+
+          <SetContainer setData={setData}></SetContainer>
+
+          {setData.length == 0 ? (
+            // || searchData.count > setData.length
+            ``
+          ) : (
+            <h3
+              style={{
+                alignSelf: "center",
+                textDecoration: "underline",
+                textUnderlineOffset: "2px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                addSearchCountAction();
+              }}
+            >
+              더보기
+            </h3>
+          )}
+
+          <Button
+            labelText="이거 가능?"
+            height={80}
+            maxWidth={250}
+            padding={20}
+            backgroundColor="#7B42AD"
+            color="white"
+            onClick={() => {
+              var randomId = parseInt((Math.random() * 146).toString());
+              randomId = setData.some((v) => v.id == randomId) ? randomId : 1;
+              router.push("/setDetail/" + randomId);
+            }}
+          ></Button>
+          {/* <Link href="/">
             <Button
               labelText="메인 화면으로"
-              height={100}
-              maxWidth={330}
+              height={80}
+              maxWidth={250}
               padding={20}
               backgroundColor="#32154B"
               color="white"
             ></Button>
-          </Link>
+          </Link> */}
         </main>
       </div>
     </>
