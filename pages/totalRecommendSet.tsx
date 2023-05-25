@@ -54,7 +54,7 @@ const TotalRecommendSet: NextPage = () => {
           <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
             추천 세트 전체 보기
           </h2>
-          <h3 style={{ textAlign: "left", marginLeft: "15x" }}>
+          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>
             Set {setData.length}개 결과 값
           </h3>
 

@@ -4,7 +4,7 @@ import { ImageButton } from "./Button/ImageButton";
 import { useRouter } from "next/router";
 
 const Container = styled.div`
-  margin: 1rem;
+  margin: 1rem 0rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -33,6 +33,7 @@ const SetContainer: React.FC<Props> = ({ setData }) => {
                 height={100}
                 padding={0}
                 borderColor={"transparent"}
+                borderRadius={2}
                 boxShadow={"1px 3px lightgray"}
               ></ImageButton>
             </div>

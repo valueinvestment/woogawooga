@@ -5,6 +5,7 @@ type buttonProps = {
   darkBtn?: boolean;
   borderColor?: string;
   boxShadow?: string;
+  borderRadius?: number;
   backgroundColor?: string;
   color?: string;
   maxWidth?: number;
@@ -21,7 +22,7 @@ const ButtonBase = styled.button<buttonProps>`
   margin: 0.5rem 0rem;
   font-size: 1.7rem;
   border: ${(props) => (props.borderColor == "transparent" ? "none" : "solid")};
-  border-radius: 4rem;
+  border-radius: ${(props) => (props.borderRadius ?? 4) + "rem"};
   border-width: thick;
   border-color: ${(props) => props.borderColor};
   color: ${(props) => props.color};
