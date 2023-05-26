@@ -35,10 +35,10 @@ type ChipProps = {
 
 type SetProps = {
   id?: number;
-  title?: string;
-  content?: string;
+  name?: string;
+  content: Array<string>;
   imgUrl?: string;
-  tags: Array<string>;
+  tags: Array<number>;
 };
 
 export type { SizeProps, ChipProps, CardProps, SetProps };
@@ -236,26 +236,29 @@ export const searchData = {
 export const setData: Array<SetProps> = [
   {
     id: 1,
-    title: "강아지 산책",
-    content:
+    name: "강아지 산책",
+    content: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    tags: ["TEST 3,4", "TEST All"],
+    ],
+    tags: [2, 1],
     imgUrl: "/assets/set1.png",
   },
   {
     id: 2,
-    title: "기분이 울적할 때",
-    content:
+    name: "기분이 울적할 때",
+    content: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    tags: ["TEST 3,4", "TEST All"],
+    ],
+    tags: [1],
     imgUrl: "/assets/set2.png",
   },
   {
     id: 3,
-    title: "고양이처럼",
-    content:
+    name: "고양이처럼",
+    content: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    tags: ["TEST 3,4", "TEST All"],
+    ],
+    tags: [3],
     imgUrl: "/assets/set3.png",
   },
 ];
@@ -312,12 +315,12 @@ function searchSets(
 ) {
   if (tags.length == 0) {
     update(
-      setData.filter((item) => item.title?.includes(title)).slice(0, count)
+      setData.filter((item) => item.name?.includes(title)).slice(0, count)
     );
   } else {
     update(
       setData
-        .filter((item) => item.title?.includes(title))
+        .filter((item) => item.name?.includes(title))
         .filter((item) => tags.every((tag) => item.tags.includes(tag)))
         .slice(0, count)
     );
@@ -506,6 +509,7 @@ export function useSearchAction() {
 
   return { searchAction, addSearchCountAction, changeSearchTypeAction };
 }
+
 export function useSelectedAction() {
   const dataContext = useDataContext();
   const getSelectedData = (id: number) => {
@@ -536,4 +540,36 @@ export function useSelectedAction() {
   };
 
   return { getSelectedData, getPreviousData, getNextData };
+}
+
+export function useSelectedSetAction() {
+  const dataContext = useSetDataContext();
+  const getSelectedSetData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    if (data) {
+      return data;
+    } else {
+      null;
+    }
+  };
+
+  const getPreviousSetData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    var prev = dataContext.state.find(
+      (value) => value.id == (data?.id ?? 0) - 1
+    );
+
+    return prev ?? data;
+  };
+
+  const getNextSetData = (id: number) => {
+    var data = dataContext.state.find((value) => value.id == id);
+    var next = dataContext.state.find(
+      (value) => value.id == (data?.id ?? 0) + 1
+    );
+
+    return next ?? data;
+  };
+
+  return { getSelectedSetData, getPreviousSetData, getNextSetData };
 }

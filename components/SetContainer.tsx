@@ -22,7 +22,7 @@ const SetContainer: React.FC<Props> = ({ setData }) => {
         {setData.map((data) => {
           return (
             <div
-              key={data.title}
+              key={data.name}
               onClick={() => {
                 router.push("/setDetail/" + data.id);
               }}

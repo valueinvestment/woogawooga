@@ -10,7 +10,7 @@ import DivideLine from "../../components/DivideLine";
 import {
   CardProps,
   useTagState,
-  useSelectedAction,
+  useSelectedSetAction,
   useDataContext,
   useSearchDataState,
 } from "../../context/DataContext";
@@ -77,10 +77,11 @@ Chart.register(
 );
 
 const Detail: NextPage = () => {
-  const { getSelectedData, getPreviousData, getNextData } = useSelectedAction();
+  const { getSelectedSetData, getPreviousSetData, getNextSetData } =
+    useSelectedSetAction();
   const router = useRouter();
   const id = Number(router.query.id);
-  const selectedData = getSelectedData(id);
+  const selectedData = getSelectedSetData(id);
   const dataState = useDataContext().state;
   const chipData = useTagState().filter((item) =>
     selectedData?.tags.includes(item.chipId)
@@ -93,11 +94,11 @@ const Detail: NextPage = () => {
       {
         label: "남자",
         data: [
-          selectedData?.["무게부담(남)"],
-          selectedData?.["상체힘(남)"],
-          selectedData?.["하체힘(남)"],
-          selectedData?.["유연성(남)"],
-          selectedData?.["균형감각(남)"],
+          // selectedData?.["무게부담(남)"],
+          // selectedData?.["상체힘(남)"],
+          // selectedData?.["하체힘(남)"],
+          // selectedData?.["유연성(남)"],
+          // selectedData?.["균형감각(남)"],
         ],
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
@@ -110,11 +111,11 @@ const Detail: NextPage = () => {
       {
         label: "여자",
         data: [
-          selectedData?.["무게부담(여)"],
-          selectedData?.["상체힘(여)"],
-          selectedData?.["하체힘(여)"],
-          selectedData?.["유연성(여)"],
-          selectedData?.["균형감각(여)"],
+          // selectedData?.["무게부담(여)"],
+          // selectedData?.["상체힘(여)"],
+          // selectedData?.["하체힘(여)"],
+          // selectedData?.["유연성(여)"],
+          // selectedData?.["균형감각(여)"],
         ],
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
@@ -207,25 +208,25 @@ const Detail: NextPage = () => {
     indexAxis: "y",
   };
 
-  const previousData = getPreviousData(id);
+  const previousData = getPreviousSetData(id);
   const previousCard: CardProps = {
     name: previousData?.name,
     tags: previousData?.tags,
     id: previousData?.id,
   };
-  const nextData = getNextData(id);
+  const nextData = getNextSetData(id);
   const nextCard: CardProps = {
     name: nextData?.name,
     tags: nextData?.tags,
     id: nextData?.id,
   };
 
-  let score =
-    (searchData.toggledIndex == 1
-      ? selectedData?.["종합난이도"]
-      : searchData.toggledIndex == 0
-      ? selectedData?.["난이도(남)"]
-      : selectedData?.["난이도(여)"]) ?? 0;
+  // let score =
+  //   (searchData.toggledIndex == 1
+  //     ? selectedData?.["종합난이도"]
+  //     : searchData.toggledIndex == 0
+  //     ? selectedData?.["난이도(남)"]
+  //     : selectedData?.["난이도(여)"]) ?? 0;
 
   return (
     <>
@@ -240,7 +241,6 @@ const Detail: NextPage = () => {
             <Image src="/assets/main.svg" alt="" width={60} height={60}></Image>
           </div>
           <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
-          {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
           <Card
             {...selectedData}
@@ -250,10 +250,16 @@ const Detail: NextPage = () => {
             name=""
           ></Card>
 
+          <h2 style={{ margin: "2rem 0rem" }}> 이런 분들에게 추천! </h2>
           <Chips chipData={chipData} isReadonly={true}></Chips>
+
+          <h2 style={{ margin: "2rem 0rem" }}> 섹스 플로우 </h2>
+          <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
+          <Chips chipData={chipData} isReadonly={true}></Chips>
+          <Carousel width="450px" height="80px" />
           <h1> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.["텍스트"].map((v) => {
+            {selectedData?.content?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}
@@ -261,60 +267,11 @@ const Detail: NextPage = () => {
               );
             })}
           </ul>
+          <h2 style={{ margin: "2rem 0rem" }}> 세트 점수 </h2>
+          <Bar data={data} options={barOption} width={200} height={200}></Bar>
+          <h2 style={{ margin: "2rem 0rem" }}> 이 세트에서 쓰인 체위 목록 </h2>
 
           <Carousel width="450px" height="80px" />
-          <h1 style={{ marginTop: "20px" }}> 성별 선택 </h1>
-          <Toggle></Toggle>
-          <h1 style={{ marginBottom: "-10px" }}>
-            난이도 :{"  "}
-            <span style={{ fontSize: "1.5em" }}>
-              {score > 90
-                ? "이거 가능?"
-                : score > 70
-                ? "전문가"
-                : score > 50
-                ? "어려움"
-                : score > 20
-                ? "보통"
-                : "쉬움"}
-            </span>
-          </h1>
-          <Radar
-            ref={chartRef}
-            data={data}
-            width={400}
-            height={400}
-            options={options}
-          ></Radar>
-          <Carousel width="450px" height="80px" />
-          <div style={{ position: "relative" }}>
-            <div
-              style={{
-                width: "100%",
-                height: "100px",
-                top: "50%",
-                position: "absolute",
-                zIndex: 10,
-              }}
-            >
-              {/* <h2>업데이트 예정</h2>
-            </div>
-            <div
-              style={{
-                opacity: "0.1",
-              }}
-            >
-              <h1> 쾌감도 </h1>
-              <h1> 총점 : 50(중간 쾌감) / 70(강한 쾌감) </h1>
-              <Bar
-                data={data}
-                options={barOption}
-                width={200}
-                height={200}
-              ></Bar> */}
-              <DivideLine />
-            </div>
-          </div>
           <div style={{ marginBottom: "0.5rem" }}></div>
 
           <Button
@@ -332,7 +289,7 @@ const Detail: NextPage = () => {
             }}
           ></Button>
           <Button
-            labelText="이거 가능?"
+            labelText="랜덤 뽑기"
             height={80}
             maxWidth={250}
             padding={20}
