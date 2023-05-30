@@ -139,9 +139,6 @@ const SetDetail: NextPage = () => {
       },
     },
     plugins: {
-      customCanvasBackgroundColor: {
-        color: "lightGreen",
-      },
       title: {
         display: false,
       },
@@ -205,7 +202,7 @@ const SetDetail: NextPage = () => {
 
           <h2 style={{ margin: "2rem 0rem" }}> 이런 분들에게 추천! </h2>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.content?.map((v) => {
+            {selectedData?.contents?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}
@@ -220,7 +217,7 @@ const SetDetail: NextPage = () => {
           <Carousel width="450px" height="80px" />
           <h1> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.content?.map((v) => {
+            {selectedData?.contents?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}

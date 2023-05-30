@@ -36,7 +36,7 @@ type ChipProps = {
 type SetProps = {
   id?: number;
   name?: string;
-  content: Array<string>;
+  contents: Array<string>;
   imgUrl?: string;
   tags: Array<number>;
 };
@@ -237,7 +237,7 @@ export const setData: Array<SetProps> = [
   {
     id: 1,
     name: "강아지 산책",
-    content: [
+    contents: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
     ],
     tags: [2, 1],
@@ -246,7 +246,7 @@ export const setData: Array<SetProps> = [
   {
     id: 2,
     name: "기분이 울적할 때",
-    content: [
+    contents: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
     ],
     tags: [1],
@@ -255,7 +255,7 @@ export const setData: Array<SetProps> = [
   {
     id: 3,
     name: "고양이처럼",
-    content: [
+    contents: [
       "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
     ],
     tags: [3],
@@ -310,7 +310,7 @@ function search(
 function searchSets(
   update: React.Dispatch<React.SetStateAction<SetProps[]>>,
   title: string,
-  tags: Array<string>,
+  tags: Array<number>,
   count: number
 ) {
   if (tags.length == 0) {
