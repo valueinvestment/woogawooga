@@ -12,8 +12,8 @@ const ImageButton: React.FC<imageButtonProps> = (props) => (
 type imageButtonProps = {
   borderColor?: string;
   boxShadow?: string;
-  backgroundColor?: string;
   borderRadius?: number;
+  backgroundColor?: string;
   color?: string;
   imgUrl?: string;
   title?: string;

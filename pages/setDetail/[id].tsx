@@ -76,7 +76,7 @@ Chart.register(
   Tooltip
 );
 
-const Detail: NextPage = () => {
+const SetDetail: NextPage = () => {
   const { getSelectedSetData, getPreviousSetData, getNextSetData } =
     useSelectedSetAction();
   const router = useRouter();
@@ -89,71 +89,47 @@ const Detail: NextPage = () => {
   const searchData = useSearchDataState();
 
   const data = {
-    labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "균형감각"],
+    labels: ["난이도", "리드비율"],
     datasets: [
       {
-        label: "남자",
-        data: [
-          // selectedData?.["무게부담(남)"],
-          // selectedData?.["상체힘(남)"],
-          // selectedData?.["하체힘(남)"],
-          // selectedData?.["유연성(남)"],
-          // selectedData?.["균형감각(남)"],
-        ],
-        fill: true,
-        backgroundColor: "rgba(198, 214, 254, 0.4)",
-        borderColor: "#7B42AD",
-        pointBackgroundColor: "rgb(54, 162, 235)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(54, 162, 235)",
+        data: [80, 20],
+        backgroundColor: ["#FF547F", "#7B42AD"],
+        barThickness: 25,
+        borderRadius: Number.MAX_VALUE,
+        borderSkipped: [false, "end"],
+        grouped: false,
+        stack: "stack1",
       },
       {
-        label: "여자",
+        data: [, 80],
+        backgroundColor: ["#FF547F", "#FF90AD"],
+        barThickness: 25,
+        borderRadius: Number.MAX_VALUE,
+        borderSkipped: false,
+        grouped: false,
+        stack: "stack1",
+      },
+      {
         data: [
-          // selectedData?.["무게부담(여)"],
-          // selectedData?.["상체힘(여)"],
-          // selectedData?.["하체힘(여)"],
-          // selectedData?.["유연성(여)"],
-          // selectedData?.["균형감각(여)"],
+          [-3, 103],
+          [-3, 103],
         ],
-        fill: true,
-        backgroundColor: "rgba(252, 226, 234, 0.2)",
-        borderColor: "#F3B4C5",
-        pointBackgroundColor: "rgb(255, 99, 132)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(255, 99, 132)",
+        backgroundColor: ["#EDEDED", "#EDEDED"],
+        barThickness: 35,
+        borderColor: "red",
+        borderRadius: Number.MAX_VALUE,
+        borderSkipped: false,
+        grouped: false,
       },
     ],
   };
 
-  const chartRef =
-    useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
-  useEffect(() => {
-    if (searchData.toggledIndex == 0) {
-      chartRef.current?.show(0);
-      chartRef.current?.hide(1);
-    } else if (searchData.toggledIndex == 1) {
-      if (!chartRef.current?.isDatasetVisible(1)) {
-        console.log(chartRef.current?.getDataVisibility(1));
-        chartRef.current?.show(1);
-      }
-      if (!chartRef.current?.isDatasetVisible(0)) {
-        console.log(chartRef.current?.getDataVisibility(0));
-        chartRef.current?.show(0);
-      }
-    } else {
-      chartRef.current?.show(1);
-      chartRef.current?.hide(0);
-    }
-  }, [searchData.toggledIndex]);
-
-  const options: ChartOptions<"radar"> = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     layout: {
       padding: 40,
     },
+    indexAxis: "x",
     elements: {
       line: {
         borderWidth: 3,
@@ -163,13 +139,16 @@ const Detail: NextPage = () => {
       },
     },
     plugins: {
+      customCanvasBackgroundColor: {
+        color: "lightGreen",
+      },
       title: {
         display: false,
       },
       legend: {
         labels: {
           filter: function (legendItem, chartData) {
-            return !legendItem.hidden; // Remove strikethrough from unselected data
+            return false;
           },
           font: {
             size: 18,
@@ -179,33 +158,18 @@ const Detail: NextPage = () => {
         maxHeight: 30,
       },
     },
+    interaction: {
+      intersect: false,
+    },
     scales: {
-      r: {
-        angleLines: {
-          display: true,
-        },
-        ticks: {
-          count: 5,
-          display: false,
-        },
-        pointLabels: {
-          font: {
-            size: 18,
-            family: "Nanum Square Neo",
-          },
-        },
-        grid: {
-          color: ["black", "lightGray", "lightGray", "lightGray"],
-        },
-        suggestedMin: 0,
-        suggestedMax: 100,
+      x: {
+        stacked: false,
+      },
+      y: {
+        stacked: false,
       },
     },
     events: [],
-  };
-
-  const barOption: ChartOptions<"bar"> = {
-    indexAxis: "y",
   };
 
   const previousData = getPreviousSetData(id);
@@ -221,19 +185,16 @@ const Detail: NextPage = () => {
     id: nextData?.id,
   };
 
-  // let score =
-  //   (searchData.toggledIndex == 1
-  //     ? selectedData?.["종합난이도"]
-  //     : searchData.toggledIndex == 0
-  //     ? selectedData?.["난이도(남)"]
-  //     : selectedData?.["난이도(여)"]) ?? 0;
-
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main}>
           <div
-            style={{ cursor: "pointer", alignSelf: "start" }}
+            style={{
+              cursor: "pointer",
+              alignSelf: "start",
+              marginLeft: "20px",
+            }}
             onClick={() => {
               router.push("/");
             }}
@@ -242,16 +203,16 @@ const Detail: NextPage = () => {
           </div>
           <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
 
-          <Card
-            {...selectedData}
-            tags={selectedData?.tags}
-            width="320px"
-            height="320px"
-            name=""
-          ></Card>
-
           <h2 style={{ margin: "2rem 0rem" }}> 이런 분들에게 추천! </h2>
-          <Chips chipData={chipData} isReadonly={true}></Chips>
+          <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
+            {selectedData?.content?.map((v) => {
+              return (
+                <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                  {v}
+                </li>
+              );
+            })}
+          </ul>
 
           <h2 style={{ margin: "2rem 0rem" }}> 섹스 플로우 </h2>
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
@@ -268,7 +229,7 @@ const Detail: NextPage = () => {
             })}
           </ul>
           <h2 style={{ margin: "2rem 0rem" }}> 세트 점수 </h2>
-          <Bar data={data} options={barOption} width={200} height={200}></Bar>
+          <Bar data={data} options={options} width={200} height={200}></Bar>
           <h2 style={{ margin: "2rem 0rem" }}> 이 세트에서 쓰인 체위 목록 </h2>
 
           <Carousel width="450px" height="80px" />
@@ -351,4 +312,4 @@ const Detail: NextPage = () => {
   );
 };
 
-export default Detail;
+export default SetDetail;

@@ -76,7 +76,7 @@ Chart.register(
   Tooltip
 );
 
-const Detail: NextPage = () => {
+const PositionDetail: NextPage = () => {
   const { getSelectedData, getPreviousData, getNextData } = useSelectedAction();
   const router = useRouter();
   const id = Number(router.query.id);
@@ -232,7 +232,11 @@ const Detail: NextPage = () => {
       <div className={styles.container}>
         <main className={styles.main}>
           <div
-            style={{ cursor: "pointer", alignSelf: "start" }}
+            style={{
+              cursor: "pointer",
+              alignSelf: "start",
+              marginLeft: "20px",
+            }}
             onClick={() => {
               router.push("/");
             }}
@@ -394,4 +398,4 @@ const Detail: NextPage = () => {
   );
 };
 
-export default Detail;
+export default PositionDetail;

@@ -1,163 +1,80 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { Button } from "../components/Button/Button";
-import { CardContainer } from "../components/CardContainer";
-import { Chips } from "../components/ChipContainer";
-import {
-  useDataState,
-  useSearchAction,
-  useSearchDataState,
-  useTagActions,
-  useTagState,
-} from "../context/DataContext";
-import styles from "../styles/Home.module.css";
+import { ImageButton } from "../components/Button/ImageButton";
 import { Carousel } from "../components/Carousel";
+import styles from "../styles/Home.module.css";
+import { Button } from "../components/Button/Button";
 
-const TotalShow: NextPage = () => {
+const Home: NextPage = () => {
   const router = useRouter();
-  const chipData = useTagState();
-  const cardData = useDataState();
-  const searchData = useSearchDataState();
-  const [showTag, setShowTag] = useState(true);
-  const { addSearchCountAction, changeSearchTypeAction } = useSearchAction();
-  const { initializeTag } = useTagActions();
-
   return (
-    <>
-      <div className={styles.container}>
-        <main className={styles.main} style={{ alignItems: "normal" }}>
-          <div style={{ alignSelf: "center", padding: "50px" }}>
-            <Image
-              src="/assets/mainlogo.png"
-              width={512}
-              height={360}
-              alt="title"
-            />
-          </div>
-          <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
-            <h1
-              style={{
-                textAlign: "left",
-                margin: "0.5rem",
-              }}
-            >
-              태그
-            </h1>
-            <h3
-              style={{
-                alignSelf: "self-end",
-                textDecoration: "underline",
-                textUnderlineOffset: "2px",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                setShowTag(!showTag);
-              }}
-            >
-              {showTag ? "접기" : "펼치기"}
-            </h3>
-          </div>
-          <h3
-            style={{
-              display: showTag ? "block" : "none",
-              alignSelf: "self-start",
-              cursor: "pointer",
-              margin: "0.5rem 1rem",
-            }}
-            onClick={() => {
-              initializeTag();
-            }}
-          >
-            초기화{" "}
-            <Image
-              src="/assets/icon/refresh.png"
-              width="20px"
-              height="20px"
-              alt="refresh"
-            />
-          </h3>
-          <div style={{ display: showTag ? "flex" : "none" }}>
-            <Chips chipData={chipData}></Chips>
-          </div>
-
-          <Carousel width="412px" height="80px" />
-          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
-            체위 요소 전체 보기
-          </h2>
-          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>
-            {cardData.length}개 결과 값
-          </h3>
-          <div
-            style={{
-              alignSelf: "start",
-              margin: "0.5rem",
-              marginLeft: "1rem",
-            }}
-          >
-            <input
-              type="checkbox"
-              id="basic"
-              checked={searchData.type.includes(0)}
-              onChange={() => changeSearchTypeAction(0)}
-            ></input>
-            <label>기본형</label>{" "}
-            <input
-              type="checkbox"
-              id="side"
-              checked={searchData.type.includes(1)}
-              onChange={() => changeSearchTypeAction(1)}
-            ></input>
-            <label>파생형</label>
-          </div>
-
-          {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
-          <CardContainer cardData={cardData}></CardContainer>
-          {cardData.length == 0 || searchData.count > cardData.length ? (
-            ``
-          ) : (
-            <h3
-              style={{
-                alignSelf: "center",
-                textDecoration: "underline",
-                textUnderlineOffset: "3px",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                addSearchCountAction();
-              }}
-            >
-              더보기
-            </h3>
-          )}
-
-          <Button
-            labelText="이거 가능?"
-            height={80}
-            maxWidth={250}
-            padding={20}
-            backgroundColor="#7B42AD"
-            color="white"
-            onClick={() => {
-              var randomId = parseInt((Math.random() * 146).toString());
-              randomId = cardData.some((v) => v.id == randomId) ? randomId : 1;
-              router.push("/detail/" + randomId);
-            }}
-          ></Button>
-          {/* <Link href="/">
-            <Button
-              labelText="메인 화면으로"
-              height={100}
-              padding={20}
-              backgroundColor="#32154B"
-              color="white"
-            ></Button>
-          </Link> */}
-        </main>
-      </div>
-    </>
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <Image
+          src="/assets/main.svg"
+          width="284px"
+          height="284px"
+          alt="title"
+        />
+        <Carousel width="100%" height="300px" />
+        <div></div>
+        <div style={{ textAlign: "left", width: "100%", paddingLeft: "15px" }}>
+          <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+            추천 컨탠츠
+          </span>{" "}
+          Recommended Contents
+          <p style={{ textAlign: "left" }}>
+            처음 방문한 사람들을 위한 추천 체위 모음
+          </p>
+        </div>
+        <div style={{ textAlign: "left", width: "100%", paddingLeft: "15px" }}>
+          <span style={{ fontSize: "2rem", fontWeight: "bold" }}>체위</span> Sex
+          Position
+          <p style={{ textAlign: "left" }}>
+            40개의 체위와 설명이 준비되어 있습니다.
+          </p>
+        </div>
+        <Button
+          labelText="체위 전체 보기"
+          backgroundUrl="/assets/typicalPosition.svg"
+          borderColor="transparent"
+          height={200}
+          padding={20}
+          onClick={() => {
+            router.push("/set");
+          }}
+        ></Button>
+        <div
+          style={{
+            textAlign: "left",
+            width: "100%",
+            paddingLeft: "15px",
+            marginTop: "10px",
+          }}
+        >
+          <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+            체위 요소
+          </span>{" "}
+          Sex Position Piece
+          <p style={{ textAlign: "left" }}>
+            200여개의 체위 요소들이 준비되어 있습니다.
+          </p>
+        </div>
+        <Button
+          labelText="체위 요소 보기"
+          backgroundUrl="/assets/recommendPosition.svg"
+          borderColor="transparent"
+          height={200}
+          padding={20}
+          onClick={() => {
+            router.push("/position");
+          }}
+        ></Button>
+      </main>
+    </div>
   );
 };
 
-export default TotalShow;
+export default Home;

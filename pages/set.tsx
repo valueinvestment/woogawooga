@@ -13,7 +13,7 @@ import {
 import styles from "../styles/Home.module.css";
 import { Carousel } from "../components/Carousel";
 
-const TotalRecommendSet: NextPage = () => {
+const Sets: NextPage = () => {
   const router = useRouter();
   const chipData = useTagState();
   const setData = useSetDataState();
@@ -110,4 +110,4 @@ const TotalRecommendSet: NextPage = () => {
   );
 };
 
-export default TotalRecommendSet;
+export default Sets;
