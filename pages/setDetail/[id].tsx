@@ -7,13 +7,7 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import {
-  CardProps,
-  useTagState,
-  useSelectedSetAction,
-  useDataContext,
-  useSearchDataState,
-} from "../../context/DataContext";
+import { CardProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -46,9 +40,11 @@ import {
   Title,
   Tooltip,
   ChartOptions,
+  ChartData,
 } from "chart.js";
-import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
 import { Carousel } from "../../components/Carousel";
+
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 Chart.register(
   ArcElement,
@@ -74,36 +70,34 @@ Chart.register(
   Legend,
   Title,
   Tooltip
+  // ChartDataLabels
 );
-
 const SetDetail: NextPage = () => {
-  const { getSelectedSetData, getPreviousSetData, getNextSetData } =
-    useSelectedSetAction();
+  const { getSelectedSetData, getPreviousSetData, getNextSetData } = useSelectedSetAction();
   const router = useRouter();
   const id = Number(router.query.id);
   const selectedData = getSelectedSetData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) =>
-    selectedData?.tags.includes(item.chipId)
-  );
+  const chipData = useTagState().filter((item) => selectedData?.tags.includes(item.chipId));
   const searchData = useSearchDataState();
 
-  const data = {
+  const data: ChartData<"bar"> = {
     labels: ["난이도", "리드비율"],
     datasets: [
       {
-        data: [80, 20],
+        data: [60, 20],
+
         backgroundColor: ["#FF547F", "#7B42AD"],
-        barThickness: 25,
+        barThickness: 30,
         borderRadius: Number.MAX_VALUE,
         borderSkipped: [false, "end"],
         grouped: false,
         stack: "stack1",
       },
       {
-        data: [, 80],
+        data: [null, 100],
         backgroundColor: ["#FF547F", "#FF90AD"],
-        barThickness: 25,
+        barThickness: 30,
         borderRadius: Number.MAX_VALUE,
         borderSkipped: false,
         grouped: false,
@@ -115,7 +109,7 @@ const SetDetail: NextPage = () => {
           [-3, 103],
         ],
         backgroundColor: ["#EDEDED", "#EDEDED"],
-        barThickness: 35,
+        barThickness: 40,
         borderColor: "red",
         borderRadius: Number.MAX_VALUE,
         borderSkipped: false,
@@ -139,6 +133,14 @@ const SetDetail: NextPage = () => {
       },
     },
     plugins: {
+      // datalabels: {
+      //   anchor: "end",
+      //   align: "top",
+      //   formatter: Math.round,
+      //   font: {
+      //     weight: "bold",
+      //   },
+      // },
       title: {
         display: false,
       },
@@ -146,10 +148,6 @@ const SetDetail: NextPage = () => {
         labels: {
           filter: function (legendItem, chartData) {
             return false;
-          },
-          font: {
-            size: 18,
-            family: "Nanum Square Neo",
           },
         },
         maxHeight: 30,
@@ -161,8 +159,19 @@ const SetDetail: NextPage = () => {
     scales: {
       x: {
         stacked: false,
+        grid: { display: false },
+        border: { display: false },
+        ticks: {
+          font: {
+            size: 15,
+            family: "Nanum Square Neo",
+          },
+        },
       },
       y: {
+        min: -5,
+        max: 105,
+        display: false,
         stacked: false,
       },
     },
@@ -294,15 +303,7 @@ const SetDetail: NextPage = () => {
             </CustomLink>
           </div>
 
-          <Button
-            labelText="메인 화면으로 "
-            height={80}
-            maxWidth={250}
-            padding={20}
-            backgroundColor="#32154B"
-            color="white"
-            onClick={() => router.push("/")}
-          ></Button>
+          <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>
         </main>
       </div>
     </>

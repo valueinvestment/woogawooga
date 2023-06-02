@@ -7,13 +7,7 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import {
-  CardProps,
-  useTagState,
-  useSelectedAction,
-  useDataContext,
-  useSearchDataState,
-} from "../../context/DataContext";
+import { CardProps, useTagState, useSelectedAction, useDataContext, useSearchDataState } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -82,9 +76,7 @@ const PositionDetail: NextPage = () => {
   const id = Number(router.query.id);
   const selectedData = getSelectedData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) =>
-    selectedData?.tags.includes(item.chipId)
-  );
+  const chipData = useTagState().filter((item) => selectedData?.tags.includes(item.chipId));
   const searchData = useSearchDataState();
 
   const data = {
@@ -92,13 +84,7 @@ const PositionDetail: NextPage = () => {
     datasets: [
       {
         label: "남자",
-        data: [
-          selectedData?.["무게부담(남)"],
-          selectedData?.["상체힘(남)"],
-          selectedData?.["하체힘(남)"],
-          selectedData?.["유연성(남)"],
-          selectedData?.["균형감각(남)"],
-        ],
+        data: [selectedData?.["무게부담(남)"], selectedData?.["상체힘(남)"], selectedData?.["하체힘(남)"], selectedData?.["유연성(남)"], selectedData?.["균형감각(남)"]],
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
         borderColor: "#7B42AD",
@@ -109,13 +95,7 @@ const PositionDetail: NextPage = () => {
       },
       {
         label: "여자",
-        data: [
-          selectedData?.["무게부담(여)"],
-          selectedData?.["상체힘(여)"],
-          selectedData?.["하체힘(여)"],
-          selectedData?.["유연성(여)"],
-          selectedData?.["균형감각(여)"],
-        ],
+        data: [selectedData?.["무게부담(여)"], selectedData?.["상체힘(여)"], selectedData?.["하체힘(여)"], selectedData?.["유연성(여)"], selectedData?.["균형감각(여)"]],
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
         borderColor: "#F3B4C5",
@@ -127,8 +107,7 @@ const PositionDetail: NextPage = () => {
     ],
   };
 
-  const chartRef =
-    useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
+  const chartRef = useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
   useEffect(() => {
     if (searchData.toggledIndex == 0) {
       chartRef.current?.show(0);
@@ -220,12 +199,7 @@ const PositionDetail: NextPage = () => {
     id: nextData?.id,
   };
 
-  let score =
-    (searchData.toggledIndex == 1
-      ? selectedData?.["종합난이도"]
-      : searchData.toggledIndex == 0
-      ? selectedData?.["난이도(남)"]
-      : selectedData?.["난이도(여)"]) ?? 0;
+  let score = (searchData.toggledIndex == 1 ? selectedData?.["종합난이도"] : searchData.toggledIndex == 0 ? selectedData?.["난이도(남)"] : selectedData?.["난이도(여)"]) ?? 0;
 
   return (
     <>
@@ -246,13 +220,7 @@ const PositionDetail: NextPage = () => {
           <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
           {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
-          <Card
-            {...selectedData}
-            tags={selectedData?.tags}
-            width="320px"
-            height="320px"
-            name=""
-          ></Card>
+          <Card {...selectedData} tags={selectedData?.tags} width="320px" height="320px" name=""></Card>
 
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <h1> Tips </h1>
@@ -271,25 +239,9 @@ const PositionDetail: NextPage = () => {
           <Toggle></Toggle>
           <h1 style={{ marginBottom: "-10px" }}>
             난이도 :{"  "}
-            <span style={{ fontSize: "1.5em" }}>
-              {score > 90
-                ? "이거 가능?"
-                : score > 70
-                ? "전문가"
-                : score > 50
-                ? "어려움"
-                : score > 20
-                ? "보통"
-                : "쉬움"}
-            </span>
+            <span style={{ fontSize: "1.5em" }}>{score > 90 ? "이거 가능?" : score > 70 ? "전문가" : score > 50 ? "어려움" : score > 20 ? "보통" : "쉬움"}</span>
           </h1>
-          <Radar
-            ref={chartRef}
-            data={data}
-            width={400}
-            height={400}
-            options={options}
-          ></Radar>
+          <Radar ref={chartRef} data={data} width={400} height={400} options={options}></Radar>
           <Carousel width="450px" height="80px" />
           <div style={{ position: "relative" }}>
             <div
@@ -383,15 +335,7 @@ const PositionDetail: NextPage = () => {
             </CustomLink>
           </div>
 
-          <Button
-            labelText="메인 화면으로 "
-            height={80}
-            maxWidth={250}
-            padding={20}
-            backgroundColor="#32154B"
-            color="white"
-            onClick={() => router.push("/")}
-          ></Button>
+          <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>
         </main>
       </div>
     </>

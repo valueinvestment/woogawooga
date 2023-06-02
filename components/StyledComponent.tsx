@@ -16,7 +16,7 @@ export default StyledComponents;
 const MyCustomBtn = () => (
   <ButtonBase darkBtn={false}>
     <div>
-      <Image src="/assets/test.svg" width="50px" height="50px"></Image>
+      <Image src="/assets/test.svg" width="50px" height="50px" alt="alt"></Image>
       Custom Btn Button
     </div>
   </ButtonBase>
@@ -29,10 +29,7 @@ type buttonProps = {
 };
 
 const Button = styled.button<buttonProps>`
-  background-color: ${({ darkBtn }) =>
-    darkBtn
-      ? "black"
-      : "cyan"}; // i am destructing here, instead of using as prop.darkBtn
+  background-color: ${({ darkBtn }) => (darkBtn ? "black" : "cyan")}; // i am destructing here, instead of using as prop.darkBtn
   padding: 1rem 2rem;
   font-size: 1.2rem;
   border: none;
