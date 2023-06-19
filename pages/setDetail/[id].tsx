@@ -7,7 +7,7 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import { DetailProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
+import { DetailProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState, useSelectedAction, SetProps } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -43,6 +43,7 @@ import {
   ChartData,
 } from "chart.js";
 import { Carousel } from "../../components/Carousel";
+import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
   ArcElement,
@@ -72,6 +73,7 @@ Chart.register(
 );
 const SetDetail: NextPage = () => {
   const { getSelectedSetData, getPreviousSetData, getNextSetData } = useSelectedSetAction();
+  const { getSelectedData } = useSelectedAction();
   const router = useRouter();
   const id = Number(router.query.id);
   const selectedData = getSelectedSetData(id);
@@ -172,12 +174,12 @@ const SetDetail: NextPage = () => {
   };
 
   const previousData = getPreviousSetData(id);
-  const previousCard: DetailProps = {
+  const previousCard: SetProps = {
     name: previousData?.name,
     id: previousData?.id,
   };
   const nextData = getNextSetData(id);
-  const nextCard: DetailProps = {
+  const nextCard: SetProps = {
     name: nextData?.name,
     id: nextData?.id,
   };
@@ -212,7 +214,24 @@ const SetDetail: NextPage = () => {
           </ul>
 
           <h2 style={{ margin: "2rem 0rem" }}> 섹스 플로우 </h2>
-
+          {selectedData?.details?.map((id) => {
+            return (
+              <ImageButton
+                key={id}
+                imgUrl={"/assets/images/" + id + ".png"}
+                width={400}
+                height={100}
+                padding={0}
+                borderColor={"transparent"}
+                borderRadius={2}
+                boxShadow={"1px 3px lightgray"}
+                title={getSelectedData(id)?.name}
+                onClick={() => {
+                  router.push("/detail/" + id);
+                }}
+              ></ImageButton>
+            );
+          })}
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <Carousel width="450px" height="80px" />

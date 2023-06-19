@@ -5,11 +5,7 @@ import { useState } from "react";
 import { Button } from "../components/Button/Button";
 import { Chips } from "../components/ChipContainer";
 import { SetContainer } from "../components/SetContainer";
-import {
-  useSearchAction,
-  useSetDataState,
-  useTagState,
-} from "../context/DataContext";
+import { useSearchAction, useSearchDataState, useSetDataState, useTagActions, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
 import { Carousel } from "../components/Carousel";
 
@@ -17,20 +13,17 @@ const Sets: NextPage = () => {
   const router = useRouter();
   const chipData = useTagState();
   const setData = useSetDataState();
+  const searchData = useSearchDataState();
   const [showTag, setShowTag] = useState(true);
   const { addSearchCountAction } = useSearchAction();
+  const { initializeTag } = useTagActions();
 
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
           <div style={{ alignSelf: "center", padding: "50px" }}>
-            <Image
-              src="/assets/mainlogo.png"
-              width={512}
-              height={360}
-              alt="title"
-            />
+            <Image src="/assets/mainlogo.png" width={512} height={360} alt="title" />
           </div>
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1 style={{ textAlign: "left" }}> 태그 </h1>
@@ -47,23 +40,31 @@ const Sets: NextPage = () => {
               태그 {showTag ? "접기" : "펼치기"}
             </h3>
           </div>
+          <h3
+            style={{
+              display: showTag ? "block" : "none",
+              alignSelf: "self-start",
+              cursor: "pointer",
+              margin: "0.5rem 1rem",
+            }}
+            onClick={() => {
+              initializeTag();
+            }}
+          >
+            초기화 <Image src="/assets/icon/refresh.png" width="20px" height="20px" alt="refresh" />
+          </h3>
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
           <Carousel width="412px" height="80px" />
-          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
-            추천 세트 전체 보기
-          </h2>
-          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>
-            Set {setData.length}개 결과 값
-          </h3>
+          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>추천 세트 전체 보기</h2>
+          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>Set {setData.length}개 결과 값</h3>
 
           {setData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
 
           <SetContainer setData={setData}></SetContainer>
 
-          {setData.length == 0 ? (
-            // || searchData.count > setData.length
+          {setData.length == 0 || searchData.count > setData.length ? (
             ``
           ) : (
             <h3

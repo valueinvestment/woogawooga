@@ -251,7 +251,6 @@ export const searchData = {
   count: 8,
   type: [0, 1],
   toggledIndex: 1,
-  set: "",
 };
 
 export const setData: Array<SetProps> = setJson;
@@ -296,15 +295,10 @@ function search(update: React.Dispatch<React.SetStateAction<DetailProps[]>>, tit
 }
 
 function searchSets(update: React.Dispatch<React.SetStateAction<SetProps[]>>, title: string, tags: Array<number>, count: number) {
-  if (tags.length == 0) {
-    update(setData.filter((item) => item.name?.includes(title)).slice(0, count));
+  if (tags.length == 1 && tags[0] == 0) {
+    update(setData.slice(0, count));
   } else {
-    update(
-      setData
-        .filter((item) => item.name?.includes(title))
-        .filter((item) => tags.every((tag) => item.tags?.includes(tag)))
-        .slice(0, count)
-    );
+    update(setData.filter((item) => tags.every((tag) => item.tags?.includes(tag))).slice(0, count));
   }
 }
 
@@ -360,6 +354,7 @@ export function useSearchDataState() {
 export function useTagActions() {
   const tagContext = useTagContext();
   const dataContext = useDataContext();
+  const setContext = useSetDataContext();
   const searchContext = useSearchDataContext();
   const searchDataContext = useSearchDataContext();
 
@@ -379,6 +374,7 @@ export function useTagActions() {
         tags: selectedTags,
       });
       search(dataContext.update, searchContext.state.title, selectedTags, searchContext.state.type, searchContext.state.count);
+      searchSets(setContext.update, searchContext.state.title, selectedTags, searchContext.state.count);
     } else {
       throw new Error("tag key dosen't exist");
     }
@@ -403,6 +399,7 @@ export function useTagActions() {
     });
 
     search(dataContext.update, searchContext.state.title, [], searchContext.state.type, loadCount);
+    searchSets(setContext.update, searchContext.state.title, [], loadCount);
   };
 
   return { updateTagSelected, initializeTag };
@@ -411,6 +408,7 @@ export function useTagActions() {
 export function useSearchAction() {
   const dataContext = useDataContext();
   const searchDataContext = useSearchDataContext();
+  const setContext = useSetDataContext();
 
   const searchAction = (value: string) => {
     searchDataContext.update({
@@ -420,6 +418,7 @@ export function useSearchAction() {
     });
 
     search(dataContext.update, value, searchDataContext.state.tags, searchDataContext.state.type, loadCount);
+    searchSets(setContext.update, searchDataContext.state.title, searchDataContext.state.tags, loadCount);
   };
 
   const addSearchCountAction = () => {
@@ -431,6 +430,7 @@ export function useSearchAction() {
     });
 
     search(dataContext.update, searchDataContext.state.title, searchDataContext.state.tags, searchDataContext.state.type, newCount);
+    searchSets(setContext.update, searchDataContext.state.title, searchDataContext.state.tags, newCount);
   };
 
   const changeSearchTypeAction = (value: number) => {
@@ -443,6 +443,7 @@ export function useSearchAction() {
     });
 
     search(dataContext.update, searchDataContext.state.title, searchDataContext.state.tags, newType, searchDataContext.state.count);
+    searchSets(setContext.update, searchDataContext.state.title, searchDataContext.state.tags, searchDataContext.state.count);
   };
 
   return { searchAction, addSearchCountAction, changeSearchTypeAction };
@@ -489,15 +490,13 @@ export function useSelectedSetAction() {
 
   const getPreviousSetData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var prev = dataContext.state.find((value) => value.id == (data?.id ?? 0) - 1);
-
+    var prev = dataContext.state.find((value) => value.id == (id ?? 0) - 1);
     return prev ?? data;
   };
 
   const getNextSetData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var next = dataContext.state.find((value) => value.id == (data?.id ?? 0) + 1);
-
+    var next = dataContext.state.find((value) => value.id == (id ?? 0) + 1);
     return next ?? data;
   };
 
