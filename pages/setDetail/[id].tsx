@@ -7,7 +7,7 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import { CardProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
+import { DetailProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar, Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -44,8 +44,6 @@ import {
 } from "chart.js";
 import { Carousel } from "../../components/Carousel";
 
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
 Chart.register(
   ArcElement,
   LineElement,
@@ -78,14 +76,17 @@ const SetDetail: NextPage = () => {
   const id = Number(router.query.id);
   const selectedData = getSelectedSetData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) => selectedData?.tags.includes(item.chipId));
+  const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
   const searchData = useSearchDataState();
 
   const data: ChartData<"bar"> = {
-    labels: ["난이도", "리드비율"],
+    labels: [
+      ["쾌감도", selectedData?.쾌감도 ?? 0],
+      ["리드비율(남/여)", "(" + (selectedData?.["리드(남)"] ?? 0) + "/" + (100 - (selectedData?.["리드(남)"] ?? 0)) + ")"],
+    ],
     datasets: [
       {
-        data: [60, 20],
+        data: [selectedData?.쾌감도 ?? 0, selectedData?.["리드(남)"] ?? 0],
 
         backgroundColor: ["#FF547F", "#7B42AD"],
         barThickness: 30,
@@ -133,14 +134,6 @@ const SetDetail: NextPage = () => {
       },
     },
     plugins: {
-      // datalabels: {
-      //   anchor: "end",
-      //   align: "top",
-      //   formatter: Math.round,
-      //   font: {
-      //     weight: "bold",
-      //   },
-      // },
       title: {
         display: false,
       },
@@ -179,15 +172,13 @@ const SetDetail: NextPage = () => {
   };
 
   const previousData = getPreviousSetData(id);
-  const previousCard: CardProps = {
+  const previousCard: DetailProps = {
     name: previousData?.name,
-    tags: previousData?.tags,
     id: previousData?.id,
   };
   const nextData = getNextSetData(id);
-  const nextCard: CardProps = {
+  const nextCard: DetailProps = {
     name: nextData?.name,
-    tags: nextData?.tags,
     id: nextData?.id,
   };
 
@@ -211,7 +202,7 @@ const SetDetail: NextPage = () => {
 
           <h2 style={{ margin: "2rem 0rem" }}> 이런 분들에게 추천! </h2>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.contents?.map((v) => {
+            {selectedData?.subTitle?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}
@@ -221,12 +212,13 @@ const SetDetail: NextPage = () => {
           </ul>
 
           <h2 style={{ margin: "2rem 0rem" }}> 섹스 플로우 </h2>
+
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <Carousel width="450px" height="80px" />
           <h1> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.contents?.map((v) => {
+            {selectedData?.tips?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}
@@ -234,11 +226,12 @@ const SetDetail: NextPage = () => {
               );
             })}
           </ul>
-          <h2 style={{ margin: "2rem 0rem" }}> 세트 점수 </h2>
+          <h1 style={{ marginBottom: "-10px" }}>
+            난이도 :{"  "}
+            <span style={{ fontSize: "1.5em" }}>{selectedData?.난이도 ?? "보통"}</span>
+          </h1>
+          <h2 style={{ margin: "2rem 0rem -1rem 0rem" }}> 세트 점수 </h2>
           <Bar data={data} options={options} width={200} height={200}></Bar>
-          <h2 style={{ margin: "2rem 0rem" }}> 이 세트에서 쓰인 체위 목록 </h2>
-
-          <Carousel width="450px" height="80px" />
           <div style={{ marginBottom: "0.5rem" }}></div>
 
           <Button
@@ -255,6 +248,7 @@ const SetDetail: NextPage = () => {
               navigator.clipboard.writeText(links);
             }}
           ></Button>
+
           <Button
             labelText="랜덤 뽑기"
             height={80}
@@ -268,6 +262,7 @@ const SetDetail: NextPage = () => {
               router.push("/detail/" + randomId);
             }}
           ></Button>
+
           <div
             style={{
               display: "flex",
@@ -275,7 +270,7 @@ const SetDetail: NextPage = () => {
               width: "90%",
             }}
           >
-            <CustomLink href={"/detail/" + previousCard.id}>
+            <CustomLink href={"/setDetail/" + previousCard.id}>
               <h2
                 style={{
                   textAlign: "left",
@@ -286,9 +281,9 @@ const SetDetail: NextPage = () => {
               >
                 ← 이전
               </h2>
-              <CardContainer cardData={[previousCard]}></CardContainer>
+              <Card id={previousCard.id} name={previousCard.name} src="/assets/setImages/"></Card>
             </CustomLink>
-            <CustomLink href={"/detail/" + nextCard.id}>
+            <CustomLink href={"/setDetail/" + nextCard.id}>
               <h2
                 style={{
                   textAlign: "right",
@@ -299,7 +294,7 @@ const SetDetail: NextPage = () => {
               >
                 다음 →
               </h2>
-              <CardContainer cardData={[nextCard]}></CardContainer>
+              <Card id={nextCard.id} name={nextCard.name} src="/assets/setImages/"></Card>
             </CustomLink>
           </div>
 

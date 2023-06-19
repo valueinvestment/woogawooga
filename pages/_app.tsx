@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { CardDataProvider, SearchDataProvider, SetDataProvider, TagProvider } from "../context/DataContext";
+import { DataProvider, SearchDataProvider, SetDataProvider, TagProvider } from "../context/DataContext";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "../components/Footer";
@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image" content="/assets/forshareimg.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CardDataProvider>
+      <DataProvider>
         <SetDataProvider>
           <SearchDataProvider>
             <TagProvider>
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </TagProvider>
           </SearchDataProvider>
         </SetDataProvider>
-      </CardDataProvider>
+      </DataProvider>
       <Analytics />
       <Footer></Footer>
     </>

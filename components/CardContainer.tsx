@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import {
-  CardProps,
-  useSearchDataState as useSearchDataState,
-} from "../context/DataContext";
+import { DetailProps, useSearchDataState as useSearchDataState } from "../context/DataContext";
 import { Card } from "./Card";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   margin: 0.1rem;
@@ -13,18 +11,32 @@ const Container = styled.div`
 `;
 
 type Props = {
-  cardData: Array<CardProps>;
+  ids: Array<number>;
+  names: Array<string>;
+  width?: number;
+  height?: number;
+  src?: string;
 };
 
-const CardContainer: React.FC<Props> = ({ cardData }) => {
+const CardContainer: React.FC<Props> = (props) => {
   const count = useSearchDataState().count;
+  const router = useRouter();
   return (
     <>
       <Container>
-        {cardData.slice(0, count).map((data) => {
+        {props.ids.slice(0, count).map((id, index) => {
           return (
-            <div key={data.id}>
-              <Card {...data}></Card>
+            <div key={id}>
+              <Card
+                id={id}
+                name={props.names[index]}
+                width={props.width}
+                height={props.height}
+                src={props.src}
+                onClick={() => {
+                  router.push("/detail/" + id);
+                }}
+              ></Card>
             </div>
           );
         })}

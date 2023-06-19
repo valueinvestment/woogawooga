@@ -15,10 +15,7 @@ type buttonProps = {
 };
 
 const ButtonBase = styled.button<buttonProps>`
-  background-color: ${({ darkBtn, backgroundColor }) =>
-    darkBtn
-      ? "black"
-      : backgroundColor}; // i am destructing here, instead of using as prop.darkBtn
+  background-color: ${({ darkBtn, backgroundColor }) => (darkBtn ? "black" : backgroundColor)}; // i am destructing here, instead of using as prop.darkBtn
   padding: ${(props) => props.padding};
   margin: 0.5rem 0rem;
   font-size: 1.7rem;
@@ -38,6 +35,7 @@ const ButtonBase = styled.button<buttonProps>`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  cursor: pointer;
 
   /* if you want to place multiple lines of css, you can import {css}  */
   ${({ active }) =>

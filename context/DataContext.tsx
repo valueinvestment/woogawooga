@@ -1,13 +1,8 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, PropsWithChildren, SetStateAction, useContext, useState } from "react";
 import { Dispatch } from "react";
 import detailData from "./detailData.json";
-import tagData from "./tags.json";
+import tagJson from "./tags.json";
+import setJson from "./setData.json";
 
 const loadCount = 8;
 
@@ -16,11 +11,11 @@ type SizeProps = {
   height?: number | string | undefined;
 };
 
-type CardProps = SizeProps & {
+type TagProps = {
   id?: number;
   name?: string;
-  type?: number;
-  tags?: Array<number>;
+  detail?: Array<number>;
+  set?: Array<number>;
 };
 
 type ChipProps = {
@@ -36,12 +31,39 @@ type ChipProps = {
 type SetProps = {
   id?: number;
   name?: string;
-  contents: Array<string>;
-  imgUrl?: string;
-  tags: Array<number>;
+  subTitle?: Array<string> | null;
+  tags?: Array<number>;
+  details?: Array<number>;
+  tips?: Array<string> | null;
+  난이도?: string;
+  쾌감도?: number;
+  "리드(남)"?: number;
 };
 
-export type { SizeProps, ChipProps, CardProps, SetProps };
+type DetailProps = {
+  id?: number;
+  order?: number;
+  type?: number;
+  code?: number;
+  name?: string;
+  tags?: Array<number>;
+  "상체힘(남)"?: number;
+  "상체힘(여)"?: number;
+  "하체힘(남)"?: number;
+  "하체힘(여)"?: number;
+  "균형감각(남)"?: number;
+  "균형감각(여)"?: number;
+  "유연성(남)"?: number;
+  "유연성(여)"?: number;
+  "무게부담(남)"?: number;
+  "무게부담(여)"?: number;
+  "난이도(남)"?: number;
+  "난이도(여)"?: number;
+  종합난이도?: number;
+  details?: Array<string>;
+};
+
+export type { DetailProps, SizeProps, ChipProps, SetProps };
 
 export const tags: Array<ChipProps> = [
   {
@@ -217,51 +239,22 @@ export const tags: Array<ChipProps> = [
   },
 ];
 
-export const data = detailData;
+export const data: Array<DetailProps> = detailData;
 
 export const filteredData = [];
 
-export const cards: Array<CardProps> = tagData;
+export const tagData: Array<TagProps> = tagJson;
 
 export const searchData = {
   title: "",
   tags: [0],
   count: 8,
   type: [0, 1],
-  card: cards[0],
   toggledIndex: 1,
   set: "",
 };
 
-export const setData: Array<SetProps> = [
-  {
-    id: 1,
-    name: "강아지 산책",
-    contents: [
-      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    ],
-    tags: [2, 1],
-    imgUrl: "/assets/set1.png",
-  },
-  {
-    id: 2,
-    name: "기분이 울적할 때",
-    contents: [
-      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    ],
-    tags: [1],
-    imgUrl: "/assets/set2.png",
-  },
-  {
-    id: 3,
-    name: "고양이처럼",
-    contents: [
-      "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-    ],
-    tags: [3],
-    imgUrl: "/assets/set3.png",
-  },
-];
+export const setData: Array<SetProps> = setJson;
 
 function createCustomContext<T>(defaultValue: T) {
   type UpdateType = Dispatch<SetStateAction<typeof defaultValue>>;
@@ -286,58 +279,42 @@ function createCustomContext<T>(defaultValue: T) {
   return [useCustomContext, Provider] as const;
 }
 
-function search(
-  update: React.Dispatch<React.SetStateAction<CardProps[]>>,
-  title: string,
-  tags: Array<number>,
-  types: Array<number>,
-  count: number
-) {
+function search(update: React.Dispatch<React.SetStateAction<DetailProps[]>>, title: string, tags: Array<number>, types: Array<number>, count: number) {
   if (tags.length == 1 && tags[0] == 0) {
-    var result = cards
-      .filter((item) => title == "" || item.name?.includes(title))
+    var result = data
+      //  .filter((item) => title == "" || item.name?.includes(title))
+      // .filter((item) => tags.every((tag) => item.tags.includes(tag)))
       .filter((item) => types.includes(item.type ?? -1));
     update(result);
   } else {
-    var result = cards
-      .filter((item) => title == "" || item.name?.includes(title))
+    var result = data
+      //  .filter((item) => title == "" || item.name?.includes(title))
       .filter((item) => tags.every((tag) => item.tags?.includes(tag)))
       .filter((item) => types.includes(item.type ?? -1));
     update(result);
   }
 }
 
-function searchSets(
-  update: React.Dispatch<React.SetStateAction<SetProps[]>>,
-  title: string,
-  tags: Array<number>,
-  count: number
-) {
+function searchSets(update: React.Dispatch<React.SetStateAction<SetProps[]>>, title: string, tags: Array<number>, count: number) {
   if (tags.length == 0) {
-    update(
-      setData.filter((item) => item.name?.includes(title)).slice(0, count)
-    );
+    update(setData.filter((item) => item.name?.includes(title)).slice(0, count));
   } else {
     update(
       setData
         .filter((item) => item.name?.includes(title))
-        .filter((item) => tags.every((tag) => item.tags.includes(tag)))
+        .filter((item) => tags.every((tag) => item.tags?.includes(tag)))
         .slice(0, count)
     );
   }
 }
 
 export const [useDataContext, DataProvider] = createCustomContext(data);
-export const [useCardDataContext, CardDataProvider] =
-  createCustomContext(cards);
-export const [useSetDataContext, SetDataProvider] =
-  createCustomContext(setData);
+export const [useSetDataContext, SetDataProvider] = createCustomContext(setData);
 export const [useTagContext, TagProvider] = createCustomContext(tags);
-export const [useSearchDataContext, SearchDataProvider] =
-  createCustomContext(searchData);
+export const [useSearchDataContext, SearchDataProvider] = createCustomContext(searchData);
 
 export function useDataState() {
-  const dataContext = useCardDataContext();
+  const dataContext = useDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
   }
@@ -382,7 +359,7 @@ export function useSearchDataState() {
 
 export function useTagActions() {
   const tagContext = useTagContext();
-  const dataContext = useCardDataContext();
+  const dataContext = useDataContext();
   const searchContext = useSearchDataContext();
   const searchDataContext = useSearchDataContext();
 
@@ -391,27 +368,17 @@ export function useTagActions() {
   }
 
   const updateTagSelected = (id: number) => {
-    const newValue = JSON.parse(
-      JSON.stringify(tagContext.state)
-    ) as Array<ChipProps>;
+    const newValue = JSON.parse(JSON.stringify(tagContext.state)) as Array<ChipProps>;
     const tag = newValue.find((item) => item.chipId == id);
     if (tag) {
       tag.isSelected = !tag.isSelected;
       tagContext.update(newValue);
-      const selectedTags = newValue
-        .filter((item) => item.isSelected)
-        .map((item) => item.chipId);
+      const selectedTags = newValue.filter((item) => item.isSelected).map((item) => item.chipId);
       searchContext.update({
         ...searchContext.state,
         tags: selectedTags,
       });
-      search(
-        dataContext.update,
-        searchContext.state.title,
-        selectedTags,
-        searchContext.state.type,
-        searchContext.state.count
-      );
+      search(dataContext.update, searchContext.state.title, selectedTags, searchContext.state.type, searchContext.state.count);
     } else {
       throw new Error("tag key dosen't exist");
     }
@@ -435,20 +402,14 @@ export function useTagActions() {
       count: loadCount,
     });
 
-    search(
-      dataContext.update,
-      searchContext.state.title,
-      [],
-      searchContext.state.type,
-      loadCount
-    );
+    search(dataContext.update, searchContext.state.title, [], searchContext.state.type, loadCount);
   };
 
   return { updateTagSelected, initializeTag };
 }
 
 export function useSearchAction() {
-  const dataContext = useCardDataContext();
+  const dataContext = useDataContext();
   const searchDataContext = useSearchDataContext();
 
   const searchAction = (value: string) => {
@@ -458,53 +419,30 @@ export function useSearchAction() {
       count: loadCount,
     });
 
-    search(
-      dataContext.update,
-      value,
-      searchDataContext.state.tags,
-      searchDataContext.state.type,
-      loadCount
-    );
+    search(dataContext.update, value, searchDataContext.state.tags, searchDataContext.state.type, loadCount);
   };
 
   const addSearchCountAction = () => {
-    const newCount = Math.min(
-      searchDataContext.state.count + loadCount,
-      cards.length
-    );
+    const newCount = Math.min(searchDataContext.state.count + loadCount, data.length);
 
     searchDataContext.update({
       ...searchDataContext.state,
       count: newCount,
     });
 
-    search(
-      dataContext.update,
-      searchDataContext.state.title,
-      searchDataContext.state.tags,
-      searchDataContext.state.type,
-      newCount
-    );
+    search(dataContext.update, searchDataContext.state.title, searchDataContext.state.tags, searchDataContext.state.type, newCount);
   };
 
   const changeSearchTypeAction = (value: number) => {
     var newType = [...searchDataContext.state.type];
-    newType.includes(value)
-      ? newType.splice(newType.indexOf(value), 1)
-      : newType.push(value);
+    newType.includes(value) ? newType.splice(newType.indexOf(value), 1) : newType.push(value);
     console.log(newType);
     searchDataContext.update({
       ...searchDataContext.state,
       type: newType,
     });
 
-    search(
-      dataContext.update,
-      searchDataContext.state.title,
-      searchDataContext.state.tags,
-      newType,
-      searchDataContext.state.count
-    );
+    search(dataContext.update, searchDataContext.state.title, searchDataContext.state.tags, newType, searchDataContext.state.count);
   };
 
   return { searchAction, addSearchCountAction, changeSearchTypeAction };
@@ -523,18 +461,14 @@ export function useSelectedAction() {
 
   const getPreviousData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var prev = dataContext.state.find(
-      (value) => value.order == (data?.order ?? 0) - 1
-    );
+    var prev = dataContext.state.find((value) => value.order == (data?.order ?? 0) - 1);
 
     return prev ?? data;
   };
 
   const getNextData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var next = dataContext.state.find(
-      (value) => value.order == (data?.order ?? 0) + 1
-    );
+    var next = dataContext.state.find((value) => value.order == (data?.order ?? 0) + 1);
 
     return next ?? data;
   };
@@ -555,18 +489,14 @@ export function useSelectedSetAction() {
 
   const getPreviousSetData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var prev = dataContext.state.find(
-      (value) => value.id == (data?.id ?? 0) - 1
-    );
+    var prev = dataContext.state.find((value) => value.id == (data?.id ?? 0) - 1);
 
     return prev ?? data;
   };
 
   const getNextSetData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
-    var next = dataContext.state.find(
-      (value) => value.id == (data?.id ?? 0) + 1
-    );
+    var next = dataContext.state.find((value) => value.id == (data?.id ?? 0) + 1);
 
     return next ?? data;
   };

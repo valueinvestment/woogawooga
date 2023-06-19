@@ -5,13 +5,7 @@ import { useState } from "react";
 import { Button } from "../components/Button/Button";
 import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
-import {
-  useDataState,
-  useSearchAction,
-  useSearchDataState,
-  useTagActions,
-  useTagState,
-} from "../context/DataContext";
+import { useDataState, useSearchAction, useSearchDataState, useTagActions, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
 import { Carousel } from "../components/Carousel";
 
@@ -29,12 +23,7 @@ const Positions: NextPage = () => {
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
           <div style={{ alignSelf: "center", padding: "50px" }}>
-            <Image
-              src="/assets/mainlogo.png"
-              width={512}
-              height={360}
-              alt="title"
-            />
+            <Image src="/assets/mainlogo.png" width={512} height={360} alt="title" />
           </div>
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1
@@ -70,25 +59,15 @@ const Positions: NextPage = () => {
               initializeTag();
             }}
           >
-            초기화{" "}
-            <Image
-              src="/assets/icon/refresh.png"
-              width="20px"
-              height="20px"
-              alt="refresh"
-            />
+            초기화 <Image src="/assets/icon/refresh.png" width="20px" height="20px" alt="refresh" />
           </h3>
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
 
           <Carousel width="412px" height="80px" />
-          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>
-            체위 요소 전체 보기
-          </h2>
-          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>
-            {cardData.length}개 결과 값
-          </h3>
+          <h2 style={{ textAlign: "left", marginLeft: "10px" }}>체위 요소 전체 보기</h2>
+          <h3 style={{ textAlign: "left", marginLeft: "15px" }}>{cardData.length}개 결과 값</h3>
           <div
             style={{
               alignSelf: "start",
@@ -96,24 +75,13 @@ const Positions: NextPage = () => {
               marginLeft: "1rem",
             }}
           >
-            <input
-              type="checkbox"
-              id="basic"
-              checked={searchData.type.includes(0)}
-              onChange={() => changeSearchTypeAction(0)}
-            ></input>
-            <label>기본형</label>{" "}
-            <input
-              type="checkbox"
-              id="side"
-              checked={searchData.type.includes(1)}
-              onChange={() => changeSearchTypeAction(1)}
-            ></input>
+            <input type="checkbox" id="basic" checked={searchData.type.includes(0)} onChange={() => changeSearchTypeAction(0)}></input>
+            <label>기본형</label> <input type="checkbox" id="side" checked={searchData.type.includes(1)} onChange={() => changeSearchTypeAction(1)}></input>
             <label>파생형</label>
           </div>
 
           {cardData.length == 0 ? <h3>표시할 내용이 없습니다</h3> : ``}
-          <CardContainer cardData={cardData}></CardContainer>
+          <CardContainer ids={cardData.map((v) => v.id ?? 0)} names={cardData.map((v) => v.name ?? "")}></CardContainer>
           {cardData.length == 0 || searchData.count > cardData.length ? (
             ``
           ) : (

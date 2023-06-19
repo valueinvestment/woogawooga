@@ -27,15 +27,7 @@ const SetContainer: React.FC<Props> = ({ setData }) => {
                 router.push("/setDetail/" + data.id);
               }}
             >
-              <ImageButton
-                {...data}
-                width={500}
-                height={100}
-                padding={0}
-                borderColor={"transparent"}
-                borderRadius={2}
-                boxShadow={"1px 3px lightgray"}
-              ></ImageButton>
+              <ImageButton {...data} imgUrl={"/assets/setImages/" + data.id + ".png"} width={400} height={100} padding={0} borderColor={"transparent"} borderRadius={2} boxShadow={"1px 3px lightgray"} title={data.name} content={data.tips?.[0]}></ImageButton>
             </div>
           );
         })}

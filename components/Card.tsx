@@ -1,17 +1,12 @@
 import styled from "styled-components";
 import Image from "next/image";
-import {
-  CardProps,
-  SizeProps,
-  useSearchDataContext,
-} from "../context/DataContext";
-import { useRouter } from "next/router";
+import { DetailProps, SizeProps, useSearchDataContext } from "../context/DataContext";
 
 const Container = styled.div`
   cursor: pointer;
 `;
 
-const CardContainer = styled.div<SizeProps>`
+const ImageContainer = styled.div<SizeProps>`
   display: flex;
   border-radius: 2rem;
   overflow: hidden;
@@ -20,7 +15,7 @@ const CardContainer = styled.div<SizeProps>`
   box-shadow: 0px 4px 4px 0px lightgray;
 `;
 
-CardContainer.defaultProps = { height: 150, width: 150 };
+ImageContainer.defaultProps = { height: 150, width: 150 };
 
 const TitleContainer = styled.div<SizeProps>`
   /* height: ${({ height }) => height}; */
@@ -31,27 +26,28 @@ const TitleContainer = styled.div<SizeProps>`
   text-align: center;
 `;
 
-const Card: React.FC<CardProps> = (props) => {
-  const router = useRouter();
+type Props = {
+  id?: number;
+  name?: string;
+  width?: number;
+  height?: number;
+  src?: string;
+  onClick?: () => void;
+};
+
+const Card: React.FC<Props> = (props) => {
   const defaultSize = 140;
   return (
     <Container
       onClick={() => {
-        router.push("/detail/" + props.id);
+        if (props.onClick) {
+          props.onClick();
+        }
       }}
     >
-      <CardContainer
-        width={props.width ?? defaultSize}
-        height={props.height ?? defaultSize}
-      >
-        <Image
-          src={"/assets/images/" + props.id + (props.height ? ".gif" : ".png")}
-          alt=""
-          height={props.height ?? defaultSize}
-          width={props.width ?? defaultSize}
-          objectFit="cover"
-        />
-      </CardContainer>
+      <ImageContainer width={props.width ?? defaultSize} height={props.height ?? defaultSize}>
+        <Image src={(props.src ?? "/assets/images/") + props.id + (props.height ? ".gif" : ".png")} alt="" height={props.height ?? defaultSize} width={props.width ?? defaultSize} objectFit="cover" />
+      </ImageContainer>
 
       <TitleContainer width={props.width ?? defaultSize} height="auto">
         {props.name}

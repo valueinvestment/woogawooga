@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../../components/Button/Button";
 import { Toggle } from "../../components/Button/ToggleButton";
@@ -7,9 +6,9 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import { CardProps, useTagState, useSelectedAction, useDataContext, useSearchDataState } from "../../context/DataContext";
+import { DetailProps, useTagState, useSelectedAction, useDataContext, useSearchDataState } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
-import { Bar, Radar } from "react-chartjs-2";
+import { Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
 import { CustomLink } from "../../components/CustomLink";
 import Image from "next/image";
@@ -76,7 +75,7 @@ const PositionDetail: NextPage = () => {
   const id = Number(router.query.id);
   const selectedData = getSelectedData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) => selectedData?.tags.includes(item.chipId));
+  const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
   const searchData = useSearchDataState();
 
   const data = {
@@ -187,15 +186,13 @@ const PositionDetail: NextPage = () => {
   };
 
   const previousData = getPreviousData(id);
-  const previousCard: CardProps = {
+  const previousCard: DetailProps = {
     name: previousData?.name,
-    tags: previousData?.tags,
     id: previousData?.id,
   };
   const nextData = getNextData(id);
-  const nextCard: CardProps = {
+  const nextCard: DetailProps = {
     name: nextData?.name,
-    tags: nextData?.tags,
     id: nextData?.id,
   };
 
@@ -220,12 +217,12 @@ const PositionDetail: NextPage = () => {
           <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
           {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
-          <Card {...selectedData} tags={selectedData?.tags} width="320px" height="320px" name=""></Card>
+          <Card id={selectedData?.id} name={selectedData?.name} width={320} height={320}></Card>
 
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <h1> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
-            {selectedData?.["텍스트"].map((v) => {
+            {selectedData?.details?.map((v) => {
               return (
                 <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
                   {v}
@@ -318,7 +315,7 @@ const PositionDetail: NextPage = () => {
               >
                 ← 이전
               </h2>
-              <CardContainer cardData={[previousCard]}></CardContainer>
+              <Card id={previousCard.id} name={previousCard.name}></Card>
             </CustomLink>
             <CustomLink href={"/detail/" + nextCard.id}>
               <h2
@@ -331,7 +328,7 @@ const PositionDetail: NextPage = () => {
               >
                 다음 →
               </h2>
-              <CardContainer cardData={[nextCard]}></CardContainer>
+              <Card id={nextCard.id} name={nextCard.name}></Card>
             </CustomLink>
           </div>
 
