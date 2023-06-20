@@ -42,6 +42,7 @@ import {
 } from "chart.js";
 import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
 import { Carousel } from "../../components/Carousel";
+import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
   ArcElement,
@@ -239,7 +240,6 @@ const PositionDetail: NextPage = () => {
             <span style={{ fontSize: "1.5em" }}>{score > 90 ? "이거 가능?" : score > 70 ? "전문가" : score > 50 ? "어려움" : score > 20 ? "보통" : "쉬움"}</span>
           </h1>
           <Radar ref={chartRef} data={data} width={400} height={400} options={options}></Radar>
-          <Carousel width="450px" height="80px" />
           <div style={{ position: "relative" }}>
             <div
               style={{
@@ -269,6 +269,23 @@ const PositionDetail: NextPage = () => {
             </div>
           </div>
           <div style={{ marginBottom: "0.5rem" }}></div>
+
+          <h1 style={{ marginTop: "20px" }}> 연관 세트 </h1>
+
+          <ImageButton
+            imgUrl={"/assets/setImages/" + selectedData?.code + ".png"}
+            width={400}
+            height={100}
+            padding={0}
+            borderColor={"transparent"}
+            borderRadius={2}
+            boxShadow={"1px 3px lightgray"}
+            title={selectedData?.code ? getSelectedData(selectedData?.code)?.name : ""}
+            onClick={() => {
+              router.push("/setDetail/" + selectedData?.code);
+            }}
+          ></ImageButton>
+          <Carousel width="450px" height="80px" />
 
           <Button
             labelText="공유하기"
