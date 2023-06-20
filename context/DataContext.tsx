@@ -318,18 +318,8 @@ export function useDataState() {
 
 export function useSetDataState() {
   const dataContext = useSetDataContext();
-  const searhDataContext = useSearchDataContext();
   if (dataContext === undefined) {
     throw new Error("useDataState should be used within DataProvider");
-  }
-
-  if (searhDataContext.state.count == 0) {
-    searhDataContext.update({
-      ...searhDataContext.state,
-      count: loadCount,
-    });
-
-    searchSets(dataContext.update, searhDataContext.state.title, [], loadCount);
   }
 
   return dataContext.state;
@@ -436,7 +426,6 @@ export function useSearchAction() {
   const changeSearchTypeAction = (value: number) => {
     var newType = [...searchDataContext.state.type];
     newType.includes(value) ? newType.splice(newType.indexOf(value), 1) : newType.push(value);
-    console.log(newType);
     searchDataContext.update({
       ...searchDataContext.state,
       type: newType,

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useSearchDataState } from "../context/DataContext";
 import { SetProps } from "../context/DataContext";
 import { ImageButton } from "./Button/ImageButton";
 import { useRouter } from "next/router";
@@ -15,11 +16,12 @@ type Props = {
 };
 
 const SetContainer: React.FC<Props> = ({ setData }) => {
+  const count = useSearchDataState().count;
   const router = useRouter();
   return (
     <>
       <Container>
-        {setData.map((data) => {
+        {setData.slice(0, count).map((data) => {
           return (
             <div
               key={data.name}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DetailProps, useSearchDataState as useSearchDataState } from "../context/DataContext";
+import { useSearchDataState } from "../context/DataContext";
 import { Card } from "./Card";
 import { useRouter } from "next/router";
 
