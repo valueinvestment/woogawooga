@@ -239,7 +239,9 @@ export const tags: Array<ChipProps> = [
   },
 ];
 
-export const data: Array<DetailProps> = detailData;
+export const data: Array<DetailProps> = detailData.sort((a, b) => {
+  return (a.order ?? 0) - (b.order ?? 0);
+});
 
 export const filteredData = [];
 
