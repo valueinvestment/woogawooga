@@ -80,10 +80,6 @@ const PositionDetail: NextPage = () => {
   const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
   const searchData = useSearchDataState();
 
-  if (Number.isNaN(id)) {
-    router.push("/");
-  }
-
   const data = {
     labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "균형감각"],
     datasets: [
@@ -286,6 +282,7 @@ const PositionDetail: NextPage = () => {
               router.push("/detail/" + randomId);
             }}
           ></Button>
+
           <div
             style={{
               display: "flex",
@@ -293,32 +290,72 @@ const PositionDetail: NextPage = () => {
               width: "90%",
             }}
           >
-            <CustomLink href={"/detail/" + previousCard.id}>
-              <h2
+            {previousData ? (
+              <CustomLink href={"/detail/" + previousCard?.id}>
+                <h2
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "30px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  ← 이전
+                </h2>
+                <Card id={previousCard.id} name={previousCard.name}></Card>
+              </CustomLink>
+            ) : (
+              <div
                 style={{
-                  textAlign: "left",
-                  marginLeft: "30px",
-                  textDecorationLine: "underline",
-                  textUnderlineOffset: "5px",
+                  opacity: 0.5,
                 }}
               >
-                ← 이전
-              </h2>
-              <Card id={previousCard.id} name={previousCard.name}></Card>
-            </CustomLink>
-            <CustomLink href={"/detail/" + nextCard.id}>
-              <h2
+                <h2
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "30px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  ← 이전
+                </h2>
+                <Card id={0} name={"컨텐츠가 없습니다."}></Card>
+              </div>
+            )}
+            {nextData ? (
+              <CustomLink href={"/detail/" + nextCard.id}>
+                <h2
+                  style={{
+                    textAlign: "right",
+                    paddingRight: "20px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  다음 →
+                </h2>
+                <Card id={nextCard.id} name={nextCard.name}></Card>
+              </CustomLink>
+            ) : (
+              <div
                 style={{
-                  textAlign: "right",
-                  paddingRight: "20px",
-                  textDecorationLine: "underline",
-                  textUnderlineOffset: "5px",
+                  opacity: 0.5,
                 }}
               >
-                다음 →
-              </h2>
-              <Card id={nextCard.id} name={nextCard.name}></Card>
-            </CustomLink>
+                <h2
+                  style={{
+                    textAlign: "right",
+                    paddingRight: "20px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  다음 →
+                </h2>
+                <Card id={0} name={"컨텐츠가 없습니다."}></Card>
+              </div>
+            )}
           </div>
 
           <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>

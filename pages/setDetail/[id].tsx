@@ -292,32 +292,72 @@ const SetDetail: NextPage = () => {
               width: "90%",
             }}
           >
-            <CustomLink href={"/setDetail/" + previousCard.id}>
-              <h2
+            {previousData ? (
+              <CustomLink href={"/setDetail/" + previousCard?.id}>
+                <h2
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "30px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  ← 이전
+                </h2>
+                <Card id={previousCard.id} name={previousCard.name} src="/assets/setImages/"></Card>
+              </CustomLink>
+            ) : (
+              <div
                 style={{
-                  textAlign: "left",
-                  marginLeft: "30px",
-                  textDecorationLine: "underline",
-                  textUnderlineOffset: "5px",
+                  opacity: 0.5,
                 }}
               >
-                ← 이전
-              </h2>
-              <Card id={previousCard.id} name={previousCard.name} src="/assets/setImages/"></Card>
-            </CustomLink>
-            <CustomLink href={"/setDetail/" + nextCard.id}>
-              <h2
+                <h2
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "30px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  ← 이전
+                </h2>
+                <Card id={0} name={"컨텐츠가 없습니다."} src="/assets/setImages/"></Card>
+              </div>
+            )}
+            {nextData ? (
+              <CustomLink href={"/setDetail/" + nextCard.id}>
+                <h2
+                  style={{
+                    textAlign: "right",
+                    paddingRight: "20px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  다음 →
+                </h2>
+                <Card id={nextCard.id} name={nextCard.name} src="/assets/setImages/"></Card>
+              </CustomLink>
+            ) : (
+              <div
                 style={{
-                  textAlign: "right",
-                  paddingRight: "20px",
-                  textDecorationLine: "underline",
-                  textUnderlineOffset: "5px",
+                  opacity: 0.5,
                 }}
               >
-                다음 →
-              </h2>
-              <Card id={nextCard.id} name={nextCard.name} src="/assets/setImages/"></Card>
-            </CustomLink>
+                <h2
+                  style={{
+                    textAlign: "right",
+                    paddingRight: "20px",
+                    textDecorationLine: "underline",
+                    textUnderlineOffset: "5px",
+                  }}
+                >
+                  다음 →
+                </h2>
+                <Card id={0} name={"컨텐츠가 없습니다."} src="/assets/setImages/"></Card>
+              </div>
+            )}
           </div>
 
           <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>

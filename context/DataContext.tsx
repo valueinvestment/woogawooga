@@ -455,14 +455,14 @@ export function useSelectedAction() {
     var data = dataContext.state.find((value) => value.id == id);
     var prev = dataContext.state.find((value) => value.order == (data?.order ?? 0) - 1);
 
-    return prev ?? data;
+    return prev;
   };
 
   const getNextData = (id: number) => {
     var data = dataContext.state.find((value) => value.id == id);
     var next = dataContext.state.find((value) => value.order == (data?.order ?? 0) + 1);
 
-    return next ?? data;
+    return next;
   };
 
   return { getSelectedData, getPreviousData, getNextData };
@@ -480,15 +480,13 @@ export function useSelectedSetAction() {
   };
 
   const getPreviousSetData = (id: number) => {
-    var data = dataContext.state.find((value) => value.id == id);
     var prev = dataContext.state.find((value) => value.id == (id ?? 0) - 1);
-    return prev ?? data;
+    return prev;
   };
 
   const getNextSetData = (id: number) => {
-    var data = dataContext.state.find((value) => value.id == id);
     var next = dataContext.state.find((value) => value.id == (id ?? 0) + 1);
-    return next ?? data;
+    return next;
   };
 
   return { getSelectedSetData, getPreviousSetData, getNextSetData };
