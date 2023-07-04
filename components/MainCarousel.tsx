@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Container = styled.div<carouselProps>`
   overflow: hidden;
-  // padding: 0 0 50px 0;
+  padding: 0 0 50px 0;
   width: 100%;
 `;
 
@@ -25,7 +25,7 @@ type carouselProps = {
   height: string;
 };
 
-const Carousel: React.FC<carouselProps> = (props) => {
+const MainCarousel: React.FC<carouselProps> = (props) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -37,13 +37,10 @@ const Carousel: React.FC<carouselProps> = (props) => {
   };
 
   const items = [
-    { id: 1, url: "/assets/carousel/carousel1.jpg" },
-    { id: 2, url: "/assets/carousel/carousel2.jpg" },
-    { id: 3, url: "/assets/carousel/carousel3.jpg" },
-    { id: 4, url: "/assets/carousel/carousel4.jpg" },
-    { id: 5, url: "/assets/carousel/carousel5.jpg" },
-    { id: 6, url: "/assets/carousel/carousel6.jpg" },
-    { id: 7, url: "/assets/carousel/carousel7.jpg" },
+    { id: 1, url: "/assets/carousel/MainCarousel1.png" },
+    { id: 2, url: "/assets/carousel/MainCarousel2.png" },
+    { id: 3, url: "/assets/carousel/MainCarousel3.png" },
+    { id: 4, url: "/assets/carousel/MainCarousel4.png" },
   ];
 
   return (
@@ -54,12 +51,7 @@ const Carousel: React.FC<carouselProps> = (props) => {
             return (
               <div key={item.id}>
                 <ImageContainer>
-                  <Image
-                    src={item.url}
-                    alt={item.url}
-                    width="400px"
-                    height="80px"
-                  />
+                  <Image src={item.url} alt={item.url} width="450px" height="200px" />
                 </ImageContainer>
               </div>
             );
@@ -70,4 +62,4 @@ const Carousel: React.FC<carouselProps> = (props) => {
   );
 };
 
-export { Carousel };
+export { MainCarousel };

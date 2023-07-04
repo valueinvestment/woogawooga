@@ -7,7 +7,7 @@ import { Chips } from "../components/ChipContainer";
 import { SetContainer } from "../components/SetContainer";
 import { useSearchAction, useSearchDataState, useSetDataState, useTagActions, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
-import { Carousel } from "../components/Carousel";
+import { DivideCarousel } from "../components/DivideCarousel";
 
 const Sets: NextPage = () => {
   const router = useRouter();
@@ -56,7 +56,7 @@ const Sets: NextPage = () => {
           <div style={{ display: showTag ? "flex" : "none" }}>
             <Chips chipData={chipData}></Chips>
           </div>
-          <Carousel width="412px" height="80px" />
+          <DivideCarousel width="412px" height="80px" />
           <h2 style={{ textAlign: "left", marginLeft: "10px" }}>추천 세트 전체 보기</h2>
           <h3 style={{ textAlign: "left", marginLeft: "15px" }}>Set {setData.length}개 결과 값</h3>
 

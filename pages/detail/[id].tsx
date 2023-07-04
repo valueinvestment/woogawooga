@@ -6,7 +6,7 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import { DetailProps, useTagState, useSelectedAction, useDataContext, useSearchDataState } from "../../context/DataContext";
+import { DetailProps, useTagState, useSelectedAction, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -41,7 +41,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
-import { Carousel } from "../../components/Carousel";
+import { DivideCarousel } from "../../components/DivideCarousel";
 import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
@@ -72,12 +72,17 @@ Chart.register(
 
 const PositionDetail: NextPage = () => {
   const { getSelectedData, getPreviousData, getNextData } = useSelectedAction();
+  const { getSelectedSetData } = useSelectedSetAction();
   const router = useRouter();
   const id = Number(router.query.id);
   const selectedData = getSelectedData(id);
   const dataState = useDataContext().state;
   const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
   const searchData = useSearchDataState();
+
+  if (Number.isNaN(id)) {
+    router.push("/");
+  }
 
   const data = {
     labels: ["파트너 무게 부담", "상체근력", "하체근력", "유연성", "균형감각"],
@@ -232,7 +237,7 @@ const PositionDetail: NextPage = () => {
             })}
           </ul>
 
-          <Carousel width="450px" height="80px" />
+          <DivideCarousel width="450px" height="80px" />
           <h1 style={{ marginTop: "20px" }}> 성별 선택 </h1>
           <Toggle></Toggle>
           <h1 style={{ marginBottom: "-10px" }}>
@@ -240,35 +245,6 @@ const PositionDetail: NextPage = () => {
             <span style={{ fontSize: "1.5em" }}>{score > 90 ? "이거 가능?" : score > 70 ? "전문가" : score > 50 ? "어려움" : score > 20 ? "보통" : "쉬움"}</span>
           </h1>
           <Radar ref={chartRef} data={data} width={400} height={400} options={options}></Radar>
-          <div style={{ position: "relative" }}>
-            <div
-              style={{
-                width: "100%",
-                height: "100px",
-                top: "50%",
-                position: "absolute",
-                zIndex: 10,
-              }}
-            >
-              {/* <h2>업데이트 예정</h2>
-            </div>
-            <div
-              style={{
-                opacity: "0.1",
-              }}
-            >
-              <h1> 쾌감도 </h1>
-              <h1> 총점 : 50(중간 쾌감) / 70(강한 쾌감) </h1>
-              <Bar
-                data={data}
-                options={barOption}
-                width={200}
-                height={200}
-              ></Bar> */}
-              <DivideLine />
-            </div>
-          </div>
-          <div style={{ marginBottom: "0.5rem" }}></div>
 
           <h1 style={{ marginTop: "20px" }}> 연관 세트 </h1>
 
@@ -280,12 +256,12 @@ const PositionDetail: NextPage = () => {
             borderColor={"transparent"}
             borderRadius={2}
             boxShadow={"1px 3px lightgray"}
-            title={selectedData?.code ? getSelectedData(selectedData?.code)?.name : ""}
+            title={selectedData?.code ? getSelectedSetData(selectedData?.code)?.name : ""}
             onClick={() => {
               router.push("/setDetail/" + selectedData?.code);
             }}
           ></ImageButton>
-          <Carousel width="450px" height="80px" />
+          <DivideCarousel width="450px" height="80px" />
 
           <Button
             labelText="공유하기"

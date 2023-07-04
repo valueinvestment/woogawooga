@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { Carousel } from "./Carousel";
+import { DivideCarousel } from "./DivideCarousel";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ function getDiffDate(date: Date) {
 const Footer: React.FC = () => (
   <>
     <FooterContainer>
-      <Carousel width="450px" height="80px" />
+      <DivideCarousel width="450px" height="80px" />
       <h3 style={{ margin: "0rem" }}>투자 문의 / 아이디어 제안</h3>
       <a
         href="mailto: oogaooga.app@gmail.com"
@@ -50,9 +50,7 @@ const Footer: React.FC = () => (
         <span style={{ fontSize: "0.8rem" }}>Copyright © 2023. 우가?우가!</span>
       </p>
       <p style={{ margin: "0rem" }}>
-        <span style={{ fontSize: "0.8rem" }}>
-          우가?우가! OOGA?OOGA! All rights reserved.
-        </span>
+        <span style={{ fontSize: "0.8rem" }}>우가?우가! OOGA?OOGA! All rights reserved.</span>
       </p>
     </FooterContainer>
   </>

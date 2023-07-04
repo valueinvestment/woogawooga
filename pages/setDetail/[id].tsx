@@ -42,7 +42,7 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
-import { Carousel } from "../../components/Carousel";
+import { DivideCarousel } from "../../components/DivideCarousel";
 import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
@@ -234,7 +234,7 @@ const SetDetail: NextPage = () => {
           })}
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
           <Chips chipData={chipData} isReadonly={true}></Chips>
-          <Carousel width="450px" height="80px" />
+          <DivideCarousel width="450px" height="80px" />
           <h1> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.tips?.map((v) => {
@@ -269,7 +269,7 @@ const SetDetail: NextPage = () => {
           ></Button>
 
           <Button
-            labelText="랜덤 뽑기"
+            labelText="이거 가능?"
             height={80}
             maxWidth={250}
             padding={20}

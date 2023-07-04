@@ -7,7 +7,7 @@ import { CardContainer } from "../components/CardContainer";
 import { Chips } from "../components/ChipContainer";
 import { useDataState, useSearchAction, useSearchDataState, useTagActions, useTagState } from "../context/DataContext";
 import styles from "../styles/Home.module.css";
-import { Carousel } from "../components/Carousel";
+import { DivideCarousel } from "../components/DivideCarousel";
 
 const Positions: NextPage = () => {
   const router = useRouter();
@@ -65,7 +65,7 @@ const Positions: NextPage = () => {
             <Chips chipData={chipData}></Chips>
           </div>
 
-          <Carousel width="412px" height="80px" />
+          <DivideCarousel width="412px" height="80px" />
           <h2 style={{ textAlign: "left", marginLeft: "10px" }}>체위 요소 전체 보기</h2>
           <h3 style={{ textAlign: "left", marginLeft: "15px" }}>{cardData.length}개 결과 값</h3>
           <div
