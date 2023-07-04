@@ -69,7 +69,6 @@ Chart.register(
   Legend,
   Title,
   Tooltip
-  // ChartDataLabels
 );
 const SetDetail: NextPage = () => {
   const { getSelectedSetData, getPreviousSetData, getNextSetData } = useSelectedSetAction();
@@ -80,26 +79,28 @@ const SetDetail: NextPage = () => {
   const dataState = useDataContext().state;
   const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
   const searchData = useSearchDataState();
+  const score = selectedData?.난이도 == "쉬움" ? 20 : selectedData?.난이도 == "보통" ? 40 : selectedData?.난이도 == "어려움" ? 60 : selectedData?.난이도 == "전문가" ? 80 : selectedData?.난이도 == "이거 가능?" ? 100 : 0;
 
   const data: ChartData<"bar"> = {
     labels: [
+      ["난이도", selectedData?.난이도],
       ["쾌감도", selectedData?.쾌감도 ?? 0],
-      ["리드비율(남/여)", "(" + (selectedData?.["리드(남)"] ?? 0) + "/" + (100 - (selectedData?.["리드(남)"] ?? 0)) + ")"],
+      ["리드 비율", "(" + (selectedData?.["리드(남)"] ?? 0) + "/" + (100 - (selectedData?.["리드(남)"] ?? 0)) + ")", "(남/여)"],
     ],
     datasets: [
       {
-        data: [selectedData?.쾌감도 ?? 0, selectedData?.["리드(남)"] ?? 0],
+        data: [score, selectedData?.쾌감도 ?? 0, selectedData?.["리드(남)"] ?? 0],
 
-        backgroundColor: ["#FF547F", "#7B42AD"],
+        backgroundColor: ["#FF90AD", "#FF547F", "#7B42AD"],
         barThickness: 30,
         borderRadius: Number.MAX_VALUE,
-        borderSkipped: [false, "end"],
+        borderSkipped: [false, false, "end"],
         grouped: false,
         stack: "stack1",
       },
       {
-        data: [null, 100],
-        backgroundColor: ["#FF547F", "#FF90AD"],
+        data: [null, null, 100],
+        backgroundColor: ["#FF547F", "#FF90AD", "#FF90AD"],
         barThickness: 30,
         borderRadius: Number.MAX_VALUE,
         borderSkipped: false,
@@ -110,10 +111,10 @@ const SetDetail: NextPage = () => {
         data: [
           [-3, 103],
           [-3, 103],
+          [-3, 103],
         ],
-        backgroundColor: ["#EDEDED", "#EDEDED"],
+        backgroundColor: ["#EDEDED", "#EDEDED", "#EDEDED"],
         barThickness: 40,
-        borderColor: "red",
         borderRadius: Number.MAX_VALUE,
         borderSkipped: false,
         grouped: false,
@@ -200,9 +201,10 @@ const SetDetail: NextPage = () => {
           >
             <Image src="/assets/main.svg" alt="" width={60} height={60}></Image>
           </div>
-          <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
+          <Image src={"/assets/setImages/wide/" + id + ".png"} width={1456} height={816} alt="title" />
+          <h1 style={{ margin: "1.5rem 0rem" }}> {selectedData?.name} </h1>
 
-          <h2 style={{ margin: "2rem 0rem" }}> 이런 분들에게 추천! </h2>
+          <h2 style={{ margin: "1rem 0rem" }}> 이런 분들에게 추천! </h2>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.subTitle?.map((v) => {
               return (
@@ -232,6 +234,7 @@ const SetDetail: NextPage = () => {
               ></ImageButton>
             );
           })}
+          <h5>※ 컨텐츠는 지속적으로 추가될 예정입니다.</h5>
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
           <Chips chipData={chipData} isReadonly={true}></Chips>
           <DivideCarousel width="450px" height="80px" />
@@ -276,9 +279,9 @@ const SetDetail: NextPage = () => {
             backgroundColor="#7B42AD"
             color="white"
             onClick={() => {
-              var randomId = parseInt((Math.random() * 146).toString());
+              var randomId = parseInt((Math.random() * 55).toString());
               randomId = dataState.some((v) => v.id == randomId) ? randomId : 1;
-              router.push("/detail/" + randomId);
+              router.push("/setDetail/" + randomId);
             }}
           ></Button>
 

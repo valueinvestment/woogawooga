@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 
-const Label = styled.label``;
-
 const ImageLabelContainer = styled.div<imageLabelProps>`
   display: grid;
   grid-template-columns: ${({ imageSize }) => imageSize + "px"} auto;
@@ -18,13 +16,16 @@ const LabelContainer = styled.div<imageLabelProps>`
 
 const Title = styled.div<imageLabelProps>`
   font-size: ${({ content }) => (content ? "1.5rem" : "inherit")};
-  height: ${({ content }) => (content ? "1.5rem" : "inherit")};
+  height: ${({ content }) => (content ? "2.5rem" : "inherit")};
+  text-align: ${({ titleAlign }) => (titleAlign ? titleAlign : "center")};
+  padding: ${({ titlePadding }) => (titlePadding ? titlePadding : "0px")};
 `;
 
 const Content = styled.div<imageLabelProps>`
   display: ${({ content }) => (content ? "flex" : "none")};
   font-size: 1rem;
-  padding: 5px;
+  font-weight: normal;
+  padding: ${({ contentPadding }) => (contentPadding ? contentPadding : "0px")};
   text-align: left;
 `;
 
@@ -49,6 +50,9 @@ type imageLabelProps = {
   width?: number;
   height?: number;
   imageSize: number;
+  titleAlign?: string;
+  titlePadding?: string;
+  contentPadding?: string;
 };
 
 export { ImageLabel };

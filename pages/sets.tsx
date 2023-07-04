@@ -23,7 +23,15 @@ const Sets: NextPage = () => {
       <div className={styles.container}>
         <main className={styles.main} style={{ alignItems: "normal" }}>
           <div style={{ alignSelf: "center", padding: "50px" }}>
-            <Image src="/assets/mainlogo.png" width={512} height={360} alt="title" />
+            <Image
+              src="/assets/mainlogo.png"
+              width={512}
+              height={360}
+              alt="title"
+              onClick={() => {
+                router.push("/");
+              }}
+            />
           </div>
           <div style={{ display: "flex", whiteSpace: "pre-wrap" }}>
             <h1 style={{ textAlign: "left" }}> 태그 </h1>

@@ -1,9 +1,6 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { ImageButton } from "../components/Button/ImageButton";
-import { DivideCarousel } from "../components/DivideCarousel";
 import styles from "../styles/Home.module.css";
 import { Button } from "../components/Button/Button";
 import { MainCarousel } from "../components/MainCarousel";

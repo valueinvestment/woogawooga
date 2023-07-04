@@ -17,7 +17,10 @@ type imageButtonProps = {
   color?: string;
   imgUrl?: string;
   title?: string;
+  titleAlign?: string;
+  titlePadding?: string;
   content?: string;
+  contentPadding?: string;
   width?: number;
   maxWidth?: number;
   height?: number;

@@ -187,10 +187,6 @@ const PositionDetail: NextPage = () => {
     events: [],
   };
 
-  const barOption: ChartOptions<"bar"> = {
-    indexAxis: "y",
-  };
-
   const previousData = getPreviousData(id);
   const previousCard: DetailProps = {
     name: previousData?.name,
