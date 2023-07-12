@@ -12,13 +12,12 @@ const Container = styled.div<Props>`
     display: flex;
     flex-wrap: wrap;
     padding: 4px;
-    justify-content: "left"};
+  }
 
-    li {
-      margin: 4px;
+  li {
+    margin: 4px;
 
-      &:not(:last-child) {
-      }
+    &:not(:last-child) {
     }
   }
 `;
@@ -26,9 +25,10 @@ const Container = styled.div<Props>`
 type Props = {
   chipData: Array<ChipProps>;
   isReadonly?: boolean;
+  justifyContent?: string;
 };
 
-const Chips: React.FC<Props> = ({ chipData, isReadonly }) => {
+const Chips: React.FC<Props> = ({ chipData, isReadonly, justifyContent }) => {
   let categorySet = new Set(chipData.map((data) => data.category));
   let categorys = Array.from(categorySet);
 
@@ -51,7 +51,11 @@ const Chips: React.FC<Props> = ({ chipData, isReadonly }) => {
               </p>
             )}
 
-            <ul>
+            <ul
+              style={{
+                justifyContent: justifyContent,
+              }}
+            >
               {chipData
                 .filter((data) => data.category === category)
                 .map((data) => {

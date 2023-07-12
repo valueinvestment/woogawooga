@@ -41,7 +41,6 @@ import {
   ChartOptions,
 } from "chart.js";
 import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
-import { DivideCarousel } from "../../components/DivideCarousel";
 import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
@@ -217,8 +216,8 @@ const PositionDetail: NextPage = () => {
 
           <Card id={selectedData?.id} name={selectedData?.name} width={320} height={320}></Card>
 
-          <Chips chipData={chipData} isReadonly={true}></Chips>
-          <h1> Tips </h1>
+          <Chips chipData={chipData} isReadonly={true} justifyContent="center"></Chips>
+          <h1 style={{ marginTop: "35px" }}> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.details?.map((v) => {
               return (
@@ -229,7 +228,6 @@ const PositionDetail: NextPage = () => {
             })}
           </ul>
 
-          <DivideCarousel width="450px" height="80px" />
           <h1 style={{ marginTop: "20px" }}> 성별 선택 </h1>
           <Toggle></Toggle>
           <h1 style={{ marginBottom: "-10px" }}>
@@ -253,7 +251,6 @@ const PositionDetail: NextPage = () => {
               router.push("/setDetail/" + selectedData?.code);
             }}
           ></ImageButton>
-          <DivideCarousel width="450px" height="80px" />
 
           <Button
             labelText="공유하기"

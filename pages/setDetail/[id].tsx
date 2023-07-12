@@ -1,16 +1,11 @@
 import { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../../components/Button/Button";
-import { Toggle } from "../../components/Button/ToggleButton";
 import { Card } from "../../components/Card";
-import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
-import DivideLine from "../../components/DivideLine";
-import { DetailProps, useTagState, useSelectedSetAction, useDataContext, useSearchDataState, useSelectedAction, SetProps } from "../../context/DataContext";
+import { useTagState, useSelectedSetAction, useDataContext, useSearchDataState, useSelectedAction, SetProps } from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
-import { Bar, Radar } from "react-chartjs-2";
-import { useEffect, useRef } from "react";
+import { Bar } from "react-chartjs-2";
 import { CustomLink } from "../../components/CustomLink";
 import Image from "next/image";
 
@@ -42,7 +37,6 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
-import { DivideCarousel } from "../../components/DivideCarousel";
 import { ImageButton } from "../../components/Button/ImageButton";
 
 Chart.register(
@@ -78,7 +72,6 @@ const SetDetail: NextPage = () => {
   const selectedData = getSelectedSetData(id);
   const dataState = useDataContext().state;
   const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
-  const searchData = useSearchDataState();
   const score = selectedData?.난이도 == "쉬움" ? 20 : selectedData?.난이도 == "보통" ? 40 : selectedData?.난이도 == "어려움" ? 60 : selectedData?.난이도 == "전문가" ? 80 : selectedData?.난이도 == "이거 가능?" ? 100 : 0;
 
   const data: ChartData<"bar"> = {
@@ -236,9 +229,8 @@ const SetDetail: NextPage = () => {
           })}
           <h5>※ 컨텐츠는 지속적으로 추가될 예정입니다.</h5>
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
-          <Chips chipData={chipData} isReadonly={true}></Chips>
-          <DivideCarousel width="450px" height="80px" />
-          <h1> Tips </h1>
+          <Chips chipData={chipData} isReadonly={true} justifyContent={"center"}></Chips>
+          <h1 style={{ marginTop: "35px" }}> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.tips?.map((v) => {
               return (
