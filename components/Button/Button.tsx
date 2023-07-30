@@ -27,6 +27,7 @@ type buttonProps = {
   height: number;
   padding: number;
   children?: any;
+  backgroundOpacity?: number;
   onClick?: () => void;
 };
 

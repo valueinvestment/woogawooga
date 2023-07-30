@@ -12,10 +12,14 @@ type buttonProps = {
   maxWidth?: number;
   children?: any;
   padding?: string;
+  backgroundOpacity?: number;
 };
 
 const ButtonBase = styled.button<buttonProps>`
-  background-color: ${({ darkBtn, backgroundColor }) => (darkBtn ? "black" : backgroundColor)}; // i am destructing here, instead of using as prop.darkBtn
+  background-color: ${({ darkBtn, backgroundColor }) =>
+    darkBtn
+      ? "black"
+      : backgroundColor}; // i am destructing here, instead of using as prop.darkBtn
   padding: ${(props) => props.padding};
   margin: 0.5rem 0rem;
   font-size: 1.7rem;
@@ -44,7 +48,11 @@ const ButtonBase = styled.button<buttonProps>`
       border: 2px solid gold;
       background-color: darkcyan;
       color: white;
-    `}
+    `};
+
+  &:before {
+    opacity: ${(props) => props.backgroundOpacity ?? 1};
+  }
 `;
 
 ButtonBase.defaultProps = {

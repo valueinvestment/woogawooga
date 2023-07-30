@@ -37,10 +37,10 @@ const MainCarousel: React.FC<carouselProps> = (props) => {
   };
 
   const items = [
-    { id: 1, url: "/assets/carousel/MainCarousel1.png" },
-    { id: 2, url: "/assets/carousel/MainCarousel2.png" },
-    { id: 3, url: "/assets/carousel/MainCarousel3.png" },
-    { id: 4, url: "/assets/carousel/MainCarousel4.png" },
+    { id: 1, url: "/assets/carousel/mainCarousel1.png" },
+    { id: 2, url: "/assets/carousel/mainCarousel2.png" },
+    { id: 3, url: "/assets/carousel/mainCarousel3.png" },
+    { id: 4, url: "/assets/carousel/mainCarousel4.png" },
   ];
 
   return (
@@ -51,7 +51,12 @@ const MainCarousel: React.FC<carouselProps> = (props) => {
             return (
               <div key={item.id}>
                 <ImageContainer>
-                  <Image src={item.url} alt={item.url} width="450px" height="200px" />
+                  <Image
+                    src={item.url}
+                    alt={item.url}
+                    width="450px"
+                    height="200px"
+                  />
                 </ImageContainer>
               </div>
             );

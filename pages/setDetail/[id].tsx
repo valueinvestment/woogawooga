@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card";
 import { Chips } from "../../components/ChipContainer";
-import { useTagState, useSelectedSetAction, useDataContext, useSearchDataState, useSelectedAction, SetProps } from "../../context/DataContext";
+import {
+  useTagState,
+  useSelectedSetAction,
+  useDataContext,
+  useSearchDataState,
+  useSelectedAction,
+  SetProps,
+} from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Bar } from "react-chartjs-2";
 import { CustomLink } from "../../components/CustomLink";
@@ -65,24 +72,50 @@ Chart.register(
   Tooltip
 );
 const SetDetail: NextPage = () => {
-  const { getSelectedSetData, getPreviousSetData, getNextSetData } = useSelectedSetAction();
+  const { getSelectedSetData, getPreviousSetData, getNextSetData } =
+    useSelectedSetAction();
   const { getSelectedData } = useSelectedAction();
   const router = useRouter();
   const id = Number(router.query.id);
   const selectedData = getSelectedSetData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
-  const score = selectedData?.난이도 == "쉬움" ? 20 : selectedData?.난이도 == "보통" ? 40 : selectedData?.난이도 == "어려움" ? 60 : selectedData?.난이도 == "전문가" ? 80 : selectedData?.난이도 == "이거 가능?" ? 100 : 0;
+  const chipData = useTagState().filter((item) =>
+    selectedData?.tags?.includes(item.chipId)
+  );
+  const score =
+    selectedData?.난이도 == "쉬움"
+      ? 20
+      : selectedData?.난이도 == "보통"
+      ? 40
+      : selectedData?.난이도 == "어려움"
+      ? 60
+      : selectedData?.난이도 == "전문가"
+      ? 80
+      : selectedData?.난이도 == "이거 가능?"
+      ? 100
+      : 0;
 
   const data: ChartData<"bar"> = {
     labels: [
       ["난이도", selectedData?.난이도],
       ["쾌감도", selectedData?.쾌감도 ?? 0],
-      ["리드 비율", "(" + (selectedData?.["리드(남)"] ?? 0) + "/" + (100 - (selectedData?.["리드(남)"] ?? 0)) + ")", "(남/여)"],
+      [
+        "리드 비율",
+        "(" +
+          (selectedData?.["리드(남)"] ?? 0) +
+          "/" +
+          (100 - (selectedData?.["리드(남)"] ?? 0)) +
+          ")",
+        "(남/여)",
+      ],
     ],
     datasets: [
       {
-        data: [score, selectedData?.쾌감도 ?? 0, selectedData?.["리드(남)"] ?? 0],
+        data: [
+          score,
+          selectedData?.쾌감도 ?? 0,
+          selectedData?.["리드(남)"] ?? 0,
+        ],
 
         backgroundColor: ["#FF90AD", "#FF547F", "#7B42AD"],
         barThickness: 30,
@@ -194,14 +227,25 @@ const SetDetail: NextPage = () => {
           >
             <Image src="/assets/main.svg" alt="" width={60} height={60}></Image>
           </div>
-          <Image src={"/assets/setImages/wide/" + id + ".png"} width={1456} height={816} alt="title" />
+          <Image
+            src={"/assets/setImages/wide/" + id + ".png"}
+            width={1456}
+            height={816}
+            alt="title"
+          />
           <h1 style={{ margin: "1.5rem 0rem" }}> {selectedData?.name} </h1>
 
           <h2 style={{ margin: "1rem 0rem" }}> 이런 분들에게 추천! </h2>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.subTitle?.map((v) => {
               return (
-                <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                <li
+                  key={v}
+                  style={{
+                    textAlign: "justify",
+                    margin: "0.5rem 2.2rem 0.5rem 0.5rem ",
+                  }}
+                >
                   {v}
                 </li>
               );
@@ -229,12 +273,22 @@ const SetDetail: NextPage = () => {
           })}
           <h5>※ 컨텐츠는 지속적으로 추가될 예정입니다.</h5>
           <h2 style={{ margin: "2rem 0rem" }}> 태그 </h2>
-          <Chips chipData={chipData} isReadonly={true} justifyContent={"center"}></Chips>
+          <Chips
+            chipData={chipData}
+            isReadonly={true}
+            justifyContent={"center"}
+          ></Chips>
           <h1 style={{ marginTop: "35px" }}> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.tips?.map((v) => {
               return (
-                <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                <li
+                  key={v}
+                  style={{
+                    textAlign: "justify",
+                    margin: "0.5rem 2.2rem 0.5rem 0.5rem ",
+                  }}
+                >
                   {v}
                 </li>
               );
@@ -242,7 +296,9 @@ const SetDetail: NextPage = () => {
           </ul>
           <h1 style={{ marginBottom: "-10px" }}>
             난이도 :{"  "}
-            <span style={{ fontSize: "1.5em" }}>{selectedData?.난이도 ?? "보통"}</span>
+            <span style={{ fontSize: "1.5em" }}>
+              {selectedData?.난이도 ?? "보통"}
+            </span>
           </h1>
           <h2 style={{ margin: "2rem 0rem -1rem 0rem" }}> 세트 점수 </h2>
           <Bar data={data} options={options} width={200} height={200}></Bar>
@@ -296,7 +352,11 @@ const SetDetail: NextPage = () => {
                 >
                   ← 이전
                 </h2>
-                <Card id={previousCard.id} name={previousCard.name} src="/assets/setImages/"></Card>
+                <Card
+                  id={previousCard.id}
+                  name={previousCard.name}
+                  src="/assets/setImages/"
+                ></Card>
               </CustomLink>
             ) : (
               <div
@@ -314,7 +374,11 @@ const SetDetail: NextPage = () => {
                 >
                   ← 이전
                 </h2>
-                <Card id={0} name={"컨텐츠가 없습니다."} src="/assets/setImages/"></Card>
+                <Card
+                  id={0}
+                  name={"컨텐츠가 없습니다."}
+                  src="/assets/setImages/"
+                ></Card>
               </div>
             )}
             {nextData ? (
@@ -329,7 +393,11 @@ const SetDetail: NextPage = () => {
                 >
                   다음 →
                 </h2>
-                <Card id={nextCard.id} name={nextCard.name} src="/assets/setImages/"></Card>
+                <Card
+                  id={nextCard.id}
+                  name={nextCard.name}
+                  src="/assets/setImages/"
+                ></Card>
               </CustomLink>
             ) : (
               <div
@@ -347,12 +415,33 @@ const SetDetail: NextPage = () => {
                 >
                   다음 →
                 </h2>
-                <Card id={0} name={"컨텐츠가 없습니다."} src="/assets/setImages/"></Card>
+                <Card
+                  id={0}
+                  name={"컨텐츠가 없습니다."}
+                  src="/assets/setImages/"
+                ></Card>
               </div>
             )}
           </div>
 
-          <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>
+          <Button
+            labelText="목록 보기 "
+            height={80}
+            maxWidth={250}
+            padding={20}
+            backgroundColor="purple"
+            color="white"
+            onClick={() => router.push("/sets")}
+          ></Button>
+          <Button
+            labelText="메인 화면으로 "
+            height={80}
+            maxWidth={250}
+            padding={20}
+            backgroundColor="#32154B"
+            color="white"
+            onClick={() => router.push("/")}
+          ></Button>
         </main>
       </div>
     </>

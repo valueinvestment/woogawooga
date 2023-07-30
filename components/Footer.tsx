@@ -7,7 +7,7 @@ const FooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   margin-bottom: 3rem;
   max-width: 400px;
 `;
@@ -26,7 +26,7 @@ const Footer: React.FC = () => (
   <>
     <FooterContainer>
       <DivideCarousel width="450px" height="80px" />
-      <h3 style={{ margin: "0rem" }}>투자 문의 / 아이디어 제안</h3>
+      <h3 style={{ marginTop: "1rem" }}>투자 문의 / 아이디어 제안</h3>
       <a
         href="mailto: oogaooga.app@gmail.com"
         style={{
@@ -50,7 +50,9 @@ const Footer: React.FC = () => (
         <span style={{ fontSize: "0.8rem" }}>Copyright © 2023. 우가?우가!</span>
       </p>
       <p style={{ margin: "0rem" }}>
-        <span style={{ fontSize: "0.8rem" }}>우가?우가! OOGA?OOGA! All rights reserved.</span>
+        <span style={{ fontSize: "0.8rem" }}>
+          우가?우가! OOGA?OOGA! All rights reserved.
+        </span>
       </p>
     </FooterContainer>
   </>

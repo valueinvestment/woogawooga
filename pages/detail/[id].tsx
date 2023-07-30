@@ -6,7 +6,14 @@ import { Card } from "../../components/Card";
 import { CardContainer } from "../../components/CardContainer";
 import { Chips } from "../../components/ChipContainer";
 import DivideLine from "../../components/DivideLine";
-import { DetailProps, useTagState, useSelectedAction, useSelectedSetAction, useDataContext, useSearchDataState } from "../../context/DataContext";
+import {
+  DetailProps,
+  useTagState,
+  useSelectedAction,
+  useSelectedSetAction,
+  useDataContext,
+  useSearchDataState,
+} from "../../context/DataContext";
 import styles from "../../styles/Home.module.css";
 import { Radar } from "react-chartjs-2";
 import { useEffect, useRef } from "react";
@@ -76,7 +83,9 @@ const PositionDetail: NextPage = () => {
   const id = Number(router.query.id);
   const selectedData = getSelectedData(id);
   const dataState = useDataContext().state;
-  const chipData = useTagState().filter((item) => selectedData?.tags?.includes(item.chipId));
+  const chipData = useTagState().filter((item) =>
+    selectedData?.tags?.includes(item.chipId)
+  );
   const searchData = useSearchDataState();
 
   const data = {
@@ -84,7 +93,13 @@ const PositionDetail: NextPage = () => {
     datasets: [
       {
         label: "남자",
-        data: [selectedData?.["무게부담(남)"], selectedData?.["상체힘(남)"], selectedData?.["하체힘(남)"], selectedData?.["유연성(남)"], selectedData?.["균형감각(남)"]],
+        data: [
+          selectedData?.["무게부담(남)"],
+          selectedData?.["상체힘(남)"],
+          selectedData?.["하체힘(남)"],
+          selectedData?.["유연성(남)"],
+          selectedData?.["균형감각(남)"],
+        ],
         fill: true,
         backgroundColor: "rgba(198, 214, 254, 0.4)",
         borderColor: "#7B42AD",
@@ -95,7 +110,13 @@ const PositionDetail: NextPage = () => {
       },
       {
         label: "여자",
-        data: [selectedData?.["무게부담(여)"], selectedData?.["상체힘(여)"], selectedData?.["하체힘(여)"], selectedData?.["유연성(여)"], selectedData?.["균형감각(여)"]],
+        data: [
+          selectedData?.["무게부담(여)"],
+          selectedData?.["상체힘(여)"],
+          selectedData?.["하체힘(여)"],
+          selectedData?.["유연성(여)"],
+          selectedData?.["균형감각(여)"],
+        ],
         fill: true,
         backgroundColor: "rgba(252, 226, 234, 0.2)",
         borderColor: "#F3B4C5",
@@ -107,7 +128,8 @@ const PositionDetail: NextPage = () => {
     ],
   };
 
-  const chartRef = useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
+  const chartRef =
+    useRef<ChartJSOrUndefined<"radar", (number | undefined)[], unknown>>();
   useEffect(() => {
     if (searchData.toggledIndex == 0) {
       chartRef.current?.show(0);
@@ -193,7 +215,12 @@ const PositionDetail: NextPage = () => {
     id: nextData?.id,
   };
 
-  let score = (searchData.toggledIndex == 1 ? selectedData?.["종합난이도"] : searchData.toggledIndex == 0 ? selectedData?.["난이도(남)"] : selectedData?.["난이도(여)"]) ?? 0;
+  let score =
+    (searchData.toggledIndex == 1
+      ? selectedData?.["종합난이도"]
+      : searchData.toggledIndex == 0
+      ? selectedData?.["난이도(남)"]
+      : selectedData?.["난이도(여)"]) ?? 0;
 
   return (
     <>
@@ -214,14 +241,24 @@ const PositionDetail: NextPage = () => {
           <h1 style={{ margin: "2rem 0rem" }}> {selectedData?.name} </h1>
           {/* <p style={{}}> {selectedData?.type == 0 ? "기본형" : "파생형"} </p> */}
 
-          <Card id={selectedData?.id} name={selectedData?.name} width={320} height={320}></Card>
+          <Card id={selectedData?.id} width={320} height={320}></Card>
 
-          <Chips chipData={chipData} isReadonly={true} justifyContent="center"></Chips>
+          <Chips
+            chipData={chipData}
+            isReadonly={true}
+            justifyContent="center"
+          ></Chips>
           <h1 style={{ marginTop: "35px" }}> Tips </h1>
           <ul style={{ lineHeight: "110%", wordSpacing: "2px" }}>
             {selectedData?.details?.map((v) => {
               return (
-                <li key={v} style={{ textAlign: "justify", margin: "0.5rem" }}>
+                <li
+                  key={v}
+                  style={{
+                    textAlign: "justify",
+                    margin: "0.5rem 2.2rem 0.5rem 0.5rem",
+                  }}
+                >
                   {v}
                 </li>
               );
@@ -232,11 +269,27 @@ const PositionDetail: NextPage = () => {
           <Toggle></Toggle>
           <h1 style={{ marginBottom: "-10px" }}>
             난이도 :{"  "}
-            <span style={{ fontSize: "1.5em" }}>{score > 90 ? "이거 가능?" : score > 70 ? "전문가" : score > 50 ? "어려움" : score > 20 ? "보통" : "쉬움"}</span>
+            <span style={{ fontSize: "1.5em" }}>
+              {score > 90
+                ? "이거 가능?"
+                : score > 70
+                ? "전문가"
+                : score > 50
+                ? "어려움"
+                : score > 20
+                ? "보통"
+                : "쉬움"}
+            </span>
           </h1>
-          <Radar ref={chartRef} data={data} width={400} height={400} options={options}></Radar>
+          <Radar
+            ref={chartRef}
+            data={data}
+            width={400}
+            height={400}
+            options={options}
+          ></Radar>
 
-          <h1 style={{ marginTop: "20px" }}> 연관 세트 </h1>
+          <h1 style={{ marginTop: "-10px" }}> 연관 세트 </h1>
 
           <ImageButton
             imgUrl={"/assets/setImages/" + selectedData?.code + ".png"}
@@ -246,11 +299,17 @@ const PositionDetail: NextPage = () => {
             borderColor={"transparent"}
             borderRadius={2}
             boxShadow={"1px 3px lightgray"}
-            title={selectedData?.code ? getSelectedSetData(selectedData?.code)?.name : ""}
+            title={
+              selectedData?.code
+                ? getSelectedSetData(selectedData?.code)?.name
+                : ""
+            }
             onClick={() => {
               router.push("/setDetail/" + selectedData?.code);
             }}
           ></ImageButton>
+
+          <p />
 
           <Button
             labelText="공유하기"
@@ -354,8 +413,25 @@ const PositionDetail: NextPage = () => {
               </div>
             )}
           </div>
-
-          <Button labelText="메인 화면으로 " height={80} maxWidth={250} padding={20} backgroundColor="#32154B" color="white" onClick={() => router.push("/")}></Button>
+          
+          <Button
+            labelText="목록 보기 "
+            height={80}
+            maxWidth={250}
+            padding={20}
+            backgroundColor="purple"
+            color="white"
+            onClick={() => router.push("/details")}
+          ></Button>
+          <Button
+            labelText="메인 화면으로 "
+            height={80}
+            maxWidth={250}
+            padding={20}
+            backgroundColor="#32154B"
+            color="white"
+            onClick={() => router.push("/")}
+          ></Button>
         </main>
       </div>
     </>
