@@ -67,7 +67,7 @@ const Home: NextPage = () => {
           padding={20}
           backgroundOpacity={0.4}
           onClick={() => {
-            router.push("/position");
+            router.push("/details");
           }}
         ></Button>
       </main>
