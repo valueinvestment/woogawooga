@@ -4,6 +4,8 @@ import { DataProvider, SearchDataProvider, SetDataProvider, TagProvider } from "
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "../components/Footer";
+import * as gtag from '../lib/gtag';
+import Script from 'next/script';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -17,6 +19,22 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image" content="/assets/forshareimg.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${gtag.GA_TRACKING_ID}', {
+          page_path: window.location.pathname,
+        });
+      `
+        }}
+      />
       <DataProvider>
         <SetDataProvider>
           <SearchDataProvider>
