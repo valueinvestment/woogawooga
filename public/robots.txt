@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /exclude
+
+# Host
+Host: https://oogaooga.app
+
+# Sitemaps
+Sitemap: https://oogaooga.app/sitemap.xml
+Sitemap: https://oogaooga.app/server-sitemap.xml
