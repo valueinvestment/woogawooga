@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-    siteUrl: 'https://oogaooga.app', // .게시하는 site의 url
+    siteUrl: 'https://www.oogaooga.app', // .게시하는 site의 url
     generateRobotsTxt: true, // robots.txt generate 여부 (자동생성 여부)
     sitemapSize: 7000, // sitemap별 최대 크기 (최대 크기가 넘어갈 경우 복수개의 sitemap으로 분리됨)
     changefreq: 'weekly', // 페이지 주소 변경 빈도 (검색엔진에 제공됨) - always, daily, hourly, monthly, never, weekly, yearly 중 택 1
@@ -24,7 +24,7 @@ module.exports = {
             // 추가 정책이 필요할 경우 배열 요소로 추가 작성
         ],
          additionalSitemaps: [
-            'https://oogaooga.app/server-sitemap.xml', // <==== Add here
+            'https://www.oogaooga.app/server-sitemap.xml', // <==== Add here
         ],
     } // robots.txt 옵션 설정
 }

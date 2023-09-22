@@ -4,8 +4,8 @@ Allow: /
 Disallow: /exclude
 
 # Host
-Host: https://oogaooga.app
+Host: https://www.oogaooga.app
 
 # Sitemaps
-Sitemap: https://oogaooga.app/sitemap.xml
-Sitemap: https://oogaooga.app/server-sitemap.xml
+Sitemap: https://www.oogaooga.app/sitemap.xml
+Sitemap: https://www.oogaooga.app/server-sitemap.xml

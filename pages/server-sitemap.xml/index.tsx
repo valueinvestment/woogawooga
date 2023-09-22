@@ -9,7 +9,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // const urls = await fetch('https//example.com/api')
     let details = data.map(v => {
         return {
-            loc: 'https://oogaooga.app/setDetail/' + v.id, // Absolute url
+            loc: 'https://www.oogaooga.app/setDetail/' + v.id, // Absolute url
             lastmod: new Date().toISOString(),
             // changefreq
             // priority
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     });;
     let sets = setData.map(v => {
         return {
-            loc: 'https://oogaooga.app/detail/' + v.id, // Absolute url
+            loc: 'https://www.oogaooga.app/detail/' + v.id, // Absolute url
             lastmod: new Date().toISOString(),
             // changefreq
             // priority
